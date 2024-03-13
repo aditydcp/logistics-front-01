@@ -33,6 +33,15 @@ export const indigo = withAlphas({
   contrastText: '#FFFFFF'
 });
 
+export const golden = withAlphas({
+  lightest: '#FFF0B9',
+  light: '#FCDD6C',
+  main: '#F1C522',
+  dark: '#D3A70A',
+  darkest: '#785F05',
+  contrastText: '#FFFFFF'
+})
+
 export const success = withAlphas({
   lightest: '#F0FDF9',
   light: '#3FC79A',

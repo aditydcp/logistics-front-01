@@ -1,9 +1,8 @@
 {
-  "name": "material-kit-react",
-  "version": "3.0.0",
-  "author": "Devias",
+  "name": "logistics-front",
+  "version": "0.1.0",
+  "author": "Aditya Cahyo",
   "licence": "MIT",
-  "homepage": "https://devias.io",
   "private": false,
   "scripts": {
     "dev": "next",

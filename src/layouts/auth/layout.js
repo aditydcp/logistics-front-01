@@ -69,7 +69,7 @@ export const Layout = (props) => {
           }}
         >
           <Box sx={{ p: 3 }}>
-            <Typography
+            {/* <Typography
               align="center"
               color="inherit"
               sx={{
@@ -94,7 +94,7 @@ export const Layout = (props) => {
               variant="subtitle1"
             >
               A professional kit that comes with ready-to-use MUI components.
-            </Typography>
+            </Typography> */}
             <img
               alt=""
               src="/assets/auth-illustration.svg"
