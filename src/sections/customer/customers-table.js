@@ -96,7 +96,7 @@ export const CustomersTable = (props) => {
                       />
                     </TableCell>
                     <TableCell>
-                      <Stack
+                      {/* <Stack
                         alignItems="center"
                         direction="row"
                         spacing={2}
@@ -104,10 +104,10 @@ export const CustomersTable = (props) => {
                         <Avatar src={customer.avatar}>
                           {getInitials(customer.name)}
                         </Avatar>
-                        <Typography variant="subtitle2">
+                        <Typography variant="subtitle2"> */}
                           {customer.name}
-                        </Typography>
-                      </Stack>
+                        {/* </Typography>
+                      </Stack> */}
                     </TableCell>
                     <TableCell>
                       {customer.email}
