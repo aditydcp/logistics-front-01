@@ -25,7 +25,7 @@ const Page = () => {
   const [method, setMethod] = useState('email');
   const formik = useFormik({
     initialValues: {
-      email: 'demo@devias.io',
+      email: 'demo@dbkit.io',
       password: 'Password123!',
       submit: null
     },
@@ -71,7 +71,7 @@ const Page = () => {
     <>
       <Head>
         <title>
-          Login | Devias Kit
+          Login | Dashboard Kit
         </title>
       </Head>
       <Box
@@ -176,7 +176,7 @@ const Page = () => {
                 >
                   Continue
                 </Button>
-                <FormHelperText sx={{ mt: 3 }}>
+                {/* <FormHelperText sx={{ mt: 3 }}>
                   Optionally you can skip.
                 </FormHelperText>
                 <Button
@@ -186,14 +186,14 @@ const Page = () => {
                   onClick={handleSkip}
                 >
                   Skip authentication
-                </Button>
+                </Button> */}
                 <Alert
                   color="primary"
                   severity="info"
                   sx={{ mt: 3 }}
                 >
                   <div>
-                    You can use <b>demo@devias.io</b> and password <b>Password123!</b>
+                    For this demo, you can use <b>demo@dbkit.io</b> and password <b>Password123!</b>
                   </div>
                 </Alert>
               </form>

@@ -10,6 +10,12 @@ import { SvgIcon } from '@mui/material';
 import DocumentTextIcon from '@heroicons/react/24/solid/DocumentTextIcon'
 import TruckIcon from '@heroicons/react/24/solid/TruckIcon'
 import FlightIcon from '@mui/icons-material/Flight';
+import AssignmentRoundedIcon from '@mui/icons-material/AssignmentRounded';
+import FlightRoundedIcon from '@mui/icons-material/FlightRounded';
+import LocalShippingRoundedIcon from '@mui/icons-material/LocalShippingRounded';
+import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
+import SupervisorAccountRoundedIcon from '@mui/icons-material/SupervisorAccountRounded';
+import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
 
 export const items = [
   {
@@ -17,7 +23,7 @@ export const items = [
     path: '/',
     icon: (
       <SvgIcon fontSize="small">
-        <DocumentTextIcon />
+        <AssignmentRoundedIcon />
       </SvgIcon>
     )
   },
@@ -35,7 +41,7 @@ export const items = [
     path: '/flights',
     icon: (
       <SvgIcon fontSize="small">
-        <FlightIcon />
+        <FlightRoundedIcon />
       </SvgIcon>
     )
   },
@@ -44,7 +50,17 @@ export const items = [
     path: '/companies',
     icon: (
       <SvgIcon fontSize="small">
-        <TruckIcon />
+        <LocalShippingRoundedIcon />
+      </SvgIcon>
+    )
+  },
+  {
+    title: 'Employees',
+    path: '/employees',
+    role: ['manager', 'admin'],
+    icon: (
+      <SvgIcon fontSize="small">
+        <SupervisorAccountRoundedIcon />
       </SvgIcon>
     )
   },
@@ -53,7 +69,7 @@ export const items = [
     path: '/account',
     icon: (
       <SvgIcon fontSize="small">
-        <UserIcon />
+        <AccountCircleRoundedIcon />
       </SvgIcon>
     )
   },
@@ -62,7 +78,7 @@ export const items = [
     path: '/settings',
     icon: (
       <SvgIcon fontSize="small">
-        <CogIcon />
+        <SettingsRoundedIcon />
       </SvgIcon>
     )
   },

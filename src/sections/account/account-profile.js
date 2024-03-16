@@ -10,11 +10,11 @@ import {
 } from '@mui/material';
 
 const user = {
-  avatar: '/assets/avatars/avatar-anika-visser.png',
+  avatar: '/assets/avatars/avatar-alcides-antonio.png',
   city: 'Los Angeles',
   country: 'USA',
   jobTitle: 'Senior Developer',
-  name: 'Anika Visser',
+  name: 'John',
   timezone: 'GTM-7'
 };
 

@@ -27,7 +27,7 @@ const data = [
     ref: 'DEV1049',
     customer: {
       name: 'Ekaterina Tankova',
-      email: 'ekaterina.tankova@devias.io',
+      email: 'ekaterina.tankova@dbkit.io',
       phone: '304-428-3097'
     },
     flight: {
@@ -62,7 +62,7 @@ const data = [
     id: '5e887b209c28ac3dd97f6db5',
     ref: 'DEV1050',
     customer: {
-      email: 'fran.perez@devias.io',
+      email: 'fran.perez@dbkit.io',
       name: 'Fran Perez',
       phone: '712-351-5711'
     },
@@ -98,7 +98,7 @@ const data = [
     id: '5e887b7602bdbc4dbb234b27',
     ref: 'DEV1051',
     customer: {
-      email: 'fran.perez@devias.io',
+      email: 'fran.perez@dbkit.io',
       name: 'Fran Perez',
       phone: '712-351-5711'
     },
@@ -134,7 +134,7 @@ const data = [
     id: '5e86809283e28b96d2d38537',
     ref: 'DEV1050',
     customer: {
-      email: 'fran.perez@devias.io',
+      email: 'fran.perez@dbkit.io',
       name: 'Fran Perez',
       phone: '712-351-5711'
     },
@@ -170,7 +170,7 @@ const data = [
     id: '5e8680e60cba5019c5ca6fda',
     ref: 'DEV1052',
     customer: {
-      email: 'fran.perez@devias.io',
+      email: 'fran.perez@dbkit.io',
       name: 'Fran Perez',
       phone: '712-351-5711'
     },
@@ -206,7 +206,7 @@ const data = [
     id: '5e86805e2bafd54f66cc95c3',
     ref: 'DEV1053',
     customer: {
-      email: 'fran.perez@devias.io',
+      email: 'fran.perez@dbkit.io',
       name: 'Fran Perez',
       phone: '712-351-5711'
     },
@@ -242,7 +242,7 @@ const data = [
     id: '5e887a1fbefd7938eea9c981',
     ref: 'DEV1054',
     customer: {
-      email: 'fran.perez@devias.io',
+      email: 'fran.perez@dbkit.io',
       name: 'Fran Perez',
       phone: '712-351-5711'
     },
@@ -278,7 +278,7 @@ const data = [
     id: '5e887d0b3d090c1b8f162003',
     ref: 'DEV1055',
     customer: {
-      email: 'fran.perez@devias.io',
+      email: 'fran.perez@dbkit.io',
       name: 'Fran Perez',
       phone: '712-351-5711'
     },
@@ -314,7 +314,7 @@ const data = [
     id: '5e88792be2d4cfb4bf0971d9',
     ref: 'DEV1056',
     customer: {
-      email: 'fran.perez@devias.io',
+      email: 'fran.perez@dbkit.io',
       name: 'Fran Perez',
       phone: '712-351-5711'
     },
@@ -350,7 +350,7 @@ const data = [
     id: '5e8877da9a65442b11551975',
     ref: 'DEV1057',
     customer: {
-      email: 'fran.perez@devias.io',
+      email: 'fran.perez@dbkit.io',
       name: 'Fran Perez',
       phone: '712-351-5711'
     },
@@ -427,7 +427,7 @@ const Page = () => {
     <>
       <Head>
         <title>
-          Shipments | Devias Kit
+          Shipments | Dashboard Kit
         </title>
       </Head>
       <Box

@@ -30,7 +30,7 @@ const App = (props) => {
       
       <Head>
         <title>
-          Devias Kit
+          Dashboard Kit
         </title>
         <meta
           name="viewport"
