@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 const HANDLERS = {
   INITIALIZE: 'INITIALIZE',
   SIGN_IN: 'SIGN_IN',
-  SIGN_OUT: 'SIGN_OUT'
+  SIGN_OUT: 'SIGN_OUT',
+  SWITCH_ROLE: 'SWITCH_ROLE'
 };
 
 const initialState = {
@@ -48,6 +49,15 @@ const handlers = {
       isAuthenticated: false,
       user: null
     };
+  },
+  [HANDLERS.SWITCH_ROLE]: (state, action) => {
+    const user = action.payload;
+
+    return {
+      ...state,
+      isAuthenticated: true,
+      user
+    };
   }
 };
 
@@ -85,7 +95,8 @@ export const AuthProvider = (props) => {
         id: '5e86809283e28b96d2d38537',
         avatar: '/assets/avatars/avatar-alcides-antonio.png',
         name: 'John',
-        email: 'john@dbkit.io'
+        email: 'john@dbkit.io',
+        role: 'Customer Service'
       };
 
       dispatch({
@@ -118,7 +129,8 @@ export const AuthProvider = (props) => {
       id: '5e86809283e28b96d2d38537',
       avatar: '/assets/avatars/avatar-alcides-antonio.png',
       name: 'John',
-      email: 'john@dbkit.io'
+      email: 'john@dbkit.io',
+      role: 'Customer Service'
     };
 
     dispatch({
@@ -142,7 +154,8 @@ export const AuthProvider = (props) => {
       id: '5e86809283e28b96d2d38537',
       avatar: '/assets/avatars/avatar-alcides-antonio.png',
       name: 'John',
-      email: 'john@dbkit.io'
+      email: 'john@dbkit.io',
+      role: 'Customer Service'
     };
 
     dispatch({
@@ -161,6 +174,23 @@ export const AuthProvider = (props) => {
     });
   };
 
+  const switchRole = (role) => {
+    const newRole = role === 'Customer Service' ? 'Manager' : 'Customer Service'
+
+    const user = {
+      id: '5e86809283e28b96d2d38537',
+      avatar: '/assets/avatars/avatar-alcides-antonio.png',
+      name: 'John',
+      email: 'john@dbkit.io',
+      role: newRole
+    };
+
+    dispatch({
+      type: HANDLERS.SWITCH_ROLE,
+      payload: user
+    });
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -168,7 +198,8 @@ export const AuthProvider = (props) => {
         skip,
         signIn,
         signUp,
-        signOut
+        signOut,
+        switchRole
       }}
     >
       {children}

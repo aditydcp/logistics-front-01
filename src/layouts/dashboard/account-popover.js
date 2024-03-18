@@ -18,16 +18,22 @@ export const AccountPopover = (props) => {
     [onClose, auth, router]
   );
 
+  const handleSwitchRole = useCallback(
+    () => {
+      auth.switchRole(auth.user.role);
+    }
+  )
+
   return (
     <Popover
       anchorEl={anchorEl}
       anchorOrigin={{
-        horizontal: 'left',
+        horizontal: 'right',
         vertical: 'bottom'
       }}
       onClose={onClose}
       open={open}
-      PaperProps={{ sx: { width: 200 } }}
+      PaperProps={{ sx: { width: 'fit-content' } }}
     >
       <Box
         sx={{
@@ -42,13 +48,13 @@ export const AccountPopover = (props) => {
           color="inherit"
           variant="subtitle1"
         >
-          John
+          {auth.user.name}
         </Typography>
         <Typography
           color="neutral.400"
           variant="body2"
         >
-          Customer Service
+          {auth.user.role}
         </Typography>
         {/* <Typography
           color="text.secondary"
@@ -68,6 +74,9 @@ export const AccountPopover = (props) => {
           }
         }}
       >
+        <MenuItem onClick={handleSwitchRole}>
+          Switch to {auth.user.role === 'Customer Service' ? 'Manager' : 'Customer Service'}
+        </MenuItem>
         <MenuItem onClick={handleSignOut}>
           Sign out
         </MenuItem>

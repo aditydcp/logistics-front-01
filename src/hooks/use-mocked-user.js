@@ -5,6 +5,7 @@ export const useMockedUser = () => {
     id: '5e86809283e28b96d2d38537',
     avatar: '/assets/avatars/avatar-alcides-antonio.png',
     name: 'John',
-    email: 'john@dbkit.io'
+    email: 'john@dbkit.io',
+    role: 'Customer Service'
   };
 };
