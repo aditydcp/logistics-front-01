@@ -20,8 +20,10 @@ export const AccountSwitcherPopover = (props) => {
 
   const handleSwitchRole = useCallback(
     () => {
+      onClose?.();
       auth.switchRole(auth.user.role);
-    }
+    },
+    [onClose, auth]
   )
 
   return (
@@ -48,7 +50,7 @@ export const AccountSwitcherPopover = (props) => {
           disablePadding
           dense
           sx={{
-            p: '8px',
+            // p: 0.5,
             '& > *': {
               borderRadius: 1
             }
@@ -59,7 +61,8 @@ export const AccountSwitcherPopover = (props) => {
             sx={{
               flexDirection: 'column',
               alignItems: 'flex-start',
-              borderRadius: 1
+              borderRadius: 1,
+              px: 1.5
             }}
           >
             <Typography

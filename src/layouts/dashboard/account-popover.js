@@ -19,9 +19,10 @@ export const AccountPopover = (props) => {
   );
 
   const handleSwitchRole = useCallback(
-    () => {
+    () => {      
       auth.switchRole(auth.user.role);
-    }
+    },
+    [auth]
   )
 
   return (
