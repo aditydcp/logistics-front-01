@@ -178,11 +178,21 @@ export const FlightsSearch = (props) => {
     setLocalDepartureAirport(temp)
   }
 
+  const filterFlights = (flights, departureAirport, arrivalAirport, date) => {
+    return flights.filter(flight => {
+       const departureMatches = flight.departure.airport === departureAirport.name;
+       const arrivalMatches = flight.arrival.airport === arrivalAirport.name;
+      //  const dateMatches = new Date(flight.departure.time).toDateString() === new Date(date).toDateString();
+       return departureMatches && arrivalMatches
+        // && dateMatches;
+    });
+   };
+
   const handleSearchClick = () => {
     setDepartureAirport(localDepartureAirport)
     setArrivalAirport(localArrivalAirport)
     setDate(localDate)
-    setFlights(flightsData)
+    setFlights(filterFlights(flightsData, localDepartureAirport, localArrivalAirport, localDate))
     setSearchCommenced(true)
   }
 
