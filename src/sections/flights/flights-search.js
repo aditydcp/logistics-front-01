@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { subDays, subHours } from 'date-fns';
 import FlightTakeoffRoundedIcon from '@mui/icons-material/FlightTakeoffRounded';
 import FlightLandRoundedIcon from '@mui/icons-material/FlightLandRounded';
 import SwapHorizRoundedIcon from '@mui/icons-material/SwapHorizRounded';
@@ -30,13 +31,119 @@ import { MyDatePicker } from 'src/components/date-picker';
 // import 'dayjs/locale/en-gb';
 // import { DatePicker } from '@mui/x-date-pickers';
 
-export const FlightsSearch = (props) => {
-  const airports = [
-    { name: "Changi Intl" },
-    { name: "Soekarno Hatta Airport" },
-    { name: "Yogyakarta International Airport" }
-  ];
+const now = new Date();
 
+const airports = [
+  { name: "Changi Intl" },
+  { name: "Kuala Lumpur International Airport" },
+  { name: "Soekarno Hatta International Airport" },
+  { name: "Yogyakarta International Airport" },
+  { name: "Adi Sutjipto" },
+  { name: "Juanda" },
+];
+
+const flightsData = [
+  {
+    id: '1',
+    airline: 'Malaysia Airlines',
+    planeModel: 'MH-360',
+    baggageSize: 1000,
+    departure: {
+      airport: airports[0].name,
+      time: subDays(subHours(now, 7), 1).getTime(),
+    },
+    arrival: {
+      airport: airports[1].name,
+      time: subDays(subHours(now, 7), 1).getTime(),
+    }
+  },
+  {
+    id: '2',
+    airline: 'Malaysia Airlines',
+    planeModel: 'MH-871',
+    baggageSize: 1000,
+    departure: {
+      airport: airports[1].name,
+      time: subDays(subHours(now, 7), 1).getTime(),
+    },
+    arrival: {
+      airport: airports[5].name,
+      time: subDays(subHours(now, 7), 1).getTime(),
+    }
+  },
+  {
+    id: '3',
+    airline: 'Citilink',
+    planeModel: 'QG-252',
+    baggageSize: 350,
+    departure: {
+      airport: airports[2].name,
+      time: subDays(subHours(now, 7), 1).getTime(),
+    },
+    arrival: {
+      airport: airports[5].name,
+      time: subDays(subHours(now, 7), 1).getTime(),
+    }
+  },
+  {
+    id: '4',
+    airline: 'Garuda Indonesia',
+    planeModel: 'GA-855',
+    baggageSize: 1500,
+    departure: {
+      airport: airports[0].name,
+      time: subDays(subHours(now, 7), 1).getTime(),
+    },
+    arrival: {
+      airport: airports[5].name,
+      time: subDays(subHours(now, 7), 1).getTime(),
+    }
+  },
+  {
+    id: '5',
+    airline: 'Garuda Indonesia',
+    planeModel: 'GA-837',
+    baggageSize: 1500,
+    departure: {
+      airport: airports[0].name,
+      time: subDays(subHours(now, 7), 1).getTime(),
+    },
+    arrival: {
+      airport: airports[2].name,
+      time: subDays(subHours(now, 7), 1).getTime(),
+    }
+  },
+  {
+    id: '6',
+    airline: 'Garuda Indonesia',
+    planeModel: 'GA-304',
+    baggageSize: 1500,
+    departure: {
+      airport: airports[2].name,
+      time: subDays(subHours(now, 7), 1).getTime(),
+    },
+    arrival: {
+      airport: airports[5].name,
+      time: subDays(subHours(now, 7), 1).getTime(),
+    }
+  },
+  {
+    id: '7',
+    airline: 'Citilink',
+    planeModel: 'QG-527',
+    baggageSize: 350,
+    departure: {
+      airport: airports[0].name,
+      time: subDays(subHours(now, 7), 1).getTime(),
+    },
+    arrival: {
+      airport: airports[2].name,
+      time: subDays(subHours(now, 7), 1).getTime(),
+    }
+  },
+]
+
+export const FlightsSearch = (props) => {
   const {
     departureAirport,
     setDepartureAirport,
@@ -44,7 +151,8 @@ export const FlightsSearch = (props) => {
     setArrivalAirport,
     date,
     setDate,
-    setSearchCommenced
+    setSearchCommenced,
+    setFlights
   } = props
 
   const [localDepartureAirport, setLocalDepartureAirport] = useState(departureAirport);
@@ -74,6 +182,7 @@ export const FlightsSearch = (props) => {
     setDepartureAirport(localDepartureAirport)
     setArrivalAirport(localArrivalAirport)
     setDate(localDate)
+    setFlights(flightsData)
     setSearchCommenced(true)
   }
 
@@ -187,5 +296,6 @@ FlightsSearch.propTypes = {
   setArrivalAirport: PropTypes.func,
   date: PropTypes.any,
   setDate: PropTypes.func,
-  setSearchCommenced: PropTypes.func
+  setSearchCommenced: PropTypes.func,
+  setFlights: PropTypes.func
 }
