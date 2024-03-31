@@ -1,6 +1,10 @@
 # Logistic-Front 01
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/0d3f0eaf-ab51-4a44-b7b0-766cd22be5de/deploy-status)](https://app.netlify.com/sites/logdash/deploys)
+
 This is a frontend API service for logistic data.
+
+See demo [here](https://logdash.netlify.app/).
 
 **Tech stack:**
 * React 18
