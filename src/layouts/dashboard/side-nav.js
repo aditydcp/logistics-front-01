@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import ArrowTopRightOnSquareIcon from '@heroicons/react/24/solid/ArrowTopRightOnSquareIcon';
 import ChevronUpDownIcon from '@heroicons/react/24/solid/ChevronUpDownIcon';
 import {
+  Alert,
   Box,
   Button,
   Divider,
@@ -137,6 +138,18 @@ export const SideNav = (props) => {
               })}
             </Stack>
           </Box>
+          <Alert
+            color="primary"
+            severity="info"
+            sx={{ 
+              mx: 3,
+              my: 3,
+            }}
+          >
+            <div>
+              Some functions may not be available in this demo.
+            </div>
+          </Alert>
         </Box>
       </Scrollbar>
       <AccountSwitcherPopover 
