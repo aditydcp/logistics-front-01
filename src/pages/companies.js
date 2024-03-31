@@ -12,6 +12,8 @@ import {
   Stack,
   SvgIcon,
   Typography,
+  ToggleButton,
+  ToggleButtonGroup,
   Unstable_Grid2 as Grid
 } from '@mui/material';
 import { useSelection } from 'src/hooks/use-selection';
@@ -247,7 +249,14 @@ const useCompanyIds = (companies) => {
   );
 };
 
+const activePages = [
+  "exporters",
+  "importers"
+]
+
 const Page = () => {
+  const [active, setActive] = useState(activePages[0])
+
   const [exportersPage, setExportersPage] = useState(0);
   const [exportersRowsPerPage, setExportersRowsPerPage] = useState(5);
   const exporters = useCompanies(exportersPage, exportersRowsPerPage);
@@ -303,137 +312,150 @@ const Page = () => {
         }}
       >
         <Container maxWidth="xl">
-          <Stack spacing={8}>
-            <Stack spacing={3}>
-              <Stack
-                direction="row"
-                justifyContent="space-between"
-                spacing={4}
-              >
-                <Stack spacing={1}>
-                  <Typography variant="h4">
-                    Exporters
-                  </Typography>
-                  <Stack
-                    alignItems="center"
-                    direction="row"
-                    spacing={1}
-                  >
-                    <Button
-                      color="inherit"
-                      startIcon={(
-                        <SvgIcon fontSize="small">
-                          <ArrowUpOnSquareIcon />
-                        </SvgIcon>
-                      )}
+          <Stack spacing={3}>
+            <ToggleButtonGroup
+              color='primary'
+              size='large'
+              exclusive
+              value={active}
+              onChange={(event, value) => {setActive(value)}}
+            >
+              <ToggleButton value={activePages[0]}>Exporters</ToggleButton>
+              <ToggleButton value={activePages[1]}>Importers</ToggleButton>
+            </ToggleButtonGroup>
+            {active === activePages[0] ? <>
+              <Stack spacing={3}>
+                <Stack
+                  direction="row"
+                  justifyContent="space-between"
+                  spacing={4}
+                >
+                  <Stack spacing={1}>
+                    <Typography variant="h4">
+                      Exporters
+                    </Typography>
+                    <Stack
+                      alignItems="center"
+                      direction="row"
+                      spacing={1}
                     >
-                      Import
-                    </Button>
-                    <Button
-                      color="inherit"
-                      startIcon={(
-                        <SvgIcon fontSize="small">
-                          <ArrowDownOnSquareIcon />
-                        </SvgIcon>
-                      )}
-                    >
-                      Export
-                    </Button>
+                      <Button
+                        color="inherit"
+                        startIcon={(
+                          <SvgIcon fontSize="small">
+                            <ArrowUpOnSquareIcon />
+                          </SvgIcon>
+                        )}
+                      >
+                        Import
+                      </Button>
+                      <Button
+                        color="inherit"
+                        startIcon={(
+                          <SvgIcon fontSize="small">
+                            <ArrowDownOnSquareIcon />
+                          </SvgIcon>
+                        )}
+                      >
+                        Export
+                      </Button>
+                    </Stack>
                   </Stack>
+                  <div>
+                    <Button
+                      startIcon={(
+                        <SvgIcon fontSize="small">
+                          <PlusIcon />
+                        </SvgIcon>
+                      )}
+                      variant="contained"
+                    >
+                      Add Exporter
+                    </Button>
+                  </div>
                 </Stack>
-                <div>
-                  <Button
-                    startIcon={(
-                      <SvgIcon fontSize="small">
-                        <PlusIcon />
-                      </SvgIcon>
-                    )}
-                    variant="contained"
-                  >
-                    Add Exporter
-                  </Button>
-                </div>
+                <CompaniesSearch title="Exporter" />
+                <CustomersTable
+                  count={data.length}
+                  items={exporters}
+                  onDeselectAll={exportersSelection.handleDeselectAll}
+                  onDeselectOne={exportersSelection.handleDeselectOne}
+                  onPageChange={handleExporterPageChange}
+                  onRowsPerPageChange={handleExporterRowsPerPageChange}
+                  onSelectAll={exportersSelection.handleSelectAll}
+                  onSelectOne={exportersSelection.handleSelectOne}
+                  page={exportersPage}
+                  rowsPerPage={exportersRowsPerPage}
+                  selected={exportersSelection.selected}
+                />
               </Stack>
-              <CompaniesSearch title="Exporter" />
-              <CustomersTable
-                count={data.length}
-                items={exporters}
-                onDeselectAll={exportersSelection.handleDeselectAll}
-                onDeselectOne={exportersSelection.handleDeselectOne}
-                onPageChange={handleExporterPageChange}
-                onRowsPerPageChange={handleExporterRowsPerPageChange}
-                onSelectAll={exportersSelection.handleSelectAll}
-                onSelectOne={exportersSelection.handleSelectOne}
-                page={exportersPage}
-                rowsPerPage={exportersRowsPerPage}
-                selected={exportersSelection.selected}
-              />
-            </Stack>
-            <Stack spacing={3}>
-              <Stack
-                direction="row"
-                justifyContent="space-between"
-                spacing={4}
-              >
-                <Stack spacing={1}>
-                  <Typography variant="h4">
-                    Importers
-                  </Typography>
-                  <Stack
-                    alignItems="center"
-                    direction="row"
-                    spacing={1}
-                  >
-                    <Button
-                      color="inherit"
-                      startIcon={(
-                        <SvgIcon fontSize="small">
-                          <ArrowUpOnSquareIcon />
-                        </SvgIcon>
-                      )}
+            </> : <>
+              <Stack spacing={3}>
+                <Stack
+                  direction="row"
+                  justifyContent="space-between"
+                  spacing={4}
+                >
+                  <Stack spacing={1}>
+                    <Typography variant="h4">
+                      Importers
+                    </Typography>
+                    <Stack
+                      alignItems="center"
+                      direction="row"
+                      spacing={1}
                     >
-                      Import
-                    </Button>
-                    <Button
-                      color="inherit"
-                      startIcon={(
-                        <SvgIcon fontSize="small">
-                          <ArrowDownOnSquareIcon />
-                        </SvgIcon>
-                      )}
-                    >
-                      Export
-                    </Button>
+                      <Button
+                        color="inherit"
+                        startIcon={(
+                          <SvgIcon fontSize="small">
+                            <ArrowUpOnSquareIcon />
+                          </SvgIcon>
+                        )}
+                      >
+                        Import
+                      </Button>
+                      <Button
+                        color="inherit"
+                        startIcon={(
+                          <SvgIcon fontSize="small">
+                            <ArrowDownOnSquareIcon />
+                          </SvgIcon>
+                        )}
+                      >
+                        Export
+                      </Button>
+                    </Stack>
                   </Stack>
+                  <div>
+                    <Button
+                      startIcon={(
+                        <SvgIcon fontSize="small">
+                          <PlusIcon />
+                        </SvgIcon>
+                      )}
+                      variant="contained"
+                    >
+                      Add Importer
+                    </Button>
+                  </div>
                 </Stack>
-                <div>
-                  <Button
-                    startIcon={(
-                      <SvgIcon fontSize="small">
-                        <PlusIcon />
-                      </SvgIcon>
-                    )}
-                    variant="contained"
-                  >
-                    Add Importer
-                  </Button>
-                </div>
+                <CompaniesSearch title="Importer" />
+                <CustomersTable
+                  count={data.length}
+                  items={customers2}
+                  onDeselectAll={customersSelection2.handleDeselectAll}
+                  onDeselectOne={customersSelection2.handleDeselectOne}
+                  onPageChange={handlePageChange2}
+                  onRowsPerPageChange={handleRowsPerPageChange2}
+                  onSelectAll={customersSelection2.handleSelectAll}
+                  onSelectOne={customersSelection2.handleSelectOne}
+                  page={importersPage}
+                  rowsPerPage={importersRowsPerPage}
+                  selected={customersSelection2.selected}
+                />
               </Stack>
-              <CompaniesSearch title="Importer" />
-              <CustomersTable
-                count={data.length}
-                items={customers2}
-                onDeselectAll={customersSelection2.handleDeselectAll}
-                onDeselectOne={customersSelection2.handleDeselectOne}
-                onPageChange={handlePageChange2}
-                onRowsPerPageChange={handleRowsPerPageChange2}
-                onSelectAll={customersSelection2.handleSelectAll}
-                onSelectOne={customersSelection2.handleSelectOne}
-                page={importersPage}
-                rowsPerPage={importersRowsPerPage}
-                selected={customersSelection2.selected}
-              />
-            </Stack>
+            </>}
           </Stack>
         </Container>
         {/* <Container maxWidth="xl">
