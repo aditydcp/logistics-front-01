@@ -175,6 +175,7 @@ export const ShipmentsTable = (props) => {
                             <Button
                               color={buttonColorMap[action]}
                               variant='outlined'
+                              key={action}
                             >
                               {action}
                             </Button>

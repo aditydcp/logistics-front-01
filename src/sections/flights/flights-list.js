@@ -32,6 +32,7 @@ export const FlightsList = (props) => {
 
         return (
           <Card
+            key={flight.id}
             sx={{
               px: 3,
               py: 2.5
