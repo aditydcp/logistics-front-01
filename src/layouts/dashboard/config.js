@@ -57,7 +57,7 @@ export const items = [
   {
     title: 'Employees',
     path: '/employees',
-    role: ['manager', 'admin'],
+    role: ['manager', 'admin', 'director'],
     icon: (
       <SvgIcon fontSize="small">
         <SupervisorAccountRoundedIcon />
