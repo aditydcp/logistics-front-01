@@ -23,7 +23,7 @@ import {
   Box, 
   Stack
 } from '@mui/material';
-import { AirportSearch } from './flights-airport-search';
+import { AirportSearch } from 'src/components/flights/flights-airport-search';
 import { MyDatePicker } from 'src/components/date-picker';
 // import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 // import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -34,112 +34,156 @@ import { MyDatePicker } from 'src/components/date-picker';
 const now = new Date();
 
 const airports = [
-  { name: "Changi Intl" },
-  { name: "Kuala Lumpur International Airport" },
-  { name: "Soekarno Hatta International Airport" },
-  { name: "Yogyakarta International Airport" },
-  { name: "Adi Sutjipto" },
-  { name: "Juanda" },
+  {
+    name: "Changi Intl",
+    code: "SIN",
+    city: "Singapore",
+    country: "Singapura"
+  },
+  { 
+    name: "Kuala Lumpur International Airport",
+    code: "KUL",
+    city: "Kuala Lumpur",
+    country: "Malaysia"
+  },
+  { 
+    name: "Soekarno Hatta International Airport",
+    code: "CGK",
+    city: "Jakarta",
+    country: "Indonesia"
+  },
+  { 
+    name: "Yogyakarta International Airport",
+    code: "YIA",
+    city: "Yogyakarta",
+    country: "Indonesia"
+  },
+  { 
+    name: "Adi Sutjipto",
+    code: "YOG",
+    city: "Yogyakarta",
+    country: "Indonesia" 
+  },
+  { 
+    name: "Juanda",
+    code: "SUB",
+    city: "Surabaya",
+    country: "Indonesia"
+  },
 ];
 
 const flightsData = [
   {
     id: '1',
     airline: 'Malaysia Airlines',
+    airlineLogo: '/assets/logos/airlines/logo-malaysiaairlines-square.png',
     planeModel: 'MH-360',
     baggageSize: 1000,
     departure: {
-      airport: airports[0].name,
+      airport: airports[0],
       time: subDays(subHours(now, 7), 1).getTime(),
     },
     arrival: {
-      airport: airports[1].name,
+      airport: airports[1],
       time: subDays(subHours(now, 7), 1).getTime(),
-    }
+    },
+    price: 1000000,
   },
   {
     id: '2',
     airline: 'Malaysia Airlines',
+    airlineLogo: '/assets/logos/airlines/logo-malaysiaairlines-square.png',
     planeModel: 'MH-871',
     baggageSize: 1000,
     departure: {
-      airport: airports[1].name,
+      airport: airports[1],
       time: subDays(subHours(now, 7), 1).getTime(),
     },
     arrival: {
-      airport: airports[5].name,
+      airport: airports[5],
       time: subDays(subHours(now, 7), 1).getTime(),
-    }
+    },
+    price: 1000000,
   },
   {
     id: '3',
     airline: 'Citilink',
+    airlineLogo: '/assets/logos/airlines/logo-citilink-square.png',
     planeModel: 'QG-252',
     baggageSize: 350,
     departure: {
-      airport: airports[2].name,
+      airport: airports[2],
       time: subDays(subHours(now, 7), 1).getTime(),
     },
     arrival: {
-      airport: airports[5].name,
+      airport: airports[5],
       time: subDays(subHours(now, 7), 1).getTime(),
-    }
+    },
+    price: 1000000,
   },
   {
     id: '4',
     airline: 'Garuda Indonesia',
+    airlineLogo: '/assets/logos/airlines/logo-garudaindonesia-square.png',
     planeModel: 'GA-855',
     baggageSize: 1500,
     departure: {
-      airport: airports[0].name,
+      airport: airports[0],
       time: subDays(subHours(now, 7), 1).getTime(),
     },
     arrival: {
-      airport: airports[5].name,
+      airport: airports[5],
       time: subDays(subHours(now, 7), 1).getTime(),
-    }
+    },
+    price: 1000000,
   },
   {
     id: '5',
     airline: 'Garuda Indonesia',
+    airlineLogo: '/assets/logos/airlines/logo-garudaindonesia-square.png',
     planeModel: 'GA-837',
     baggageSize: 1500,
     departure: {
-      airport: airports[0].name,
+      airport: airports[0],
       time: subDays(subHours(now, 7), 1).getTime(),
     },
     arrival: {
-      airport: airports[2].name,
+      airport: airports[2],
       time: subDays(subHours(now, 7), 1).getTime(),
-    }
+    },
+    price: 1000000,
   },
   {
     id: '6',
     airline: 'Garuda Indonesia',
+    airlineLogo: '/assets/logos/airlines/logo-garudaindonesia-square.png',
     planeModel: 'GA-304',
     baggageSize: 1500,
     departure: {
-      airport: airports[2].name,
+      airport: airports[2],
       time: subDays(subHours(now, 7), 1).getTime(),
     },
     arrival: {
-      airport: airports[5].name,
+      airport: airports[5],
       time: subDays(subHours(now, 7), 1).getTime(),
-    }
+    },
+    price: 1000000,
   },
   {
     id: '7',
     airline: 'Citilink',
+    airlineLogo: '/assets/logos/airlines/logo-citilink-square.png',
     planeModel: 'QG-527',
     baggageSize: 350,
     departure: {
-      airport: airports[0].name,
+      airport: airports[0],
       time: subDays(subHours(now, 7), 1).getTime(),
     },
     arrival: {
-      airport: airports[2].name,
+      airport: airports[2],
       time: subDays(subHours(now, 7), 1).getTime(),
-    }
+    },
+    price: 1000000,
   },
 ]
 
@@ -180,8 +224,8 @@ export const FlightsSearch = (props) => {
 
   const filterFlights = (flights, departureAirport, arrivalAirport, date) => {
     return flights.filter(flight => {
-       const departureMatches = flight.departure.airport === departureAirport.name;
-       const arrivalMatches = flight.arrival.airport === arrivalAirport.name;
+       const departureMatches = flight.departure.airport.name === departureAirport.name;
+       const arrivalMatches = flight.arrival.airport.name === arrivalAirport.name;
       //  const dateMatches = new Date(flight.departure.time).toDateString() === new Date(date).toDateString();
        return departureMatches && arrivalMatches
         // && dateMatches;
@@ -270,7 +314,7 @@ export const FlightsSearch = (props) => {
                 // aria-controls="panel2-content"
                 // id="panel2-header"
               >
-                <Typography variant='body2'>Advanced search options</Typography>
+                <Typography variant='body1'>Advanced search options</Typography>
               </AccordionSummary>
               <AccordionDetails>
                 <Typography>
