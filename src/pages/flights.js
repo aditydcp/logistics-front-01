@@ -40,10 +40,11 @@ const Page = () => {
   const [arrivalAirport, setArrivalAirport] = useState(null);
   const [date, setDate] = useState(null);
   const [flights, setFlights] = useState([]);
+  const [filteredFlights, setFilteredFlights] = useState([]);
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const validFlights = useFlights(flights, page, rowsPerPage);
+  const validFlights = useFlights(filteredFlights, page, rowsPerPage);
   const validFlightsIds = useFlightIds(validFlights);
   const validFlightsSelection = useSelection(validFlightsIds);
 
@@ -63,8 +64,8 @@ const Page = () => {
   
   useEffect(
     () => {
-      console.log(date)
-    }, [date]
+      setFilteredFlights(flights)
+    }, [flights]
   )
 
   return (
