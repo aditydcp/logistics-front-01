@@ -8,6 +8,7 @@ import {
   Box,
   Button,
   Container,
+  Divider,
   Pagination,
   Stack,
   SvgIcon,
@@ -323,6 +324,7 @@ const Page = () => {
               <ToggleButton value={activePages[0]}>Exporters</ToggleButton>
               <ToggleButton value={activePages[1]}>Importers</ToggleButton>
             </ToggleButtonGroup>
+            <Divider />
             {active === activePages[0] ? <>
               <Stack spacing={3}>
                 <Stack
@@ -375,7 +377,7 @@ const Page = () => {
                   </div>
                 </Stack>
                 <CompaniesSearch title="Exporter" />
-                <CustomersTable
+                <CompaniesTable
                   count={data.length}
                   items={exporters}
                   onDeselectAll={exportersSelection.handleDeselectAll}
@@ -441,7 +443,7 @@ const Page = () => {
                   </div>
                 </Stack>
                 <CompaniesSearch title="Importer" />
-                <CustomersTable
+                <CompaniesTable
                   count={data.length}
                   items={customers2}
                   onDeselectAll={customersSelection2.handleDeselectAll}
