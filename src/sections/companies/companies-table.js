@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { format } from 'date-fns';
 import {
   Avatar,
+  Button,
   Box,
   Card,
   Checkbox,
@@ -68,10 +69,10 @@ export const CompaniesTable = (props) => {
                   Email
                 </TableCell>
                 <TableCell>
-                  Location
+                  Phone
                 </TableCell>
                 <TableCell>
-                  Phone
+                  Location
                 </TableCell>
                 <TableCell>
                   Status
@@ -119,15 +120,26 @@ export const CompaniesTable = (props) => {
                       {company.email}
                     </TableCell>
                     <TableCell>
-                      {company.address.city}, {company.address.state}, {company.address.country}
-                    </TableCell>
-                    <TableCell>
                       {company.phone}
                     </TableCell>
                     <TableCell>
-                      <SeverityPill color={statusMap[company.status]}>
-                        {company.status}
-                      </SeverityPill>
+                      {company.address.city}, {company.address.state}, {company.address.country}
+                    </TableCell>
+                    <TableCell>
+                      <Stack spacing={1} width='fit-content'>
+                        <SeverityPill color={statusMap[company.status]}>
+                          {company.status}
+                        </SeverityPill>
+                        {company.status === 'unverified' && 
+                          <Button
+                            size='small'
+                            color='warning'
+                            variant='outlined'
+                          >
+                            Verify
+                          </Button>
+                        }
+                      </Stack>
                     </TableCell>
                   </TableRow>
                 );

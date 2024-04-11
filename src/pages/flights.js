@@ -14,6 +14,7 @@ import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
 import { FlightsSearch } from 'src/sections/flights/flights-search';
 import { FlightsList } from 'src/sections/flights/flights-list';
 import { applyPagination } from 'src/utils/apply-pagination';
+import { FlightsFilter } from 'src/sections/flights/flights-filter';
 
 const useFlights = (data, page, rowsPerPage) => {
   return useMemo(
@@ -39,10 +40,11 @@ const Page = () => {
   const [arrivalAirport, setArrivalAirport] = useState(null);
   const [date, setDate] = useState(null);
   const [flights, setFlights] = useState([]);
+  const [filteredFlights, setFilteredFlights] = useState([]);
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const validFlights = useFlights(flights, page, rowsPerPage);
+  const validFlights = useFlights(filteredFlights, page, rowsPerPage);
   const validFlightsIds = useFlightIds(validFlights);
   const validFlightsSelection = useSelection(validFlightsIds);
 
@@ -62,8 +64,8 @@ const Page = () => {
   
   useEffect(
     () => {
-      console.log(date)
-    }, [date]
+      setFilteredFlights(flights)
+    }, [flights]
   )
 
   return (
@@ -95,49 +97,48 @@ const Page = () => {
               setSearchCommenced={setSearchCommenced}
               setFlights={setFlights}
             />
-            <Stack 
-              direction='row'
-              spacing={2}
-            >
-              <Card sx={{ p: 3, width: '30%', height: 'fit-content' }}>
-                Filters
-              </Card>
-              <Box sx={{ width: '70%' }}>
-                {/* {searchCommenced ? "Search Commenced" : "Please hit search"}
-                {date ? format(date, 'EE dd MM yyyy') : ""}
-                {departureAirport ? departureAirport.name : ""}
-                {arrivalAirport ? arrivalAirport.name : ""}
-                <br /> */}
-                {searchCommenced ?
-                  <FlightsList 
-                    count={flights.length}
-                    items={validFlights}
-                    onDeselectAll={validFlightsSelection.handleDeselectAll}
-                    onDeselectOne={validFlightsSelection.handleDeselectOne}
-                    onPageChange={handlePageChange}
-                    onRowsPerPageChange={handleRowsPerPageChange}
-                    onSelectAll={validFlightsSelection.handleSelectAll}
-                    onSelectOne={validFlightsSelection.handleSelectOne}
-                    page={page}
-                    rowsPerPage={rowsPerPage}
-                    selected={validFlightsSelection.selected}
+            {searchCommenced ?
+              <Stack 
+                direction='row'
+                spacing={2}
+              >
+                <Card sx={{ p: 3, width: '30%', height: 'fit-content' }}>
+                  <FlightsFilter
+                    flights={flights}
+                    setFilteredFlights={setFilteredFlights}
                   />
-                  :
-                  <Typography
-                    variant='h6'
-                    align='center'
-                    sx={{ 
-                      width: '100%',
-                      height: '100%',
-                      textAlign: 'center',
-                      p: 4
-                    }}
-                  >
-                    Click search to find available flights
-                  </Typography>
-                }
-              </Box>
-            </Stack>
+                </Card>
+                <Box sx={{ width: '70%' }}>
+                    <FlightsList 
+                      count={flights.length}
+                      items={validFlights}
+                      onDeselectAll={validFlightsSelection.handleDeselectAll}
+                      onDeselectOne={validFlightsSelection.handleDeselectOne}
+                      onPageChange={handlePageChange}
+                      onRowsPerPageChange={handleRowsPerPageChange}
+                      onSelectAll={validFlightsSelection.handleSelectAll}
+                      onSelectOne={validFlightsSelection.handleSelectOne}
+                      page={page}
+                      rowsPerPage={rowsPerPage}
+                      selected={validFlightsSelection.selected}
+                    />
+                </Box>
+              </Stack>
+            :
+              <Typography
+                variant='h6'
+                component='span'
+                align='center'
+                sx={{ 
+                  width: '100%',
+                  height: '100%',
+                  textAlign: 'center',
+                  p: 4
+                }}
+              >
+                Click search to find available flights
+              </Typography>
+            }
           </Stack>
         </Container>
       </Box>
