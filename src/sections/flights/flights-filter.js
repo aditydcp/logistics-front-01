@@ -57,6 +57,12 @@ export const FlightsFilter = (props) => {
       </Typography>
       <Accordion 
         elevation={0}
+        sx={{
+          "&.MuiAccordion-root:before": {
+            height: '1px', // Set a specific height for the line
+            backgroundColor: 'rgba(0, 0, 0, 0.12)', // Set the color of the line
+          }
+        }}
       >
         <AccordionSummary
           expandIcon={<KeyboardArrowDownRoundedIcon />}
@@ -104,6 +110,11 @@ export const FlightsFilter = (props) => {
       <Accordion 
         disableGutters={true}
         elevation={0}
+        sx={{
+          "&.Mui-expanded:before": {
+            opacity: 1
+          }
+        }}
       >
         <AccordionSummary
           expandIcon={<KeyboardArrowDownRoundedIcon />}

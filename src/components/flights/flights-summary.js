@@ -12,7 +12,10 @@ export const FlightSummary = (props) => {
       direction="row"
       spacing={1}
       alignItems="center"
-      justifyItems="center"
+      justifyContent="center"
+      sx={{
+        my: 0.5
+      }}
     >
       <Stack
         spacing={0}
