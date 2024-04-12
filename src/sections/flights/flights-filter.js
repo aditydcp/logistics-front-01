@@ -7,11 +7,18 @@ import {
   FormGroup,
   FormControl,
   FormControlLabel,
+  Slider,
   Stack, 
   Typography 
 } from '@mui/material';
 import PropTypes from 'prop-types';
+import { formatCurrency } from 'src/utils/format-currency';
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
+
+const minDistance = 5
+const maxStep = 50
+
+const calculateValue = (value) => 100000 * value
 
 export const FlightsFilter = (props) => {
   const { 
@@ -32,8 +39,9 @@ export const FlightsFilter = (props) => {
   })).sort((a, b) => a.name.localeCompare(b.name)) // sort alphabetically
 
   const [selectedAirlines, setSelectedAirlines] = useState([...new Set(airlines.map(airline => airline.name))])
+  const [priceRange, setPriceRange] = useState([5, 20])
 
-  const onFilterChange = (airline) => {
+  const handleAirlinesChange = (airline) => {
     setSelectedAirlines(prev => {
       if (prev.includes(airline)) {
         return prev.filter(a => a !== airline);
@@ -44,9 +52,31 @@ export const FlightsFilter = (props) => {
   };
 
   useEffect(() => {
-    const filteredFlights = flights.filter(flight => selectedAirlines.includes(flight.airline));
+    const filteredFlights = flights.filter(flight =>
+      selectedAirlines.includes(flight.airline) &&
+      flight.price >= calculateValue(priceRange[0]) &&
+      flight.price <= calculateValue(priceRange[1])
+    );
     setFilteredFlights(filteredFlights);
-  }, [selectedAirlines, flights, setFilteredFlights]);
+  }, [selectedAirlines, priceRange, flights, setFilteredFlights]);
+
+  const handlePriceChange = (event, newValue, activeThumb) => {
+    if (!Array.isArray(newValue)) {
+      return;
+    }
+
+    if (newValue[1] - newValue[0] < minDistance) {
+      if (activeThumb === 0) {
+        const clamped = Math.min(newValue[0], maxStep - minDistance);
+        setPriceRange([clamped, clamped + minDistance]);
+      } else {
+        const clamped = Math.max(newValue[1], minDistance);
+        setPriceRange([clamped - minDistance, clamped]);
+      }
+    } else {
+      setPriceRange(newValue);
+    }
+  };
 
   return (
     <Stack 
@@ -66,8 +96,8 @@ export const FlightsFilter = (props) => {
       >
         <AccordionSummary
           expandIcon={<KeyboardArrowDownRoundedIcon />}
-          // aria-controls="panel2-content"
-          // id="panel2-header"
+          aria-controls="filter-airlines-content"
+          id="filter-airlines-header"
         >
           <Typography variant='body1'>Airlines</Typography>
         </AccordionSummary>
@@ -81,7 +111,7 @@ export const FlightsFilter = (props) => {
                       <Checkbox
                         defaultChecked
                         checked={selectedAirlines.includes(airline.name)}
-                        onChange={() => onFilterChange(airline.name)}
+                        onChange={() => handleAirlinesChange(airline.name)}
                       />
                     }
                     label={
@@ -118,16 +148,38 @@ export const FlightsFilter = (props) => {
       >
         <AccordionSummary
           expandIcon={<KeyboardArrowDownRoundedIcon />}
-          // aria-controls="panel2-content"
-          // id="panel2-header"
+          aria-controls="filter-price-content"
+          id="filter-price-header"
         >
           <Typography variant='body1'>Price Range</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget.
-          </Typography>
+          <Stack
+            direction='row'
+            justifyContent='space-between'
+          >
+            <Typography variant='body1'>
+              {formatCurrency(calculateValue(priceRange[0]))}
+            </Typography>
+            <Typography variant='body1'>
+              -
+            </Typography>
+            <Typography variant='body1'>
+              {formatCurrency(calculateValue(priceRange[1]))}
+            </Typography>
+          </Stack>
+          <Slider
+            getAriaLabel={() => 'Price Range'}
+            value={priceRange}
+            onChange={handlePriceChange}
+            valueLabelDisplay="off"
+            getAriaValueText={(value) => (formatCurrency(value))}
+            disableSwap
+            step={1}
+            min={1}
+            max={maxStep}
+            scale={calculateValue}
+          />
         </AccordionDetails>
       </Accordion>
     </Stack>
