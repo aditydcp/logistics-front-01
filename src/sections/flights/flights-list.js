@@ -201,6 +201,8 @@ export const FlightsList = (props) => {
                             </Typography>
                           </Stack>
                           <Button
+                            component={NextLink}
+                            href="/shipments/add"
                             startIcon={(
                               <SvgIcon fontSize="small">
                                 <AirplaneTicketRoundedIcon />
