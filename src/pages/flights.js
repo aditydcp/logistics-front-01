@@ -39,6 +39,10 @@ const Page = () => {
   const [departureAirport, setDepartureAirport] = useState(null);
   const [arrivalAirport, setArrivalAirport] = useState(null);
   const [date, setDate] = useState(null);
+  const [weight, setWeight] = useState(null);
+  const [size, setSize] = useState(null);
+  const [categories, setCategories] = useState([])
+  const [packaging, setPackaging] = useState([])
   const [flights, setFlights] = useState([]);
   const [filteredFlights, setFilteredFlights] = useState([]);
 
@@ -83,7 +87,7 @@ const Page = () => {
         }}
       >
         <Container maxWidth="xl">
-          <Stack spacing={3}>
+          <Stack spacing={3} useFlexGap>
             <Typography variant="h4">
               Flights
             </Typography>
@@ -93,9 +97,17 @@ const Page = () => {
               arrivalAirport={arrivalAirport}
               setArrivalAirport={setArrivalAirport}
               date={date}
-              setDate={setDate}
+              weight={weight}
+              size={size}
+              categories={categories}
+              packaging={packaging}
               setSearchCommenced={setSearchCommenced}
               setFlights={setFlights}
+              setDate={setDate}
+              setWeight={setWeight}
+              setSize={setSize}
+              setCategories={setCategories}
+              setPackaging={setPackaging}
             />
             {searchCommenced ?
               <Stack 
@@ -110,7 +122,7 @@ const Page = () => {
                 </Card>
                 <Box sx={{ width: '70%' }}>
                     <FlightsList 
-                      count={flights.length}
+                      count={validFlights.length}
                       items={validFlights}
                       onDeselectAll={validFlightsSelection.handleDeselectAll}
                       onDeselectOne={validFlightsSelection.handleDeselectOne}
@@ -125,19 +137,31 @@ const Page = () => {
                 </Box>
               </Stack>
             :
-              <Typography
-                variant='h6'
-                component='span'
-                align='center'
-                sx={{ 
-                  width: '100%',
-                  height: '100%',
-                  textAlign: 'center',
-                  p: 4
+              <Stack 
+                spacing={2}
+                alignItems="center"
+                sx={{
+                  my: 4
                 }}
               >
-                Click search to find available flights
-              </Typography>
+                <img 
+                  src="/assets/aircraft-illustration.svg" 
+                  width="50%"
+                  alt=""
+                  loading="lazy"
+                />
+                <Typography
+                  variant='h6'
+                  component='span'
+                  align='center'
+                  sx={{ 
+                    textAlign: 'center',
+                    p: 4
+                  }}
+                >
+                  Click search to find available flights
+                </Typography>
+              </Stack>
             }
           </Stack>
         </Container>
