@@ -137,19 +137,31 @@ const Page = () => {
                 </Box>
               </Stack>
             :
-              <Typography
-                variant='h6'
-                component='span'
-                align='center'
-                sx={{ 
-                  width: '100%',
-                  height: '100%',
-                  textAlign: 'center',
-                  p: 4
+              <Stack 
+                spacing={2}
+                alignItems="center"
+                sx={{
+                  my: 4
                 }}
               >
-                Click search to find available flights
-              </Typography>
+                <img 
+                  src="/assets/aircraft-illustration.svg" 
+                  width="50%"
+                  alt=""
+                  loading="lazy"
+                />
+                <Typography
+                  variant='h6'
+                  component='span'
+                  align='center'
+                  sx={{ 
+                    textAlign: 'center',
+                    p: 4
+                  }}
+                >
+                  Click search to find available flights
+                </Typography>
+              </Stack>
             }
           </Stack>
         </Container>

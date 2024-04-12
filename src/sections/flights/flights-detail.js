@@ -130,39 +130,44 @@ export const FlightDetail = (props) => {
         </Timeline>
       </Container>
       <Stack
+        spacing={0.5}
         sx={{
           width: '-webkit-fill-available'
         }}
       >
         <Stack
-          direction='row-reverse'
-          spacing={1}
-          alignItems='center'
-          justifyContent='flex-end'
+          direction='row'
+          spacing={1.5}
+          alignItems='flex-start'
+          justifyContent='flex-start'
         >
           <img
             src={flight.airlineLogo}
             alt={flight.airline}
             loading="lazy"
-            style={{ width: "2rem" }}
+            style={{ width: "2.5rem" }}
           />
-          <Typography 
-            variant='body1'
-            component='span'
+          <Stack
           >
-            {flight.airline}
-          </Typography>
+            <Typography variant='body1'>
+              {flight.airline}
+            </Typography>
+            <Typography variant='body2'>
+              {flight.planeModel}
+            </Typography>
+          </Stack>
         </Stack>
-        <Typography variant='body2'>
-          {flight.planeModel}
-        </Typography>
         <Stack
           direction='row'
           spacing={2}
           alignItems='flex-start'
-          justifyContent='space-between'
+          // justifyContent='space-between'
         >
-          <Stack>
+          <Stack
+            sx={{
+              width: '-webkit-fill-available'
+            }}
+          >
             <Stack
               direction='row'
               spacing={1}
@@ -188,7 +193,11 @@ export const FlightDetail = (props) => {
               </Typography>
             </Stack>
           </Stack>
-          <Stack>
+          <Stack
+            sx={{
+              width: '-webkit-fill-available'
+            }}
+          >
             <Tooltip 
               arrow
               describeChild
@@ -228,7 +237,7 @@ export const FlightDetail = (props) => {
               </>}
             >
               <Typography variant='body2'>
-                {`${flight.packagings.length} Packagings`}
+                {`${flight.packagings.length} Packaging`}
               </Typography>
             </Tooltip>
           </Stack>
