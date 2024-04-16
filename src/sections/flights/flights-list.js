@@ -15,7 +15,6 @@ import {
   Typography
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles'
-// import { makeStyles } from '@mui/styles';
 import WorkOutlineRoundedIcon from '@mui/icons-material/WorkOutlineRounded';
 import ZoomOutMapRoundedIcon from '@mui/icons-material/ZoomOutMapRounded';
 import OpenInFullRoundedIcon from '@mui/icons-material/OpenInFullRounded';
@@ -170,12 +169,13 @@ export const FlightsList = (props) => {
                         />
                         <Stack
                           justifyContent="flex-end"
+                          useFlexGap
                           spacing={2}
                         >
                           <Stack 
                             direction='row'
                             spacing={0.5}
-                            alignItems='flex-end'
+                            alignItems='center'
                           >
                             <Typography
                               variant='h6'
@@ -197,23 +197,32 @@ export const FlightsList = (props) => {
                                 // color: theme.palette.accent.red
                               }}
                             >
-                              /m<sub>3</sub>
+                              /m<sup>3</sup>
                             </Typography>
                           </Stack>
-                          <Button
-                            component={NextLink}
-                            href="/shipments/add"
-                            startIcon={(
-                              <SvgIcon fontSize="small">
-                                <AirplaneTicketRoundedIcon />
-                              </SvgIcon>
-                            )}
-                            variant="contained"
-                            sx={{ minWidth: '25%', height: 'fit-content' }}
-                            onClick={handlePickFlight}
+                          <div 
+                            style={{ 
+                              width: 'fit-content',
+                              marginLeft: 'auto'
+                            }}
                           >
-                            Pick flight
-                          </Button>
+                            <Button
+                              component={NextLink}
+                              href="/shipments/add"
+                              startIcon={(
+                                <SvgIcon fontSize="small">
+                                  <AirplaneTicketRoundedIcon />
+                                </SvgIcon>
+                              )}
+                              variant="contained"
+                              sx={{ 
+                                width: 'fit-content',
+                              }}
+                              onClick={handlePickFlight}
+                            >
+                              Pick flight
+                            </Button>
+                          </div>
                         </Stack>
                       </Stack>
                     </Stack>

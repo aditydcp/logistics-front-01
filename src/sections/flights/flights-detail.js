@@ -2,6 +2,7 @@ import { useState, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { format } from 'date-fns';
 import {
+  Chip,
   Container,
   Stack,
   Step,
@@ -47,7 +48,7 @@ export const FlightDetail = (props) => {
       <Container
         disableGutters
         sx={{
-          width: '-webkit-fill-available'
+          width: '40%'
         }}
       >
         <Timeline 
@@ -89,6 +90,9 @@ export const FlightDetail = (props) => {
               </Typography>
               <Typography
                 variant='body2'
+                sx={{
+                  wordWrap: 'break-word'
+                }}
               >
                 {flight.departure.airport.name}
               </Typography>
@@ -122,6 +126,9 @@ export const FlightDetail = (props) => {
               </Typography>
               <Typography
                 variant='body2'
+                sx={{
+                  wordWrap: 'break-word'
+                }}
               >
                 {flight.arrival.airport.name}
               </Typography>
@@ -132,7 +139,7 @@ export const FlightDetail = (props) => {
       <Stack
         spacing={0.5}
         sx={{
-          width: '-webkit-fill-available'
+          width: '60%'
         }}
       >
         <Stack
@@ -194,52 +201,39 @@ export const FlightDetail = (props) => {
             </Stack>
           </Stack>
           <Stack
+            spacing={1}
             sx={{
               width: '-webkit-fill-available'
             }}
           >
-            <Tooltip 
-              arrow
-              describeChild
-              enterDelay={200}
-              leaveDelay={400}
-              placement='right'
-              sx={{
-                width: 'fit-content'
-              }}
-              title={<>
+            <Stack spacing={0.5} >
+              <Typography variant='body2'>
+                Categories
+              </Typography>
+              <Stack
+                direction='row'
+                flexWrap={true}
+                spacing={1}
+              >
                 {flight.categories.map((category) => (
-                  <span key={category}>
-                    {category}<br />
-                  </span>
+                  <Chip key={category} label={category} size='small'/>
                 ))}
-              </>}
-            >
+              </Stack>
+            </Stack>
+            <Stack spacing={0.5} >
               <Typography variant='body2'>
-                {`${flight.categories.length} Categories`}
+                Packaging
               </Typography>
-            </Tooltip>
-            <Tooltip 
-              arrow
-              describeChild
-              enterDelay={200}
-              leaveDelay={400}
-              placement='right'
-              sx={{
-                width: 'fit-content'
-              }}
-              title={<>
+              <Stack
+                direction='row'
+                flexWrap={true}
+                spacing={1}
+              >
                 {flight.packagings.map((packaging) => (
-                  <span key={packaging}>
-                    {packaging}<br />
-                  </span>
+                  <Chip key={packaging} label={packaging} size='small'/>
                 ))}
-              </>}
-            >
-              <Typography variant='body2'>
-                {`${flight.packagings.length} Packaging`}
-              </Typography>
-            </Tooltip>
+              </Stack>
+            </Stack>
           </Stack>
         </Stack>
       </Stack>

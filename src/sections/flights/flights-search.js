@@ -35,11 +35,6 @@ import {
 } from '@mui/material';
 import { AirportSearch } from 'src/components/flights/flights-airport-search';
 import { MyDatePicker } from 'src/components/date-picker';
-// import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-// import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-// import dayjs from 'dayjs';
-// import 'dayjs/locale/en-gb';
-// import { DatePicker } from '@mui/x-date-pickers';
 
 const now = new Date();
 
@@ -322,16 +317,6 @@ export const FlightsSearch = (props) => {
     categories,
     packaging
   ) => {
-    // const {
-    //   flights,
-    //   departureAirport,
-    //   arrivalAirport,
-    //   date,
-    //   weight,
-    //   size,
-    //   categories,
-    //   packaging
-    // } = props
     return flights.filter(flight => {
       const departureMatches = flight.departure.airport.name === departureAirport.name;
       // Filter by departure airport
@@ -714,7 +699,8 @@ export const FlightsSearch = (props) => {
               sx={{ 
                 minWidth: '25%',
                 height: 'fit-content',
-                mb: 1
+                lineHeight: '2',
+                // mb: 1
               }}
               onClick={handleSearchClick}
             >
