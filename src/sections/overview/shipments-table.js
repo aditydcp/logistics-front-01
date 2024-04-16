@@ -31,10 +31,10 @@ const statusMap = {
 };
 
 const buttonColorMap = {
-  'Check Details': 'primary',
+  'Details': 'primary',
   'Edit': 'primary',
-  'Confirm Shipment': 'success',
-  'Cancel Shipment': 'error'
+  'Confirm': 'success',
+  'Cancel': 'error'
 }
 
 const buttonIconMap = {
