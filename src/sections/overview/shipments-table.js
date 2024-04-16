@@ -38,10 +38,10 @@ const buttonColorMap = {
 }
 
 const buttonIconMap = {
-  'Check Details': <InfoRoundedIcon />,
+  'Details': <InfoRoundedIcon />,
   'Edit': <EditRoundedIcon />,
-  'Confirm Shipment': <CheckCircleRoundedIcon />,
-  'Cancel Shipment': <CancelRoundedIcon />
+  'Confirm': <CheckCircleRoundedIcon />,
+  'Cancel': <CancelRoundedIcon />
 }
 
 export const ShipmentsTable = (props) => {
