@@ -1,9 +1,13 @@
+import { useState } from 'react'
 import PropTypes from 'prop-types';
 import { format } from 'date-fns';
 import {
   Box,
   Card,
   Checkbox,
+  IconButton,
+  Menu,
+  MenuItem,
   Stack,
   Table,
   TableBody,
@@ -18,6 +22,7 @@ import {
 import { Scrollbar } from 'src/components/scrollbar';
 import { getInitials } from 'src/utils/get-initials';
 import { SeverityPill } from 'src/components/severity-pill';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 const statusMap = {
   draft: 'warning',
@@ -48,6 +53,9 @@ export const ShipmentsTable = (props) => {
 
   const selectedSome = (selected.length > 0) && (selected.length < shipments.length);
   const selectedAll = (shipments.length > 0) && (selected.length === shipments.length);
+
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
   
   return (
     <Card>
@@ -162,7 +170,55 @@ export const ShipmentsTable = (props) => {
                       </SeverityPill>
                     </TableCell>
                     <TableCell>
-                      <Stack
+                      <IconButton
+                        aria-label="more"
+                        id={`${shipment.id}-actions-button`}
+                        aria-controls={open ? 'actions-menu' : undefined}
+                        aria-expanded={open ? 'true' : undefined}
+                        aria-haspopup="true"
+                        onClick={(event) => setAnchorEl(event.currentTarget)}
+                      >
+                        <MoreVertIcon />
+                      </IconButton>
+                      <Menu
+                        id="actions-menu"
+                        MenuListProps={{
+                          'aria-labelledby': `${shipment.id}-actions-button`,
+                        }}
+                        anchorEl={anchorEl}
+                        open={open}
+                        onClose={() => setAnchorEl(null)}
+                        // slotProps = {
+                        //   paper: {
+                        //     style: {
+                        //       maxHeight: ITEM_HEIGHT * 4.5,
+                        //       width: '20ch',
+                        //     },
+                        //   }
+                        // }
+                      >
+                        {shipment.actions.map((action) => {
+                          return (
+                            <MenuItem
+                              color={buttonColorMap[action]}
+                              // variant='outlined'
+                              key={action}
+                              onClick={() => setAnchorEl(null)}
+                              sx={{
+                                fontSize: '0.875rem'
+                              }}
+                            >
+                              {action}
+                            </MenuItem>
+                          )
+                        })}
+                        {/* {options.map((option) => (
+                          <MenuItem key={option} selected={option === 'Pyxis'} onClick={handleClose}>
+                            {option}
+                          </MenuItem>
+                        ))} */}
+                      </Menu>
+                      {/* <Stack
                         alignItems="center"
                         justifyContent="center"
                         direction="column"
@@ -179,7 +235,7 @@ export const ShipmentsTable = (props) => {
                             </Button>
                           )
                         })}
-                      </Stack>
+                      </Stack> */}
                     </TableCell>
                   </TableRow>
                 );
