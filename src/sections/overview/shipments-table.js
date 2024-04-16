@@ -26,9 +26,10 @@ const statusMap = {
 };
 
 const buttonColorMap = {
-  'Check Details': 'primary',
-  'Confirm Shipment': 'success',
-  'Cancel Shipment': 'error'
+  'Details': 'primary',
+  'Edit': 'primary',
+  'Confirm': 'success',
+  'Cancel': 'error'
 }
 
 export const ShipmentsTable = (props) => {

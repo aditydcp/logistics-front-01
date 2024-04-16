@@ -57,7 +57,7 @@ const data = [
     status: 'confirmed',
     createdAt: subDays(subHours(now, 7), 1).getTime(),
     updatedAt: subDays(subHours(now, 7), 1).getTime(),
-    actions: ['Check Details', 'Cancel Shipment']
+    actions: ['Edit', 'Cancel']
   },
   {
     id: '5e887b209c28ac3dd97f6db5',
@@ -93,7 +93,7 @@ const data = [
     status: 'draft',
     createdAt: subDays(subHours(now, 1), 2).getTime(),
     updatedAt: subDays(subHours(now, 1), 2).getTime(),
-    actions: ['Check Details', 'Confirm Shipment', 'Cancel Shipment']
+    actions: ['Edit', 'Confirm', 'Cancel']
   },
   {
     id: '5e887b7602bdbc4dbb234b27',
@@ -129,7 +129,7 @@ const data = [
     status: 'draft',
     createdAt: subDays(subHours(now, 1), 2).getTime(),
     updatedAt: subDays(subHours(now, 1), 2).getTime(),
-    actions: ['Check Details', 'Confirm Shipment', 'Cancel Shipment']
+    actions: ['Edit', 'Confirm', 'Cancel']
   },
   {
     id: '5e86809283e28b96d2d38537',
@@ -165,7 +165,7 @@ const data = [
     status: 'draft',
     createdAt: subDays(subHours(now, 1), 2).getTime(),
     updatedAt: subDays(subHours(now, 1), 2).getTime(),
-    actions: ['Check Details', 'Confirm Shipment', 'Cancel Shipment']
+    actions: ['Edit', 'Confirm', 'Cancel']
   },
   {
     id: '5e8680e60cba5019c5ca6fda',
@@ -201,7 +201,7 @@ const data = [
     status: 'draft',
     createdAt: subDays(subHours(now, 1), 2).getTime(),
     updatedAt: subDays(subHours(now, 1), 2).getTime(),
-    actions: ['Check Details', 'Confirm Shipment', 'Cancel Shipment']
+    actions: ['Edit', 'Confirm', 'Cancel']
   },
   {
     id: '5e86805e2bafd54f66cc95c3',
@@ -237,7 +237,7 @@ const data = [
     status: 'draft',
     createdAt: subDays(subHours(now, 1), 2).getTime(),
     updatedAt: subDays(subHours(now, 1), 2).getTime(),
-    actions: ['Check Details', 'Confirm Shipment', 'Cancel Shipment']
+    actions: ['Edit', 'Confirm', 'Cancel']
   },
   {
     id: '5e887a1fbefd7938eea9c981',
@@ -273,7 +273,7 @@ const data = [
     status: 'draft',
     createdAt: subDays(subHours(now, 1), 2).getTime(),
     updatedAt: subDays(subHours(now, 1), 2).getTime(),
-    actions: ['Check Details', 'Confirm Shipment', 'Cancel Shipment']
+    actions: ['Edit', 'Confirm', 'Cancel']
   },
   {
     id: '5e887d0b3d090c1b8f162003',
@@ -309,7 +309,7 @@ const data = [
     status: 'draft',
     createdAt: subDays(subHours(now, 1), 2).getTime(),
     updatedAt: subDays(subHours(now, 1), 2).getTime(),
-    actions: ['Check Details', 'Confirm Shipment', 'Cancel Shipment']
+    actions: ['Edit', 'Confirm', 'Cancel']
   },
   {
     id: '5e88792be2d4cfb4bf0971d9',
@@ -345,7 +345,7 @@ const data = [
     status: 'draft',
     createdAt: subDays(subHours(now, 1), 2).getTime(),
     updatedAt: subDays(subHours(now, 1), 2).getTime(),
-    actions: ['Check Details', 'Confirm Shipment', 'Cancel Shipment']
+    actions: ['Edit', 'Confirm', 'Cancel']
   },
   {
     id: '5e8877da9a65442b11551975',
@@ -381,7 +381,7 @@ const data = [
     status: 'draft',
     createdAt: subDays(subHours(now, 1), 2).getTime(),
     updatedAt: subDays(subHours(now, 1), 2).getTime(),
-    actions: ['Check Details', 'Confirm Shipment', 'Cancel Shipment']
+    actions: ['Edit', 'Confirm', 'Cancel']
   },
 ];
 
