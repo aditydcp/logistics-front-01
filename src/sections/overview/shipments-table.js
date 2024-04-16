@@ -13,11 +13,16 @@ import {
   TableRow,
   Tooltip,
   Typography,
-  Button
+  Button,
+  ButtonGroup
 } from '@mui/material';
 import { Scrollbar } from 'src/components/scrollbar';
 import { getInitials } from 'src/utils/get-initials';
 import { SeverityPill } from 'src/components/severity-pill';
+import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
+import EditRoundedIcon from '@mui/icons-material/EditRounded';
+import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
+import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 
 const statusMap = {
   draft: 'warning',
@@ -27,8 +32,16 @@ const statusMap = {
 
 const buttonColorMap = {
   'Check Details': 'primary',
+  'Edit': 'primary',
   'Confirm Shipment': 'success',
   'Cancel Shipment': 'error'
+}
+
+const buttonIconMap = {
+  'Check Details': <InfoRoundedIcon />,
+  'Edit': <EditRoundedIcon />,
+  'Confirm Shipment': <CheckCircleRoundedIcon />,
+  'Cancel Shipment': <CancelRoundedIcon />
 }
 
 export const ShipmentsTable = (props) => {
@@ -162,7 +175,21 @@ export const ShipmentsTable = (props) => {
                       </SeverityPill>
                     </TableCell>
                     <TableCell>
-                      <Stack
+                      <ButtonGroup orientation='vertical'>
+                        {shipment.actions.map((action) => {
+                          return (
+                            <Button
+                              color={buttonColorMap[action]}
+                              variant='outlined'
+                              key={action}
+                              startIcon={buttonIconMap[action]}
+                            >
+                              {action}
+                            </Button>
+                          )
+                        })}
+                      </ButtonGroup>
+                      {/* <Stack
                         alignItems="center"
                         justifyContent="center"
                         direction="column"
@@ -179,7 +206,7 @@ export const ShipmentsTable = (props) => {
                             </Button>
                           )
                         })}
-                      </Stack>
+                      </Stack> */}
                     </TableCell>
                   </TableRow>
                 );
