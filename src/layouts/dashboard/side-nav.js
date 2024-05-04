@@ -24,12 +24,12 @@ import { AccountSwitcherPopover } from './account-switch-popover';
 import { usePopover } from 'src/hooks/use-popover';
 
 export const SideNav = (props) => {
-  const { open, onClose } = props;
+  const { open, onClose, compact, setCompact } = props;
   const pathname = usePathname();
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
   const { user } = useAuth();
-  const accountSwitchPopover = usePopover();
-  const accountSwitchBoxRef = useRef(null);
+  // const accountSwitchPopover = usePopover();
+  // const accountSwitchBoxRef = useRef(null);
 
   const content = (
     <>
@@ -63,9 +63,16 @@ export const SideNav = (props) => {
             >
               <Logo />
             </Box>
+            {/* <Box>
+              <Button
+                onClick={() => setCompact(!compact)}
+              >
+                Compact
+              </Button>
+            </Box> */}
             <Box
-              onClick={accountSwitchPopover.handleOpen}
-              ref={accountSwitchBoxRef} // Assign the ref to the Box component
+              // onClick={accountSwitchPopover.handleOpen}
+              // ref={accountSwitchBoxRef} // Assign the ref to the Box component
               sx={{
                 alignItems: 'center',
                 backgroundColor: 'rgba(255, 255, 255, 0.04)',
@@ -91,12 +98,12 @@ export const SideNav = (props) => {
                   {user.role}
                 </Typography>
               </div>
-              <SvgIcon
+              {/* <SvgIcon
                 fontSize="small"
                 sx={{ color: 'neutral.500' }}
               >
                 <ChevronUpDownIcon />
-              </SvgIcon>
+              </SvgIcon> */}
             </Box>
           </Box>
           <Divider sx={{ borderColor: 'neutral.700' }} />
@@ -152,11 +159,11 @@ export const SideNav = (props) => {
           </Alert>
         </Box>
       </Scrollbar>
-      <AccountSwitcherPopover 
+      {/* <AccountSwitcherPopover 
         anchorEl={accountSwitchBoxRef.current} // Pass the current value of the ref
         open={accountSwitchPopover.open}
         onClose={accountSwitchPopover.handleClose}
-      />
+      /> */}
     </>
   );
 
