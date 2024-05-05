@@ -18,12 +18,12 @@ export const AccountPopover = (props) => {
     [onClose, auth, router]
   );
 
-  const handleSwitchRole = useCallback(
-    () => {      
-      auth.switchRole(auth.user.role);
-    },
-    [auth]
-  )
+  // const handleSwitchRole = useCallback(
+  //   () => {      
+  //     auth.switchRole(auth.user.role);
+  //   },
+  //   [auth]
+  // )
 
   return (
     <Popover
@@ -75,9 +75,9 @@ export const AccountPopover = (props) => {
           }
         }}
       >
-        <MenuItem onClick={handleSwitchRole}>
+        {/* <MenuItem onClick={handleSwitchRole}>
           Switch to {auth.user.role === 'Customer Service' ? 'Manager' : 'Customer Service'}
-        </MenuItem>
+        </MenuItem> */}
         <MenuItem onClick={handleSignOut}>
           Sign out
         </MenuItem>

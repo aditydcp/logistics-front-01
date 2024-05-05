@@ -11,6 +11,7 @@ import {
   TableHead,
   TablePagination,
   TableRow,
+  Tooltip,
   Typography,
   Button
 } from '@mui/material';
@@ -25,9 +26,10 @@ const statusMap = {
 };
 
 const buttonColorMap = {
-  'Check Details': 'primary',
-  'Confirm Shipment': 'success',
-  'Cancel Shipment': 'error'
+  'Details': 'primary',
+  'Edit': 'primary',
+  'Confirm': 'success',
+  'Cancel': 'error'
 }
 
 export const ShipmentsTable = (props) => {
@@ -132,17 +134,12 @@ export const ShipmentsTable = (props) => {
                       {shipment.flight.airline}<br />
                       {departureDate}<br />
                       {shipment.flight.departureAirport}<br />
-                      <b>Flight Details</b>
                     </TableCell>
                     <TableCell>
-                      {shipment.exporter.name}<br />
-                      {shipment.exporter.email}<br />
-                      {shipment.exporter.phone}
+                      {shipment.exporter.name}
                     </TableCell>
                     <TableCell>
-                      {shipment.importer.name}<br />
-                      {shipment.importer.email}<br />
-                      {shipment.importer.phone}
+                      {shipment.importer.name}
                     </TableCell>
                     <TableCell>
                       {shipment.category}
@@ -151,17 +148,19 @@ export const ShipmentsTable = (props) => {
                       {shipment.note}
                     </TableCell>
                     <TableCell>
-                      {/* <Stack
-                        alignItems="center"
-                        direction="column"
-                        spacing={2}
-                      > */}
-                        <SeverityPill color={statusMap[shipment.status]}>
+                      <SeverityPill color={statusMap[shipment.status]}>
+                        <Tooltip 
+                          arrow
+                          describeChild
+                          placement='top'
+                          sx={{
+                            width: 'fit-content'
+                          }}
+                          title={`Last updated: ${updatedAt}`}
+                        >
                           {shipment.status}
-                        </SeverityPill>
-                        <br />
-                        Last updated: {updatedAt}
-                      {/* </Stack> */}
+                        </Tooltip>
+                      </SeverityPill>
                     </TableCell>
                     <TableCell>
                       <Stack
