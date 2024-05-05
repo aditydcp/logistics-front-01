@@ -23,20 +23,14 @@ import AirplaneTicketRoundedIcon from '@mui/icons-material/AirplaneTicketRounded
 import { FlightFeature } from 'src/components/flights/flights-feature';
 import { formatCurrency } from 'src/utils/format-currency';
 import { FlightSummary } from 'src/components/flights/flights-summary';
-import { FlightDetail } from './flights-detail';
+import { FlightDetail } from 'src/sections/flights/flights-detail';
 
-// const useStyles = makeStyles({
-//   noMargin: {
-//      '& .MuiAccordionSummary-content': {
-//        margin: 0, // Set the margin to 0
-//      },
-//   },
-//  });
-
-export const FlightsList = (props) => {
+export const FlightsFormList = (props) => {
   const {
     count = 0,
     items = [],
+    selectedFlight,
+    setSelectedFlight,
     onDeselectAll,
     onDeselectOne,
     onPageChange = () => {},
@@ -55,19 +49,21 @@ export const FlightsList = (props) => {
 
   const handlePickFlight = (flight) => {
     console.log(`${flight.id} picked for flight`)
+    setSelectedFlight(flight)
   };
 
   return (
     <Stack spacing={2} useFlexGap>
       {count > 0 ? <>
         {items.map((flight) => {
-          const isSelected = selected.includes(flight.id)
+          // const isSelected = selected.includes(flight.id)
+          const isSelected = selectedFlight?.id === flight.id
 
           return (
             <Accordion
               key={flight.id}
               disableGutters
-              elevation={2}
+              elevation={isSelected ? 8 : 2}
               sx={{
                 borderRadius: '20px',
                 "&.MuiAccordion-root:before": {
@@ -78,6 +74,8 @@ export const FlightsList = (props) => {
                     borderRadius: '20px'
                   },
                 },
+                boxShadow: isSelected ? `0px 3px 14px ${theme.palette.primary.main}` : 'none',
+                transition: 'box-shadow 0.3s ease', // Add transition for smooth effect
               }}
             >
               <AccordionSummary
@@ -208,22 +206,32 @@ export const FlightsList = (props) => {
                               marginLeft: 'auto'
                             }}
                           >
-                            <Button
-                              component={NextLink}
-                              href="/shipments/add"
-                              startIcon={(
-                                <SvgIcon fontSize="small">
-                                  <AirplaneTicketRoundedIcon />
-                                </SvgIcon>
-                              )}
-                              variant="contained"
-                              sx={{ 
-                                width: 'fit-content',
-                              }}
-                              onClick={() => handlePickFlight(flight)}
-                            >
-                              Pick flight
-                            </Button>
+                            {isSelected ? (
+                              <Button
+                                variant="outlined"
+                                sx={{ 
+                                  width: 'fit-content',
+                                  cursor: 'default'
+                                }}
+                              >
+                                Selected
+                              </Button>
+                            ) : (
+                              <Button
+                                startIcon={(
+                                  <SvgIcon fontSize="small">
+                                    <AirplaneTicketRoundedIcon />
+                                  </SvgIcon>
+                                )}
+                                variant="contained"
+                                sx={{ 
+                                  width: 'fit-content',
+                                }}
+                                onClick={() => handlePickFlight(flight)}
+                              >
+                                Pick flight
+                              </Button>
+                            )}
                           </div>
                         </Stack>
                       </Stack>

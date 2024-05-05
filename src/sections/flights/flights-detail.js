@@ -184,7 +184,7 @@ export const FlightDetail = (props) => {
                 <WorkOutlineRoundedIcon />
               </SvgIcon>
               <Typography variant='body2'>
-                Weight Limit {flight.weightLimit} kg
+                Available {flight.weightLimit} kg
               </Typography>
             </Stack>
             <Stack
@@ -196,7 +196,7 @@ export const FlightDetail = (props) => {
                 <SwitchCameraRoundedIcon />
               </SvgIcon>
               <Typography variant='body2'>
-                Size Limit {flight.sizeLimit} m<sup>3</sup>
+                Size Available {flight.sizeLimit} m<sup>3</sup>
               </Typography>
             </Stack>
           </Stack>
@@ -212,8 +212,9 @@ export const FlightDetail = (props) => {
               </Typography>
               <Stack
                 direction='row'
-                flexWrap={true}
+                flexWrap='wrap'
                 spacing={1}
+                useFlexGap
               >
                 {flight.categories.map((category) => (
                   <Chip key={category} label={category} size='small'/>
@@ -226,8 +227,9 @@ export const FlightDetail = (props) => {
               </Typography>
               <Stack
                 direction='row'
-                flexWrap={true}
+                flexWrap='wrap'
                 spacing={1}
+                useFlexGap
               >
                 {flight.packagings.map((packaging) => (
                   <Chip key={packaging} label={packaging} size='small'/>

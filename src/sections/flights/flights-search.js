@@ -497,7 +497,7 @@ export const FlightsSearch = (props) => {
                       }}
                     >
                       <InputLabel id="baggage-weight-label">
-                        Max Baggage Weight
+                        Cargo Weight
                       </InputLabel>
                       <Input
                         labelId="baggage-weight-label"
@@ -529,7 +529,7 @@ export const FlightsSearch = (props) => {
                       }}
                     >
                       <InputLabel id="baggage-size-label">
-                        Max Baggage Size
+                        Cargo Size
                       </InputLabel>
                       <Input
                         labelId="baggage-size-label"
@@ -575,7 +575,7 @@ export const FlightsSearch = (props) => {
                         }}
                       >
                         <InputLabel id="categories-select-label">
-                          Categories
+                          Cargo Category
                         </InputLabel>
                         <Select
                           labelId="categories-select-label"
