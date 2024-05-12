@@ -108,11 +108,11 @@ const flightsData = [
     sizeLimit: 100,
     departure: {
       airport: airportsData[0],
-      time: subDays(subHours(now, 7), 1).getTime(),
+      time: subDays(subHours(now, 6), 1).getTime(),
     },
     arrival: {
       airport: airportsData[1],
-      time: subDays(subHours(now, 7), 1).getTime(),
+      time: subDays(subHours(now, 9), 1).getTime(),
     },
     price: 1000000,
     categories: ['General Cargo', 'Special Cargo'],
@@ -127,11 +127,11 @@ const flightsData = [
     sizeLimit: 100,
     departure: {
       airport: airportsData[1],
-      time: subDays(subHours(now, 7), 1).getTime(),
+      time: subDays(subHours(now, 1), 1).getTime(),
     },
     arrival: {
       airport: airportsData[5],
-      time: subDays(subHours(now, 7), 1).getTime(),
+      time: subDays(subHours(now, 17), 1).getTime(),
     },
     price: 1000000,
     categories: ['General Cargo', 'Special Cargo'],
@@ -146,11 +146,11 @@ const flightsData = [
     sizeLimit: 100,
     departure: {
       airport: airportsData[2],
-      time: subDays(subHours(now, 7), 1).getTime(),
+      time: subDays(subHours(now, 2), 1).getTime(),
     },
     arrival: {
       airport: airportsData[5],
-      time: subDays(subHours(now, 7), 1).getTime(),
+      time: subDays(subHours(now, 10), 1).getTime(),
     },
     price: 500000,
     categories: ['General Cargo', 'Mail Cargo'],
@@ -165,7 +165,7 @@ const flightsData = [
     sizeLimit: 100,
     departure: {
       airport: airportsData[0],
-      time: subDays(subHours(now, 7), 1).getTime(),
+      time: subDays(subHours(now, 4), 1).getTime(),
     },
     arrival: {
       airport: airportsData[5],
@@ -188,7 +188,7 @@ const flightsData = [
     },
     arrival: {
       airport: airportsData[2],
-      time: subDays(subHours(now, 7), 1).getTime(),
+      time: subDays(subHours(now, 19), 1).getTime(),
     },
     price: 1200000,
     categories: ['General Cargo', 'Special Cargo'],
@@ -207,7 +207,7 @@ const flightsData = [
     },
     arrival: {
       airport: airportsData[5],
-      time: subDays(subHours(now, 7), 1).getTime(),
+      time: subDays(subHours(now, 13), 1).getTime(),
     },
     price: 1200000,
     categories: ['General Cargo', 'Special Cargo'],
@@ -226,7 +226,7 @@ const flightsData = [
     },
     arrival: {
       airport: airportsData[2],
-      time: subDays(subHours(now, 7), 1).getTime(),
+      time: subDays(subHours(now, 12), 1).getTime(),
     },
     price: 500000,
     categories: ['General Cargo', 'Mail Cargo'],
