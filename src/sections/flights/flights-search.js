@@ -226,8 +226,49 @@ const flightsData = [
     },
     arrival: {
       airport: airportsData[2],
+      time: subDays(subHours(now, 7), 1).getTime(),
+    },
+    price: 500000,
+    categories: ['General Cargo', 'Mail Cargo'],
+    packagings: ['Keranjang', 'Karton', 'Wooden Box'],
+  },
+  {
+    id: '8',
+    airline: 'Citilink',
+    airlineLogo: '/assets/logos/airlines/logo-citilink-square.png',
+    planeModel: 'QG-529',
+    weightLimit: 350,
+    sizeLimit: 100,
+    departure: {
+      airport: airportsData[0],
       time: subDays(subHours(now, 12), 1).getTime(),
     },
+    arrival: {
+      airport: airportsData[3],
+      time: subDays(subHours(now, 7), 1).getTime(),
+    },
+    transitDetails: [
+      {
+        departure: {
+          airport: airportsData[0],
+          time: subDays(subHours(now, 6), 1).getTime(),
+        },
+        arrival: {
+          airport: airportsData[2],
+          time: subDays(subHours(now, 2), 1).getTime(),
+        },
+      },
+      {
+        departure: {
+          airport: airportsData[2],
+          time: subDays(subHours(now, 1), 1).getTime(),
+        },
+        arrival: {
+          airport: airportsData[3],
+          time: subDays(subHours(now, 8), 0).getTime(),
+        },
+      },
+    ],
     price: 500000,
     categories: ['General Cargo', 'Mail Cargo'],
     packagings: ['Keranjang', 'Karton', 'Wooden Box'],

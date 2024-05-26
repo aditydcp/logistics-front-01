@@ -20,6 +20,13 @@ const maxStep = 50
 
 const calculateValue = (value) => 100000 * value
 
+const transitOptions = [
+  { index: 0, title: 'No Transit' },
+  { index: 1, title: '1 Transit' },
+  { index: 2, title: '2 Transit' },
+  { index: 3, title: '3 or more Transit' },
+]
+
 export const FlightsFilter = (props) => {
   const { 
     flights,
@@ -40,6 +47,7 @@ export const FlightsFilter = (props) => {
 
   const [selectedAirlines, setSelectedAirlines] = useState([...new Set(airlines.map(airline => airline.name))])
   const [priceRange, setPriceRange] = useState([5, 20])
+  const [selectedTransitOptions, setSelectedTransitOptions] = useState([...new Set(transitOptions.map(transitOption => transitOption.index))])
 
   const handleAirlinesChange = (airline) => {
     setSelectedAirlines(prev => {
@@ -50,15 +58,6 @@ export const FlightsFilter = (props) => {
       }
     });
   };
-
-  useEffect(() => {
-    const filteredFlights = flights.filter(flight =>
-      selectedAirlines.includes(flight.airline) &&
-      flight.price >= calculateValue(priceRange[0]) &&
-      flight.price <= calculateValue(priceRange[1])
-    );
-    setFilteredFlights(filteredFlights);
-  }, [selectedAirlines, priceRange, flights, setFilteredFlights]);
 
   const handlePriceChange = (event, newValue, activeThumb) => {
     if (!Array.isArray(newValue)) {
@@ -77,6 +76,31 @@ export const FlightsFilter = (props) => {
       setPriceRange(newValue);
     }
   };
+
+  const handleTransitOptionChange = (transitOptionIndex) => {
+    setSelectedTransitOptions(prev => {
+      if (prev.includes(transitOptionIndex)) {
+        return prev.filter(a => a !== transitOptionIndex);
+      } else {
+        return [...prev, transitOptionIndex];
+      }
+    });
+  }
+
+  useEffect(() => {
+    setSelectedAirlines([...new Set(airlines.map(airline => airline.name))])
+  }, [airlines])
+
+  useEffect(() => {
+    const filteredFlights = flights.filter(flight =>
+      selectedAirlines.includes(flight.airline) &&
+      flight.price >= calculateValue(priceRange[0]) &&
+      flight.price <= calculateValue(priceRange[1]) &&
+      selectedTransitOptions.includes(flight.transitDetails?.length ? flight.transitDetails.length - 1 : 0)
+    );
+    console.log(filteredFlights)
+    setFilteredFlights(filteredFlights);
+  }, [selectedAirlines, priceRange, flights, selectedTransitOptions]);
 
   return (
     <Stack 
@@ -180,6 +204,46 @@ export const FlightsFilter = (props) => {
             max={maxStep}
             scale={calculateValue}
           />
+        </AccordionDetails>
+      </Accordion>
+      <Accordion 
+        disableGutters={true}
+        elevation={0}
+        sx={{
+          "&.Mui-expanded:before": {
+            opacity: 1
+          }
+        }}
+      >
+        <AccordionSummary
+          expandIcon={<KeyboardArrowDownRoundedIcon />}
+          aria-controls="filter-price-content"
+          id="filter-price-header"
+        >
+          <Typography variant='body1'>Transit</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <FormGroup>
+              {transitOptions.map((option) => {
+                return (
+                  <FormControlLabel
+                    key={option.index}
+                    control={
+                      <Checkbox
+                        defaultChecked
+                        checked={selectedTransitOptions.includes(option.index)}
+                        onChange={() => handleTransitOptionChange(option.index)}
+                      />
+                    }
+                    label={            
+                      <Typography variant='body2'>
+                        {option.title}
+                      </Typography>
+                    }
+                  />
+                )
+              })}
+          </FormGroup>
         </AccordionDetails>
       </Accordion>
     </Stack>

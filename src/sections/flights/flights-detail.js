@@ -28,6 +28,7 @@ import WorkOutlineRoundedIcon from '@mui/icons-material/WorkOutlineRounded';
 import ZoomOutMapRoundedIcon from '@mui/icons-material/ZoomOutMapRounded';
 import OpenInFullRoundedIcon from '@mui/icons-material/OpenInFullRounded';
 import SwitchCameraRoundedIcon from '@mui/icons-material/SwitchCameraRounded';
+import PendingRoundedIcon from '@mui/icons-material/PendingRounded';
 
 export const FlightDetail = (props) => {
   const { flight } = props
@@ -61,79 +62,168 @@ export const FlightDetail = (props) => {
             m: 0
           }}
         >
-          <TimelineItem 
-            sx={{ 
-              minHeight: '5rem',
-            }}
-          >
-            <TimelineOppositeContent align='right' sx={{ paddingLeft: 0 }}>
-              <Typography
-                variant='body1'
-              >
-                {format(flight.departure.time, 'HH:mm')}
-              </Typography>
-              <Typography
-                variant='body2'
-              >
-                {format(flight.departure.time, 'd MMM')}
-              </Typography>
-            </TimelineOppositeContent>
-            <TimelineSeparator>
-              <TimelineDot />
-              <TimelineConnector />
-            </TimelineSeparator>
-            <TimelineContent>
-              <Typography
-                variant='body1'
-              >
-                {flight.departure.airport.city} ({flight.departure.airport.code})
-              </Typography>
-              <Typography
-                variant='body2'
-                sx={{
-                  wordWrap: 'break-word'
-                }}
-              >
-                {flight.departure.airport.name}
-              </Typography>
-            </TimelineContent>
-          </TimelineItem>
-          <TimelineItem 
-            sx={{ 
-              minHeight: 0,
-            }}
-          >
-            <TimelineOppositeContent align='right' sx={{ paddingLeft: 0 }}>
-              <Typography
-                variant='body1'
-              >
-                {format(flight.arrival.time, 'HH:mm')}
-              </Typography>
-              <Typography
-                variant='body2'
-              >
-                {format(flight.arrival.time, 'd MMM')}
-              </Typography>
-            </TimelineOppositeContent>
-            <TimelineSeparator>
-              <TimelineDot />
-            </TimelineSeparator>
-            <TimelineContent>
-              <Typography
-                variant='body1'
-              >
-                {flight.arrival.airport.city} ({flight.arrival.airport.code})
-              </Typography>
-              <Typography
-                variant='body2'
-                sx={{
-                  wordWrap: 'break-word'
-                }}
-              >
-                {flight.arrival.airport.name}
-              </Typography>
-            </TimelineContent>
-          </TimelineItem>
+          {flight.transitDetails ? <>
+            {flight.transitDetails.map((transitDetail, index) => {
+              console.log(transitDetail)
+              
+              return ( <>
+                <TimelineItem 
+                  key={index}
+                  sx={{ 
+                    minHeight: index === 0 ? '5rem' : 0,
+                  }}
+                >
+                  <TimelineOppositeContent align='right' sx={{ paddingLeft: 0 }}>
+                    <Typography
+                      variant='body1'
+                    >
+                      {format(transitDetail.departure.time, 'HH:mm')}
+                    </Typography>
+                    <Typography
+                      variant='body2'
+                    >
+                      {format(transitDetail.departure.time, 'd MMM')}
+                    </Typography>
+                  </TimelineOppositeContent>
+                  <TimelineSeparator>
+                    <TimelineDot />
+                    <TimelineConnector />
+                  </TimelineSeparator>
+                  <TimelineContent>
+                    <Typography
+                      variant='body1'
+                    >
+                      {transitDetail.departure.airport.city} ({transitDetail.departure.airport.code})
+                    </Typography>
+                    <Typography
+                      variant='body2'
+                      sx={{
+                        wordWrap: 'break-word'
+                      }}
+                    >
+                      {transitDetail.departure.airport.name}
+                    </Typography>
+                  </TimelineContent>
+                </TimelineItem>
+                <TimelineItem 
+                  key={index}
+                  sx={{ 
+                    minHeight: 0,
+                  }}
+                >
+                  <TimelineOppositeContent align='right' sx={{ paddingLeft: 0 }}>
+                    <Typography
+                      variant='body1'
+                    >
+                      {format(transitDetail.arrival.time, 'HH:mm')}
+                    </Typography>
+                    <Typography
+                      variant='body2'
+                    >
+                      {format(transitDetail.arrival.time, 'd MMM')}
+                    </Typography>
+                  </TimelineOppositeContent>
+                  <TimelineSeparator>
+                    <TimelineDot />
+                    {index < flight.transitDetails.length - 1 && <>
+                      <TimelineConnector />
+                      <TimelineDot variant='outlined' />
+                      <TimelineConnector />
+                    </>}
+                  </TimelineSeparator>
+                  <TimelineContent>
+                    <Typography
+                      variant='body1'
+                    >
+                      {transitDetail.arrival.airport.city} ({transitDetail.arrival.airport.code})
+                    </Typography>
+                    <Typography
+                      variant='body2'
+                      sx={{
+                        wordWrap: 'break-word'
+                      }}
+                    >
+                      {transitDetail.arrival.airport.name}
+                    </Typography>
+                  </TimelineContent>
+                </TimelineItem>
+              </>)
+            })}
+          </> : <>
+            <TimelineItem 
+              sx={{ 
+                minHeight: '5rem',
+              }}
+            >
+              <TimelineOppositeContent align='right' sx={{ paddingLeft: 0 }}>
+                <Typography
+                  variant='body1'
+                >
+                  {format(flight.departure.time, 'HH:mm')}
+                </Typography>
+                <Typography
+                  variant='body2'
+                >
+                  {format(flight.departure.time, 'd MMM')}
+                </Typography>
+              </TimelineOppositeContent>
+              <TimelineSeparator>
+                <TimelineDot />
+                <TimelineConnector />
+              </TimelineSeparator>
+              <TimelineContent>
+                <Typography
+                  variant='body1'
+                >
+                  {flight.departure.airport.city} ({flight.departure.airport.code})
+                </Typography>
+                <Typography
+                  variant='body2'
+                  sx={{
+                    wordWrap: 'break-word'
+                  }}
+                >
+                  {flight.departure.airport.name}
+                </Typography>
+              </TimelineContent>
+            </TimelineItem>
+            <TimelineItem 
+              sx={{ 
+                minHeight: 0,
+              }}
+            >
+              <TimelineOppositeContent align='right' sx={{ paddingLeft: 0 }}>
+                <Typography
+                  variant='body1'
+                >
+                  {format(flight.arrival.time, 'HH:mm')}
+                </Typography>
+                <Typography
+                  variant='body2'
+                >
+                  {format(flight.arrival.time, 'd MMM')}
+                </Typography>
+              </TimelineOppositeContent>
+              <TimelineSeparator>
+                <TimelineDot />
+              </TimelineSeparator>
+              <TimelineContent>
+                <Typography
+                  variant='body1'
+                >
+                  {flight.arrival.airport.city} ({flight.arrival.airport.code})
+                </Typography>
+                <Typography
+                  variant='body2'
+                  sx={{
+                    wordWrap: 'break-word'
+                  }}
+                >
+                  {flight.arrival.airport.name}
+                </Typography>
+              </TimelineContent>
+            </TimelineItem>
+          </>}
         </Timeline>
       </Container>
       <Stack
