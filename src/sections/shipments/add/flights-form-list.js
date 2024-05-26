@@ -197,7 +197,7 @@ export const FlightsFormList = (props) => {
                                 // color: theme.palette.accent.red
                               }}
                             >
-                              /m<sup>3</sup>
+                              /kg
                             </Typography>
                           </Stack>
                           <div 
