@@ -8,6 +8,7 @@ import {
   AccordionDetails,
   Button,
   Card, 
+  Grid,
   Link,
   Stack, 
   SvgIcon,
@@ -20,18 +21,11 @@ import ZoomOutMapRoundedIcon from '@mui/icons-material/ZoomOutMapRounded';
 import OpenInFullRoundedIcon from '@mui/icons-material/OpenInFullRounded';
 import SwitchCameraRoundedIcon from '@mui/icons-material/SwitchCameraRounded';
 import AirplaneTicketRoundedIcon from '@mui/icons-material/AirplaneTicketRounded';
+import ConnectingAirportsRoundedIcon from '@mui/icons-material/ConnectingAirportsRounded';
 import { FlightFeature } from 'src/components/flights/flights-feature';
 import { formatCurrency } from 'src/utils/format-currency';
 import { FlightSummary } from 'src/components/flights/flights-summary';
 import { FlightDetail } from './flights-detail';
-
-// const useStyles = makeStyles({
-//   noMargin: {
-//      '& .MuiAccordionSummary-content': {
-//        margin: 0, // Set the margin to 0
-//      },
-//   },
-//  });
 
 export const FlightsList = (props) => {
   const {
@@ -98,70 +92,70 @@ export const FlightsList = (props) => {
                     width: '100%'
                   }}
                 >
-                  <Stack
-                    spacing={2}
+                  <Grid
+                    container
                   >
-                    <Stack
-                      direction="row"
-                      spacing={2}
-                      alignItems="flex-start"
-                      useFlexGap
-                      flexWrap='wrap'
+                    <Grid
+                      item
+                      spacing={1}
+                      xs={8}
+                      md={4}
                     >
                       <Stack
-                        width='-webkit-fill-available'
-                        spacing={1}
-                        useFlexGap={true}
+                        direction="row"
+                        spacing={2}
+                        alignItems="center"
                       >
-                        <Stack
-                          direction="row"
-                          spacing={2}
-                          alignItems="center"
-                        >
-                          <img
-                            src={flight.airlineLogo}
-                            alt={flight.airline}
-                            loading="lazy"
-                            style={{ width: "2.5rem" }}
-                          />
-                          <Typography 
-                            variant='h6'
-                            component='span'
-                            sx = {{
-                              fontSize: '1rem',
-                              lineHeight: 'unset',
-                            }}
-                          >
-                            {flight.airline}
-                          </Typography>
-                        </Stack>
-                        <Stack
-                          direction="row"
-                          spacing={1.5}
-                          alignItems="center"
-                          sx={{ 
-                            mx: 0.5,
-                            px: 1.5,
-                            border: '1px solid',
-                            borderRadius: '32px',
-                            width: 'fit-content'
+                        <img
+                          src={flight.airlineLogo}
+                          alt={flight.airline}
+                          loading="lazy"
+                          style={{ width: "2.5rem" }}
+                        />
+                        <Typography 
+                          variant='h6'
+                          component='span'
+                          sx = {{
+                            fontSize: '1rem',
+                            lineHeight: 'unset',
                           }}
                         >
-                          <FlightFeature
-                            text={flight.weightLimit}
-                            icon={<WorkOutlineRoundedIcon />}
-                          />
-                          <FlightFeature
-                            text={flight.sizeLimit}
-                            icon={<SwitchCameraRoundedIcon />}
-                          />
-                        </Stack>
+                          {flight.airline}
+                        </Typography>
                       </Stack>
                       <Stack
                         direction="row"
-                        justifyContent="space-between"
-                        alignItems="flex-start"
-                        width='-webkit-fill-available'
+                        spacing={1.5}
+                        alignItems="center"
+                        sx={{ 
+                          mx: 0.5,
+                          px: 1.5,
+                          border: '1px solid',
+                          borderRadius: '32px',
+                          width: 'fit-content'
+                        }}
+                      >
+                        <FlightFeature
+                          text={flight.weightLimit}
+                          icon={<WorkOutlineRoundedIcon />}
+                        />
+                        <FlightFeature
+                          text={flight.sizeLimit}
+                          icon={<SwitchCameraRoundedIcon />}
+                        />
+                      </Stack>
+                    </Grid>
+                    <Grid
+                      item
+                      xs={4}
+                      md={4}
+                      container
+                      direction='column'
+                    >
+                      <Stack
+                        direction='column'
+                        alignItems='center'
+                        justifyContent='flex-start'
                       >
                         <FlightSummary
                           departureTime={flight.departure.time}
@@ -169,66 +163,83 @@ export const FlightsList = (props) => {
                           arrivalTime={flight.arrival.time}
                           arrivalAirport={flight.arrival.airport}
                         />
-                        <Stack
-                          justifyContent="flex-end"
-                          useFlexGap
-                          spacing={2}
+                        {flight.transitDetails && 
+                          <FlightFeature
+                            text={flight.transitDetails.length - 1}
+                            icon={<ConnectingAirportsRoundedIcon />}
+                            iconSize='1.5rem'
+                            fontSize='1rem'
+                            reverse
+                          />
+                        }
+                      </Stack>
+                    </Grid>
+                    <Grid
+                      item
+                      xs={12}
+                      md={4}
+                    >
+                      <Stack
+                        justifyContent="flex-end"
+                        useFlexGap
+                        spacing={2}
+                        width='-webkit-fill-available'
+                      >
+                        <Stack 
+                          direction='row'
+                          spacing={0.5}
+                          alignItems='center'
+                          justifyContent='flex-end'
                         >
-                          <Stack 
-                            direction='row'
-                            spacing={0.5}
-                            alignItems='center'
-                          >
-                            <Typography
-                              variant='h6'
-                              component='span'
-                              align='right'
-                              sx={{ 
-                                lineHeight: 'unset',
-                                // color: theme.palette.accent.red
-                              }}
-                            >
-                              {formatCurrency(flight.price)}
-                            </Typography>
-                            <Typography
-                              variant='caption'
-                              component='span'
-                              align='right'
-                              sx={{ 
-                                lineHeight: 'unset',
-                                // color: theme.palette.accent.red
-                              }}
-                            >
-                              /m<sup>3</sup>
-                            </Typography>
-                          </Stack>
-                          <div 
-                            style={{ 
-                              width: 'fit-content',
-                              marginLeft: 'auto'
+                          <Typography
+                            variant='h6'
+                            component='span'
+                            align='right'
+                            sx={{ 
+                              lineHeight: 'unset',
+                              // color: theme.palette.accent.red
                             }}
                           >
-                            <Button
-                              component={NextLink}
-                              href="/shipments/add"
-                              startIcon={(
-                                <SvgIcon fontSize="small">
-                                  <AirplaneTicketRoundedIcon />
-                                </SvgIcon>
-                              )}
-                              variant="contained"
-                              sx={{ 
-                                width: 'fit-content',
-                              }}
-                              onClick={() => handlePickFlight(flight)}
-                            >
-                              Pick flight
-                            </Button>
-                          </div>
+                            {formatCurrency(flight.price)}
+                          </Typography>
+                          <Typography
+                            variant='caption'
+                            component='span'
+                            align='right'
+                            sx={{ 
+                              lineHeight: 'unset',
+                              // color: theme.palette.accent.red
+                            }}
+                          >
+                            /kg
+                          </Typography>
                         </Stack>
+                        <div 
+                          style={{ 
+                            width: 'fit-content',
+                            marginLeft: 'auto'
+                          }}
+                        >
+                          <Button
+                            component={NextLink}
+                            href="/shipments/add"
+                            startIcon={(
+                              <SvgIcon fontSize="small">
+                                <AirplaneTicketRoundedIcon />
+                              </SvgIcon>
+                            )}
+                            variant="contained"
+                            sx={{ 
+                              width: 'fit-content',
+                            }}
+                            onClick={() => handlePickFlight(flight)}
+                          >
+                            Pick flight
+                          </Button>
+                        </div>
                       </Stack>
-                    </Stack>
-                  </Stack>
+                    </Grid>
+                  </Grid>
                 </Card>
               </AccordionSummary>
               <AccordionDetails>
