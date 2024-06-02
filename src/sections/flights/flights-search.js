@@ -317,6 +317,9 @@ export const FlightsSearch = (props) => {
     categories,
     packaging
   ) => {
+    if (!departureAirport || !arrivalAirport) {
+      return []
+    }
     return flights.filter(flight => {
       const departureMatches = flight.departure.airport.name === departureAirport.name;
       // Filter by departure airport
