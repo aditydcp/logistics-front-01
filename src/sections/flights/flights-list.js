@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { format } from 'date-fns';
+import { formatDistance } from 'date-fns';
 import NextLink from 'next/link';
 import { useRouter } from 'next/navigation';
 import { 
@@ -8,6 +8,7 @@ import {
   AccordionDetails,
   Button,
   Card, 
+  Divider,
   Grid,
   Link,
   Stack, 
@@ -243,9 +244,55 @@ export const FlightsList = (props) => {
                 </Card>
               </AccordionSummary>
               <AccordionDetails>
-                <FlightDetail
-                  flight={flight}
-                />
+                {flight.transitDetails ? <Stack>
+                  {flight.transitDetails.map((transit, index, arr) => (
+                    <Stack key={index}>
+                      <FlightDetail
+                        departure={transit.departure}
+                        arrival={transit.arrival}
+                        airline={transit.airline}
+                        airlineLogo={transit.airlineLogo}
+                        planeModel={transit.planeModel}
+                        weightLimit={transit.weightLimit}
+                        sizeLimit={transit.sizeLimit}
+                        categories={transit.categories}
+                        packagings={transit.packagings}
+                      />
+                      {index !== arr.length - 1 && (
+                        <Divider
+                          variant="middle"
+                          sx={{
+                            my: 2,
+                            '.MuiDivider-root:before, .MuiDivider-root:after': {
+                              borderColor: theme.palette.neutral[300]
+                            }
+                          }}
+                        >
+                          <Typography
+                            variant='body2'
+                          >
+                            {`Wait for ${formatDistance(
+                              transit.arrival.time,
+                              arr[index + 1].departure.time,
+                            )}`}
+                          </Typography>
+                        </Divider>
+                      )}
+                    </Stack>
+                  ))}
+                  </Stack> : 
+                  <FlightDetail
+                    departure={flight.departure}
+                    arrival={flight.arrival}
+                    airline={flight.airline}
+                    airlineLogo={flight.airlineLogo}
+                    planeModel={flight.planeModel}
+                    weightLimit={flight.weightLimit}
+                    sizeLimit={flight.sizeLimit}
+                    categories={flight.categories}
+                    packagings={flight.packagings}
+                  />
+                }
               </AccordionDetails>
             </Accordion>
           )

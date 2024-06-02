@@ -98,7 +98,7 @@ export const FlightsFilter = (props) => {
       flight.price <= calculateValue(priceRange[1]) &&
       selectedTransitOptions.includes(flight.transitDetails?.length ? flight.transitDetails.length - 1 : 0)
     );
-    console.log(filteredFlights)
+    // console.log(filteredFlights)
     setFilteredFlights(filteredFlights);
   }, [selectedAirlines, priceRange, flights, selectedTransitOptions]);
 
