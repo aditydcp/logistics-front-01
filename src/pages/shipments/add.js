@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Head from 'next/head'
 import { 
   Button,
@@ -21,6 +21,8 @@ import FlightsFormSearch from 'src/sections/shipments/add/flights-form-search';
 import { FlightsFormSelected } from 'src/sections/shipments/add/flights-form-selected';
 import { ShipmentFormReview } from 'src/sections/shipments/add/shipment-form-review';
 import { DetailsForm } from 'src/sections/shipments/add/details-form';
+import { useFlightData } from 'src/hooks/use-flight-data';
+import { useRouter } from 'next/router';
 
 const steps = [
   'Shipment details',
@@ -34,6 +36,17 @@ const Page = () => {
   const [completed, setCompleted] = useState({});
   const [shipment, setShipment] = useState(null);
   const [flight, setFlight] = useState(null);
+
+  const router = useRouter()
+  const { query } = router;
+  const start = query?.start;
+
+  // const flightData = useFlightData();
+
+  useEffect(() => {
+    // flightData.flight && setFlight(flightData.flight)
+    start === 'flight' && setActiveStep(1);
+  }, []);
 
   const totalSteps = () => {
     return steps.length;

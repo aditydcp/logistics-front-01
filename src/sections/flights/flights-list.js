@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { formatDistance } from 'date-fns';
 import NextLink from 'next/link';
@@ -27,6 +28,7 @@ import { FlightFeature } from 'src/components/flights/flights-feature';
 import { formatCurrency } from 'src/utils/format-currency';
 import { FlightSummary } from 'src/components/flights/flights-summary';
 import { FlightDetail } from './flights-detail';
+import { useFlightData } from 'src/hooks/use-flight-data';
 
 export const FlightsList = (props) => {
   const {
@@ -43,21 +45,35 @@ export const FlightsList = (props) => {
     selected = []
   } = props;
 
+  const router = useRouter();
+  const flightData = useFlightData();
+
   const selectedSome = (selected.length > 0) && (selected.length < items.length);
   const selectedAll = (items.length > 0) && (selected.length === items.length);
 
   const theme = useTheme()
 
-  const handlePickFlight = (flight) => {
-    console.log(`${flight.id} picked for flight`)
-  };
+  const handlePickFlight = useCallback(
+    (flight) => {
+      flightData.setFlightData(flight)
+
+      const queryString = `?start=flight`;
+      // router.push(`/shipments/add${queryString}`);
+      router.push({
+        pathname: '/shipments/add',
+        query: { 
+          start: 'flight',
+          // flight: flight
+        },
+      })
+    },
+    [flightData, router]
+  );
 
   return (
     <Stack spacing={2} useFlexGap>
       {count > 0 ? <>
         {items.map((flight) => {
-          const isSelected = selected.includes(flight.id)
-
           return (
             <Accordion
               key={flight.id}
@@ -82,7 +98,7 @@ export const FlightsList = (props) => {
                   m: 0,
                   p: 0,
                   '& .MuiAccordionSummary-content': {
-                    margin: 0, // Override the margin to 0
+                    margin: 0,
                   },
                 }}
               >
@@ -98,7 +114,7 @@ export const FlightsList = (props) => {
                   >
                     <Grid
                       item
-                      spacing={1}
+                      // spacing={1}
                       xs={8}
                       md={4}
                     >
@@ -198,7 +214,6 @@ export const FlightsList = (props) => {
                             align='right'
                             sx={{ 
                               lineHeight: 'unset',
-                              // color: theme.palette.accent.red
                             }}
                           >
                             {formatCurrency(flight.price)}
@@ -209,7 +224,6 @@ export const FlightsList = (props) => {
                             align='right'
                             sx={{ 
                               lineHeight: 'unset',
-                              // color: theme.palette.accent.red
                             }}
                           >
                             /kg
@@ -222,8 +236,6 @@ export const FlightsList = (props) => {
                           }}
                         >
                           <Button
-                            component={NextLink}
-                            href="/shipments/add"
                             startIcon={(
                               <SvgIcon fontSize="small">
                                 <AirplaneTicketRoundedIcon />

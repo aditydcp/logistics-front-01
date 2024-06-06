@@ -16,9 +16,10 @@ import { formatCurrency } from 'src/utils/format-currency';
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
 
 const minDistance = 5
-const maxStep = 50
+const maxStep = 20
+const defaultRange = [3, 10]
 
-const calculateValue = (value) => 100000 * value
+const calculateValue = (value) => 10000 * value
 
 const transitOptions = [
   { index: 0, title: 'No Transit' },
@@ -46,7 +47,7 @@ export const FlightsFilter = (props) => {
   })).sort((a, b) => a.name.localeCompare(b.name)) // sort alphabetically
 
   const [selectedAirlines, setSelectedAirlines] = useState([...new Set(airlines.map(airline => airline.name))])
-  const [priceRange, setPriceRange] = useState([5, 20])
+  const [priceRange, setPriceRange] = useState(defaultRange)
   const [selectedTransitOptions, setSelectedTransitOptions] = useState([...new Set(transitOptions.map(transitOption => transitOption.index))])
 
   const handleAirlinesChange = (airline) => {
