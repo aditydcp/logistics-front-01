@@ -57,7 +57,6 @@ export const FlightsFormList = (props) => {
     <Stack spacing={2} useFlexGap>
       {count > 0 ? <>
         {items.map((flight) => {
-          // const isSelected = selected.includes(flight.id)
           const isSelected = selectedFlight?.id === flight.id
 
           return (
