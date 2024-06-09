@@ -37,8 +37,8 @@ const useFlightIds = (flights) => {
 
 const FlightsFormSearch = (props) => {
   const {
-    selectedFlight,
-    setSelectedFlight,
+    flight,
+    setFlight,
   } = props
 
   const [searchCommenced, setSearchCommenced] = useState(false);
@@ -113,8 +113,8 @@ const FlightsFormSearch = (props) => {
               <FlightsFormList 
                 count={validFlights.length}
                 items={validFlights}
-                selectedFlight={selectedFlight}
-                setSelectedFlight={setSelectedFlight}
+                selectedFlight={flight}
+                setSelectedFlight={setFlight}
                 onDeselectAll={validFlightsSelection.handleDeselectAll}
                 onDeselectOne={validFlightsSelection.handleDeselectOne}
                 onPageChange={handlePageChange}

@@ -26,14 +26,6 @@ import { formatCurrency } from 'src/utils/format-currency';
 import { FlightSummary } from 'src/components/flights/flights-summary';
 import { FlightDetail } from './flights-detail';
 
-// const useStyles = makeStyles({
-//   noMargin: {
-//      '& .MuiAccordionSummary-content': {
-//        margin: 0, // Set the margin to 0
-//      },
-//   },
-//  });
-
 export const FlightsList = (props) => {
   const {
     count = 0,
@@ -101,18 +93,10 @@ export const FlightsList = (props) => {
                 >
                   <Grid
                     container
-                    // direction="row"
                     spacing={2}
-                    // alignItems="flex-start"
-                    // useFlexGap
-                    // flexWrap='wrap'
-                    // justifyContent='space-between'
                   >
                     <Grid
                       item
-                      // width='-webkit-fill-available'
-                      spacing={1}
-                      // useFlexGap={true}
                       xs={8}
                       md={4}
                     >
@@ -143,6 +127,7 @@ export const FlightsList = (props) => {
                         spacing={1.5}
                         alignItems="center"
                         sx={{ 
+                          mt: 1,
                           mx: 0.5,
                           px: 1.5,
                           border: '1px solid',
@@ -161,9 +146,6 @@ export const FlightsList = (props) => {
                       </Stack>
                     </Grid>
                     <Grid
-                      // justifyContent="flex-start"
-                      // alignItems="center"
-                      // width='-webkit-fill-available'
                       item
                       xs={4}
                       md={4}
@@ -176,10 +158,6 @@ export const FlightsList = (props) => {
                       />
                     </Grid>
                     <Grid
-                      // direction="row"
-                      // justifyContent="space-between"
-                      // alignItems="flex-end"
-                      // width='-webkit-fill-available'
                       item
                       xs={12}
                       md={4}
@@ -297,7 +275,6 @@ export const FlightsList = (props) => {
             align='center'
             sx={{ 
               textAlign: 'center',
-              // p: 4
             }}
           >
             Please adjust the filters or change your search

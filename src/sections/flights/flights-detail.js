@@ -31,9 +31,6 @@ import SwitchCameraRoundedIcon from '@mui/icons-material/SwitchCameraRounded';
 
 export const FlightDetail = (props) => {
   const { flight } = props
-  const [activeStep, setActiveStep] = useState(0);
-  const categoriesText = flight.categories.join('\n')
-  const packagingsText = flight.packagings.join('\n')
 
   return (
     <Stack
@@ -168,7 +165,6 @@ export const FlightDetail = (props) => {
           direction='row'
           spacing={2}
           alignItems='flex-start'
-          // justifyContent='space-between'
         >
           <Stack
             sx={{
