@@ -205,7 +205,12 @@ export const FlightsList = (props) => {
                         >
                           <Button
                             component={NextLink}
-                            href="/shipments/add"
+                            href={{
+                              pathname: "/shipments/add",
+                              query: {
+                                flight: JSON.stringify(flight)
+                              }
+                            }}
                             startIcon={(
                               <SvgIcon fontSize="small">
                                 <AirplaneTicketRoundedIcon />

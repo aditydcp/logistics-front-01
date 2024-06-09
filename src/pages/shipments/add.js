@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router';
 import Head from 'next/head'
 import { 
   Button,
@@ -30,10 +31,12 @@ const steps = [
 
 const Page = () => {
   const theme = useTheme()
-  const [activeStep, setActiveStep] = useState(0);
-  const [completed, setCompleted] = useState({});
+  const router = useRouter()
+
+  const [activeStep, setActiveStep] = useState(router.query.flight ? 1 : 0);
+  const [completed, setCompleted] = useState(router.query.flight ? { 1: true } : {});
   const [shipment, setShipment] = useState(null);
-  const [flight, setFlight] = useState(null);
+  const [flight, setFlight] = useState(router.query.flight ? JSON.parse(router.query.flight) : null);
 
   const totalSteps = () => {
     return steps.length;
@@ -157,13 +160,13 @@ const Page = () => {
                       >
                         {flight &&
                           <FlightsFormSelected
-                            selectedFlight={flight}
-                            setSelectedFlight={setFlight}
+                            flight={flight}
+                            setFlight={setFlight}
                           />
                         }
                         <FlightsFormSearch
-                          selectedFlight={flight}
-                          setSelectedFlight={setFlight}
+                          flight={flight}
+                          setFlight={setFlight}
                         />
                       </Stack>
                     }
@@ -204,76 +207,6 @@ const Page = () => {
                 )}
               </div>
             </Stack>
-            {/* <Stack
-              direction='row'
-              spacing={2}
-              useFlexGap
-              alignItems='flex-start'
-            >
-              <Stack
-                sx={{
-                  width: '-webkit-fill-available'
-                }}
-                spacing={3}
-              >
-                <Step index={0} active>
-                  <StepLabel
-                    StepIconProps={{
-                      sx: {
-                        fontSize: '2rem',
-                        mr: 1
-                      }
-                    }}
-                  >
-                    <Typography variant='h5'>
-                      Shipment Details
-                    </Typography>
-                  </StepLabel>
-                </Step>
-                <Skeleton variant="rectangular" width='100%' height={500} />
-              </Stack>
-              <Divider 
-                orientation='vertical'
-                flexItem
-                sx={{
-                  borderColor: theme.palette.neutral[300]
-                }}
-              />
-              <Stack
-                sx={{
-                  width: '-webkit-fill-available'
-                }}
-                spacing={3}
-              >
-                <Step index={1} active>
-                  <StepLabel
-                    StepIconProps={{
-                      sx: {
-                        fontSize: '2rem',
-                        mr: 1
-                      }
-                    }}
-                  >
-                    <Typography variant='h5'>
-                      Book a Flight
-                    </Typography>
-                  </StepLabel>
-                </Step>
-                <Skeleton variant="rectangular" width='100%' height={500} />
-              </Stack>
-            </Stack>
-            <Button
-              // component={NextLink}
-              // href="/shipments/add"
-              // startIcon={(
-              //   <SvgIcon fontSize="small">
-              //     <PlusIcon />
-              //   </SvgIcon>
-              // )}
-              variant="contained"
-            >
-              Create
-            </Button> */}
           </Stack>
         </Container>
       </Box>
@@ -286,5 +219,12 @@ Page.getLayout = (page) => (
     {page}
   </DashboardLayout>
 )
+
+Page.getInitialProps = async (ctx) => {
+  const { query } = ctx;
+  const { flight } = query;
+
+  return { flight };
+}
 
 export default Page;
