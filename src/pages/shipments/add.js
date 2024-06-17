@@ -76,8 +76,18 @@ const Page = () => {
     const newCompleted = completed;
     newCompleted[activeStep] = true;
     setCompleted(newCompleted);
+  };
+
+  const handleCompleteAndProceed = () => {
+    handleComplete();
     handleNext();
   };
+
+  const handleIncomplete = () => {
+    const newCompleted = completed;
+    delete newCompleted[activeStep];
+    setCompleted(newCompleted);
+  }
 
   const handleReset = () => {
     setActiveStep(0);
@@ -162,11 +172,14 @@ const Page = () => {
                           <FlightsFormSelected
                             flight={flight}
                             setFlight={setFlight}
+                            handleNext={handleNext}
+                            handleIncomplete={handleIncomplete}
                           />
                         }
                         <FlightsFormSearch
                           flight={flight}
                           setFlight={setFlight}
+                          handleComplete={handleComplete}
                         />
                       </Stack>
                     }

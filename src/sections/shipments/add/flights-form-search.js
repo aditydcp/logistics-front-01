@@ -39,6 +39,7 @@ const FlightsFormSearch = (props) => {
   const {
     flight,
     setFlight,
+    handleComplete,
   } = props
 
   const [searchCommenced, setSearchCommenced] = useState(false);
@@ -124,6 +125,7 @@ const FlightsFormSearch = (props) => {
                 page={page}
                 rowsPerPage={rowsPerPage}
                 selected={validFlightsSelection.selected}
+                handleComplete={handleComplete}
               />
           </Box>
         </Stack>

@@ -29,12 +29,18 @@ export const FlightsFormSelected = (props) => {
   const {
     flight,
     setFlight,
+    handleNext,
+    handleIncomplete,
   } = props
 
   const theme = useTheme()
 
+  const onContinue = () => {
+    handleNext()
+  }
   const onDeselect = () => {
     setFlight(null)
+    handleIncomplete()
   }
 
   return (
@@ -291,16 +297,32 @@ export const FlightsFormSelected = (props) => {
               </Stack>
             </Grid>
           </Grid>
+          <Stack
+            direction='row'
+            justifyContent='space-between'
+            sx={{
+              mt: 1
+            }}
+            >
           <Button
             variant='outlined'
             sx={{
-              mt: 1,
               width: 'fit-content',
             }}
             onClick={onDeselect}
           >
             Cancel selection
           </Button>
+          <Button
+            variant='contained'
+            sx={{
+              width: 'fit-content',
+            }}
+            onClick={onContinue}
+          >
+            Next step
+          </Button>
+          </Stack>
         </Stack>
       </Card>
     </>

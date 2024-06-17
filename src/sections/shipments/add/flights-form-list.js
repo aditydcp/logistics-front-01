@@ -40,7 +40,8 @@ export const FlightsFormList = (props) => {
     onSelectOne,
     page = 0,
     rowsPerPage = 0,
-    selected = []
+    selected = [],
+    handleComplete,
   } = props;
 
   const selectedSome = (selected.length > 0) && (selected.length < items.length);
@@ -51,6 +52,7 @@ export const FlightsFormList = (props) => {
   const handlePickFlight = (flight) => {
     console.log(`${flight.id} picked for flight`)
     setSelectedFlight(flight)
+    handleComplete()
   };
 
   return (
