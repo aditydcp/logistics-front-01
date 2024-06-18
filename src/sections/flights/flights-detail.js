@@ -48,7 +48,7 @@ export const FlightDetail = (props) => {
           width: '40%'
         }}
       >
-        <Timeline 
+        <Timeline
           position='right'
           sx={{
             [`& .${timelineOppositeContentClasses.root}`]: {
@@ -58,8 +58,8 @@ export const FlightDetail = (props) => {
             m: 0
           }}
         >
-          <TimelineItem 
-            sx={{ 
+          <TimelineItem
+            sx={{
               minHeight: '5rem',
             }}
           >
@@ -95,12 +95,18 @@ export const FlightDetail = (props) => {
               </Typography>
             </TimelineContent>
           </TimelineItem>
-          <TimelineItem 
-            sx={{ 
+          <TimelineItem
+            sx={{
               minHeight: 0,
             }}
           >
-            <TimelineOppositeContent align='right' sx={{ paddingLeft: 0 }}>
+            <TimelineOppositeContent
+              align='right'
+              sx={{
+                paddingLeft: 0,
+                textWrap: 'nowrap',
+              }}
+            >
               <Typography
                 variant='body1'
               >
@@ -213,7 +219,7 @@ export const FlightDetail = (props) => {
                 useFlexGap
               >
                 {flight.categories.map((category) => (
-                  <Chip key={category} label={category} size='small'/>
+                  <Chip key={category} label={category} size='small' />
                 ))}
               </Stack>
             </Stack>
@@ -228,7 +234,7 @@ export const FlightDetail = (props) => {
                 useFlexGap
               >
                 {flight.packagings.map((packaging) => (
-                  <Chip key={packaging} label={packaging} size='small'/>
+                  <Chip key={packaging} label={packaging} size='small' />
                 ))}
               </Stack>
             </Stack>

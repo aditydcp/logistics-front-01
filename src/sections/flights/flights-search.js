@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useTheme } from '@mui/material/styles'
 import PropTypes from 'prop-types';
-import { subDays, subHours } from 'date-fns';
 import FlightTakeoffRoundedIcon from '@mui/icons-material/FlightTakeoffRounded';
 import FlightLandRoundedIcon from '@mui/icons-material/FlightLandRounded';
 import SwapHorizRoundedIcon from '@mui/icons-material/SwapHorizRounded';
@@ -35,204 +34,13 @@ import {
 } from '@mui/material';
 import { AirportSearch } from 'src/components/flights/flights-airport-search';
 import { MyDatePicker } from 'src/components/date-picker';
-
-const now = new Date();
-
-const categoriesData = [
-  "General Cargo",
-  "Special Cargo",
-  "Live Animals",
-  "Dangerous or Hazardous Cargo",
-  "High-Value or Fragile Cargo",
-  "Perishable Cargo",
-  "Temperature-Controlled Cargo",
-  "Mail Cargo",
-  "Human Remains, Tissue and Organ Cargo",
-]
-
-const packagingData = [
-  "Keranjang",
-  "Karton",
-  "Palet",
-  "Wooden Palet",
-  "Wooden Box",
-  "Koli",
-]
-
-const airportsData = [
-  {
-    name: "Changi Intl",
-    code: "SIN",
-    city: "Singapore",
-    country: "Singapura"
-  },
-  { 
-    name: "Kuala Lumpur International Airport",
-    code: "KUL",
-    city: "Kuala Lumpur",
-    country: "Malaysia"
-  },
-  { 
-    name: "Soekarno Hatta International Airport",
-    code: "CGK",
-    city: "Jakarta",
-    country: "Indonesia"
-  },
-  { 
-    name: "Yogyakarta International Airport",
-    code: "YIA",
-    city: "Yogyakarta",
-    country: "Indonesia"
-  },
-  { 
-    name: "Adi Sutjipto",
-    code: "YOG",
-    city: "Yogyakarta",
-    country: "Indonesia" 
-  },
-  { 
-    name: "Juanda",
-    code: "SUB",
-    city: "Surabaya",
-    country: "Indonesia"
-  },
-];
-
-const flightsData = [
-  {
-    id: '1',
-    airline: 'Malaysia Airlines',
-    airlineLogo: '/assets/logos/airlines/logo-malaysiaairlines-square.png',
-    planeModel: 'MH-360',
-    weightLimit: 1000,
-    sizeLimit: 100,
-    departure: {
-      airport: airportsData[0],
-      time: subDays(subHours(now, 9), 0).getTime(),
-    },
-    arrival: {
-      airport: airportsData[1],
-      time: subDays(subHours(now, 6), 0).getTime(),
-    },
-    price: 55000,
-    categories: ['General Cargo', 'Special Cargo'],
-    packagings: ['Palet', 'Wooden Box', 'Wooden Palet'],
-  },
-  {
-    id: '2',
-    airline: 'Malaysia Airlines',
-    airlineLogo: '/assets/logos/airlines/logo-malaysiaairlines-square.png',
-    planeModel: 'MH-871',
-    weightLimit: 1000,
-    sizeLimit: 100,
-    departure: {
-      airport: airportsData[1],
-      time: subDays(subHours(now, 17), 0).getTime(),
-    },
-    arrival: {
-      airport: airportsData[5],
-      time: subDays(subHours(now, 1), 0).getTime(),
-    },
-    price: 55000,
-    categories: ['General Cargo', 'Special Cargo'],
-    packagings: ['Palet', 'Wooden Box', 'Wooden Palet'],
-  },
-  {
-    id: '3',
-    airline: 'Citilink',
-    airlineLogo: '/assets/logos/airlines/logo-citilink-square.png',
-    planeModel: 'QG-252',
-    weightLimit: 350,
-    sizeLimit: 100,
-    departure: {
-      airport: airportsData[2],
-      time: subDays(subHours(now, 10), 0).getTime(),
-    },
-    arrival: {
-      airport: airportsData[5],
-      time: subDays(subHours(now, 2), 0).getTime(),
-    },
-    price: 50000,
-    categories: ['General Cargo', 'Mail Cargo'],
-    packagings: ['Keranjang', 'Karton', 'Wooden Box'],
-  },
-  {
-    id: '4',
-    airline: 'Garuda Indonesia',
-    airlineLogo: '/assets/logos/airlines/logo-garudaindonesia-square.png',
-    planeModel: 'GA-855',
-    weightLimit: 1500,
-    sizeLimit: 100,
-    departure: {
-      airport: airportsData[0],
-      time: subDays(subHours(now, 7), 0).getTime(),
-    },
-    arrival: {
-      airport: airportsData[5],
-      time: subDays(subHours(now, 4), 0).getTime(),
-    },
-    price: 60000,
-    categories: ['General Cargo', 'Special Cargo'],
-    packagings: ['Palet', 'Wooden Box', 'Wooden Palet'],
-  },
-  {
-    id: '5',
-    airline: 'Garuda Indonesia',
-    airlineLogo: '/assets/logos/airlines/logo-garudaindonesia-square.png',
-    planeModel: 'GA-837',
-    weightLimit: 1500,
-    sizeLimit: 100,
-    departure: {
-      airport: airportsData[0],
-      time: subDays(subHours(now, 19), 0).getTime(),
-    },
-    arrival: {
-      airport: airportsData[2],
-      time: subDays(subHours(now, 7), 0).getTime(),
-    },
-    price: 60000,
-    categories: ['General Cargo', 'Special Cargo'],
-    packagings: ['Palet', 'Wooden Box', 'Wooden Palet'],
-  },
-  {
-    id: '6',
-    airline: 'Garuda Indonesia',
-    airlineLogo: '/assets/logos/airlines/logo-garudaindonesia-square.png',
-    planeModel: 'GA-304',
-    weightLimit: 1500,
-    sizeLimit: 100,
-    departure: {
-      airport: airportsData[2],
-      time: subDays(subHours(now, 13), 0).getTime(),
-    },
-    arrival: {
-      airport: airportsData[5],
-      time: subDays(subHours(now, 7), 0).getTime(),
-    },
-    price: 60000,
-    categories: ['General Cargo', 'Special Cargo'],
-    packagings: ['Palet', 'Wooden Box', 'Wooden Palet'],
-  },
-  {
-    id: '7',
-    airline: 'Citilink',
-    airlineLogo: '/assets/logos/airlines/logo-citilink-square.png',
-    planeModel: 'QG-527',
-    weightLimit: 350,
-    sizeLimit: 100,
-    departure: {
-      airport: airportsData[0],
-      time: subDays(subHours(now, 12), 0).getTime(),
-    },
-    arrival: {
-      airport: airportsData[2],
-      time: subDays(subHours(now, 6), 0).getTime(),
-    },
-    price: 50000,
-    categories: ['General Cargo', 'Mail Cargo'],
-    packagings: ['Keranjang', 'Karton', 'Wooden Box'],
-  },
-]
+import { 
+  categoriesData,
+  packagingData,
+  airportsData,
+  flightsData
+} from 'src/utils/placeholder-data';
+import DropdownMultiInput from 'src/components/dropdown-multi-input';
 
 export const FlightsSearch = (props) => {
   const theme = useTheme()
@@ -265,41 +73,14 @@ export const FlightsSearch = (props) => {
 
   const [localDate, setLocalDate] = useState(date);
 
-  const [advanceSearch, setAdvanceSearch] = useState(false)
-
-  const [localWeight, setLocalWeight] = useState(null);
-  const [localSize, setLocalSize] = useState(null);
-  const [localCategories, setLocalCategories] = useState([])
-  const [localPackaging, setLocalPackaging] = useState([])
-
-  const ITEM_HEIGHT = 48;
-  const ITEM_PADDING_TOP = 8;
-  const MenuProps = {
-    PaperProps: {
-      style: {
-        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-        width: 250,
-      },
-    },
-  };
-
-  useEffect(
-    () => {
-      // console.log(localDepartureAirport)
-      // console.log(localArrivalAirport)
-      // console.log(localWeight)
-      // console.log(localSize)
-      // console.log(advanceSearch)
-    }, [
-      // localWeight,
-      // localSize,
-      // departureAirport,
-      // arrivalAirport,
-      // localDepartureAirport,
-      // localArrivalAirport
-      // advanceSearch
-    ]
+  const [advanceSearch, setAdvanceSearch] = useState(
+    (weight !== null || size !== null) || (categories && categories.length !== 0) || (packaging && packaging.length !== 0)
   )
+
+  const [localWeight, setLocalWeight] = useState(weight || null);
+  const [localSize, setLocalSize] = useState(size || null);
+  const [localCategories, setLocalCategories] = useState(categories || [])
+  const [localPackaging, setLocalPackaging] = useState(packaging || [])
 
   const handleSwapAirport = () => {
     let temp = localArrivalAirport
@@ -451,6 +232,10 @@ export const FlightsSearch = (props) => {
               selectedDate={localDate}
               setSelectedDate={setLocalDate}
               icon={<EventIcon sx={{ mr: 1.5, my: 0.5 }} />}
+              sx={{
+                width: "30%",
+                mx: 1.5
+              }}
             />
           </Stack>
           <Stack
@@ -563,130 +348,22 @@ export const FlightsSearch = (props) => {
                     spacing={3}
                     useFlexGap
                   >
-                    <Stack
-                      direction='row'
-                      spacing={1}
-                      alignItems='flex-end'
-                      sx={{ 
-                        width: '-webkit-fill-available'
-                      }}
-                    >
-                      <FormControl 
-                        variant="standard"
-                        sx={{ 
-                          width: '-webkit-fill-available'
-                        }}
-                      >
-                        <InputLabel id="categories-select-label">
-                          Cargo Category
-                        </InputLabel>
-                        <Select
-                          labelId="categories-select-label"
-                          id="categories-select"
-                          multiple
-                          value={localCategories}
-                          onChange={(event) => {
-                            const {
-                              target: { value },
-                            } = event;
-                            setLocalCategories(
-                              // On autofill we get a stringified value.
-                              typeof value === 'string' ? value.split(',') : value,
-                          )}}
-                          renderValue={(selected) => (
-                            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                              {selected.map((value) => (
-                                <Chip key={value} label={value} size='small'/>
-                              ))}
-                            </Box>
-                          )}
-                          MenuProps={MenuProps}
-                        >
-                          {categoriesData.map((category) => (
-                            <MenuItem
-                              key={category}
-                              value={category}
-                            >
-                              {category}
-                            </MenuItem>
-                          ))}
-                        </Select>
-                      </FormControl>
-                      {localCategories.length > 0 && 
-                        <IconButton
-                          size="small"
-                          sx={{ 
-                            height: "fit-content"
-                          }}
-                          aria-label='clear categories'
-                          onClick={() => setLocalCategories([])}
-                        >
-                          <CancelIcon fontSize='inherit' />
-                        </IconButton>
-                      }
-                    </Stack>
-                    <Stack
-                      direction='row'
-                      spacing={1}
-                      alignItems='flex-end'
-                      sx={{ 
-                        width: '-webkit-fill-available'
-                      }}
-                    >
-                      <FormControl 
-                        variant="standard"
-                        sx={{ 
-                          width: '-webkit-fill-available'
-                        }}
-                      >
-                        <InputLabel id="packaging-select-label">
-                          Packaging
-                        </InputLabel>
-                        <Select
-                          labelId="packaging-select-label"
-                          id="packaging-select"
-                          multiple
-                          value={localPackaging}
-                          onChange={(event) => {
-                            const {
-                              target: { value },
-                            } = event;
-                            setLocalPackaging(
-                              // On autofill we get a stringified value.
-                              typeof value === 'string' ? value.split(',') : value,
-                          )}}
-                          renderValue={(selected) => (
-                            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                              {selected.map((value) => (
-                                <Chip key={value} label={value} size='small'/>
-                              ))}
-                            </Box>
-                          )}
-                          MenuProps={MenuProps}
-                        >
-                          {packagingData.map((packaging) => (
-                            <MenuItem
-                              key={packaging}
-                              value={packaging}
-                            >
-                              {packaging}
-                            </MenuItem>
-                          ))}
-                        </Select>
-                      </FormControl>
-                      {localPackaging.length > 0 && 
-                        <IconButton
-                          size="small"
-                          sx={{ 
-                            height: "fit-content"
-                          }}
-                          aria-label='clear packaging'
-                          onClick={() => setLocalPackaging([])}
-                        >
-                          <CancelIcon fontSize='inherit' />
-                        </IconButton>
-                      }
-                    </Stack>
+                    <DropdownMultiInput
+                      labelId="categories-select-label"
+                      selectId="categories-select"
+                      label="Cargo Category"
+                      data={categoriesData}
+                      value={localCategories}
+                      setValue={setLocalCategories}
+                    />
+                    <DropdownMultiInput
+                      labelId="packaging-select-label"
+                      selectId="packaging-select"
+                      label="Packaging"
+                      data={packagingData}
+                      value={localPackaging}
+                      setValue={setLocalPackaging}
+                    />
                   </Stack>
                 </Stack>
               </AccordionDetails>

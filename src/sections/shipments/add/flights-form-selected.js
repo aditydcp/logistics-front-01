@@ -38,6 +38,7 @@ export const FlightsFormSelected = (props) => {
   const onContinue = () => {
     handleNext()
   }
+  
   const onDeselect = () => {
     setFlight(null)
     handleIncomplete()

@@ -1,33 +1,50 @@
-import { cloneElement, Children } from "react";
-import { Autocomplete, createFilterOptions, TextField, Box, InputAdornment, SvgIcon } from "@mui/material";
+import {
+  Autocomplete,
+  createFilterOptions,
+  TextField,
+  Box,
+} from "@mui/material";
 import PropTypes from 'prop-types';
 
 const filter = createFilterOptions()
 
 export const CompanySearch = (props) => {
+  const handleDataChange = (newValue) => {
+    if (props.setValue) {
+      props.setValue(newValue);
+    }
+    if (props.customChangeHandler) {
+      props.customChangeHandler(newValue);
+    }
+  }
+
   return (
     <Box sx={{ width: "100%", display: 'flex', alignItems: 'flex-end' }}>
-      {/* {props.children} */}
       {props.icon && props.icon}
       <Autocomplete
         value={props.value}
         onChange={(event, newValue) => {
           if (typeof newValue === 'string') {
-            props.setValue({
+            // Create a new value from the user input
+            let value = {
+              id: Math.floor(Math.random() * 89) + 10,
               name: newValue,
-            });
+            }
+            handleDataChange(value);
           } else if (newValue && newValue.inputValue) {
             // Create a new value from the user input
-            props.setValue({
+            let value = {
+              id: Math.floor(Math.random() * 89) + 10,
               name: newValue.inputValue,
-            });
+            }
+            handleDataChange(value);
           } else {
-            props.setValue(newValue);
+            handleDataChange(newValue);
           }
         }}
         filterOptions={(options, params) => {
           const filtered = filter(options, params);
-  
+
           const { inputValue } = params;
           // Suggest the creation of a new value
           const isExisting = options.some((option) => inputValue === option.name);
@@ -37,7 +54,7 @@ export const CompanySearch = (props) => {
               name: `Add "${inputValue}"`,
             });
           }
-  
+
           return filtered;
         }}
         selectOnFocus
@@ -58,7 +75,7 @@ export const CompanySearch = (props) => {
           return option.name;
         }}
         renderOption={(props, option) => <li {...props}>{option.name}</li>}
-        sx={props.sx ? props.sx : { width: "100%" }}
+        sx={{ width: "100%", ...props.sx }}
         freeSolo
         renderInput={(params) => (
           <TextField

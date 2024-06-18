@@ -2,17 +2,17 @@ import { addDays, addHours } from 'date-fns';
 const now = new Date();
 
 export const exporters = [
-  { name: 'Exporter A' },
-  { name: 'Exporter B' },
-  { name: 'Exporter C' },
-  { name: 'Exporter D' },
+  { id: 1, name: 'Exporter A' },
+  { id: 2, name: 'Exporter B' },
+  { id: 3, name: 'Exporter C' },
+  { id: 4, name: 'Exporter D' },
 ]
 
 export const importers = [
-  { name: 'Importer A' },
-  { name: 'Importer B' },
-  { name: 'Importer C' },
-  { name: 'Importer D' },
+  { id: 1, name: 'Importer A' },
+  { id: 2, name: 'Importer B' },
+  { id: 3, name: 'Importer C' },
+  { id: 4, name: 'Importer D' },
 ]
 
 export const categoriesData = [

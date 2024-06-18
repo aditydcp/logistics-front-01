@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router';
 import Head from 'next/head'
-import { 
+import {
   Button,
   Box,
   Container,
@@ -15,7 +15,7 @@ import {
   Typography,
   Unstable_Grid2 as Grid
 } from '@mui/material';
-import { useTheme } from'@mui/material/styles'
+import { useTheme } from '@mui/material/styles'
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
 import { fontSize } from '@mui/system';
 import FlightsFormSearch from 'src/sections/shipments/add/flights-form-search';
@@ -35,7 +35,18 @@ const Page = () => {
 
   const [activeStep, setActiveStep] = useState(router.query.flight ? 1 : 0);
   const [completed, setCompleted] = useState(router.query.flight ? { 1: true } : {});
-  const [shipment, setShipment] = useState(null);
+  const [shipment, setShipment] = useState({
+    exporter: null,
+    importer: null,
+    departureDate: null,
+    quantity: null,
+    category: [],
+    packaging: [],
+    weightIndividual: null,
+    weightTotal: 0,
+    sizeIndividual: null,
+    sizeTotal: 0,
+  });
   const [flight, setFlight] = useState(router.query.flight ? JSON.parse(router.query.flight) : null);
 
   const totalSteps = () => {
@@ -45,6 +56,10 @@ const Page = () => {
   const completedSteps = () => {
     return Object.keys(completed).length;
   };
+
+  const stepCompleted = (step = null) => {
+    return completed[step || activeStep] ?? false;
+  }
 
   const isLastStep = () => {
     return activeStep === totalSteps() - 1;
@@ -58,8 +73,8 @@ const Page = () => {
     const newActiveStep =
       isLastStep() && !allStepsCompleted()
         ? // It's the last step, but not all steps have been completed,
-          // find the first step that has been completed
-          steps.findIndex((step, i) => !(i in completed))
+        // find the first step that has been completed
+        steps.findIndex((step, i) => !(i in completed))
         : activeStep + 1;
     setActiveStep(newActiveStep);
   };
@@ -72,9 +87,10 @@ const Page = () => {
     setActiveStep(step);
   };
 
-  const handleComplete = () => {
+  const handleComplete = (step = null) => {
     const newCompleted = completed;
-    newCompleted[activeStep] = true;
+    step = step ?? activeStep;
+    newCompleted[step] = true;
     setCompleted(newCompleted);
   };
 
@@ -83,9 +99,12 @@ const Page = () => {
     handleNext();
   };
 
-  const handleIncomplete = () => {
+  const handleIncomplete = (step = null) => {
     const newCompleted = completed;
-    delete newCompleted[activeStep];
+    step = step ?? activeStep;
+    if (newCompleted[step]) {
+      delete newCompleted[step];
+    }
     setCompleted(newCompleted);
   }
 
@@ -112,7 +131,7 @@ const Page = () => {
           <Stack spacing={4}>
             <Typography variant="h4">
               New Shipment
-            </Typography> 
+            </Typography>
 
             <Stack
               spacing={4}
@@ -161,6 +180,9 @@ const Page = () => {
                       <DetailsForm
                         shipment={shipment}
                         setShipment={setShipment}
+                        handleNext={handleNext}
+                        handleComplete={handleComplete}
+                        handleIncomplete={handleIncomplete}
                       />
                     }
                     {activeStep === 1 && // FLIGHTS SEARCH
@@ -173,6 +195,7 @@ const Page = () => {
                             flight={flight}
                             setFlight={setFlight}
                             handleNext={handleNext}
+                            handleComplete={handleComplete}
                             handleIncomplete={handleIncomplete}
                           />
                         }
@@ -189,8 +212,8 @@ const Page = () => {
                         flight={flight}
                       />
                     }
-                    
-                    <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+
+                    {/* <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                       <Button
                         color="inherit"
                         disabled={activeStep === 0}
@@ -215,7 +238,7 @@ const Page = () => {
                               : 'Complete Step'}
                           </Button>
                         ))}
-                    </Box>
+                    </Box> */}
                   </Box>
                 )}
               </div>
