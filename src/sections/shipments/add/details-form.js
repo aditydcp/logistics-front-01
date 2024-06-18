@@ -30,6 +30,7 @@ export const DetailsForm = (props) => {
   const {
     shipment,
     setShipment,
+    setFlightSearchParams,
     handleNext,
     handleComplete,
     handleIncomplete,
@@ -45,6 +46,13 @@ export const DetailsForm = (props) => {
     allPropertiesAreNotNull ? handleComplete() : handleIncomplete()
     handleNext()
   }
+
+  const updateFlightSearchParams = (field, value) => {
+    setFlightSearchParams((prevFlightSearchParams) => ({
+      ...prevFlightSearchParams,
+      [field]: value,
+    }));
+  };
 
   const updateShipment = (field, value) => {
     setShipment((prevShipment) => ({
@@ -98,6 +106,7 @@ export const DetailsForm = (props) => {
                 selectedDate={shipment.date}
                 setSelectedDate={(date) => {
                   updateShipment('departureDate', date)
+                  updateFlightSearchParams('departureDate', date)
                 }}
               />
             </Stack>

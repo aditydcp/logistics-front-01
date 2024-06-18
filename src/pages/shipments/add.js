@@ -47,6 +47,15 @@ const Page = () => {
     sizeIndividual: null,
     sizeTotal: 0,
   });
+  const [flightSearchParams, setFlightSearchParams] = useState({
+    departureAirport: null,
+    arrivalAirport: null,
+    departureDate: null,
+    weight: null,
+    size: null,
+    categories: [],
+    packaging: [],
+  })
   const [flight, setFlight] = useState(router.query.flight ? JSON.parse(router.query.flight) : null);
 
   const totalSteps = () => {
@@ -180,6 +189,7 @@ const Page = () => {
                       <DetailsForm
                         shipment={shipment}
                         setShipment={setShipment}
+                        setFlightSearchParams={setFlightSearchParams}
                         handleNext={handleNext}
                         handleComplete={handleComplete}
                         handleIncomplete={handleIncomplete}
@@ -203,6 +213,7 @@ const Page = () => {
                           flight={flight}
                           setFlight={setFlight}
                           handleComplete={handleComplete}
+                          flightSearchParams={flightSearchParams}
                         />
                       </Stack>
                     }
