@@ -113,10 +113,10 @@ export const FlightsSearch = (props) => {
         return false
       }
 
-      // // Filter by date
-      // if (new Date(flight.departure.time).toDateString() !== new Date(date).toDateString()) {
-      //   return false
-      // }
+      // Filter by date
+      if (new Date(flight.departure.time).toDateString() !== new Date(date).toDateString()) {
+        return false
+      }
       
       if (advanceSearch) {
         // Filter by weight
