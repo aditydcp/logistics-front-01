@@ -57,7 +57,7 @@ const data = [
     status: 'confirmed',
     createdAt: subDays(subHours(now, 7), 1).getTime(),
     updatedAt: subDays(subHours(now, 7), 1).getTime(),
-    actions: ['Edit', 'Cancel']
+    actions: ['View Report']
   },
   {
     id: '5e887b209c28ac3dd97f6db5',
@@ -162,10 +162,10 @@ const data = [
     dimension: '30',
     weight: '1000',
     note: '-',
-    status: 'draft',
-    createdAt: subDays(subHours(now, 1), 2).getTime(),
-    updatedAt: subDays(subHours(now, 1), 2).getTime(),
-    actions: ['Edit', 'Confirm', 'Cancel']
+    status: 'confirmed',
+    createdAt: subDays(subHours(now, 7), 1).getTime(),
+    updatedAt: subDays(subHours(now, 7), 1).getTime(),
+    actions: ['View Report']
   },
   {
     id: '5e8680e60cba5019c5ca6fda',

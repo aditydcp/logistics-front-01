@@ -29,6 +29,7 @@ const buttonColorMap = {
   'Details': 'primary',
   'Edit': 'primary',
   'Confirm': 'success',
+  'View Report': 'primary',
   'Cancel': 'error'
 }
 
