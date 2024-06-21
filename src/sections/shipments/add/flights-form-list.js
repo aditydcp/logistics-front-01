@@ -2,14 +2,15 @@ import PropTypes from 'prop-types';
 import { format } from 'date-fns';
 import NextLink from 'next/link';
 import { useRouter } from 'next/navigation';
-import { 
+import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
   Button,
-  Card, 
+  Card,
+  Grid,
   Link,
-  Stack, 
+  Stack,
   SvgIcon,
   TablePagination,
   Typography
@@ -33,13 +34,14 @@ export const FlightsFormList = (props) => {
     setSelectedFlight,
     onDeselectAll,
     onDeselectOne,
-    onPageChange = () => {},
+    onPageChange = () => { },
     onRowsPerPageChange,
     onSelectAll,
     onSelectOne,
     page = 0,
     rowsPerPage = 0,
-    selected = []
+    selected = [],
+    handleComplete,
   } = props;
 
   const selectedSome = (selected.length > 0) && (selected.length < items.length);
@@ -50,13 +52,13 @@ export const FlightsFormList = (props) => {
   const handlePickFlight = (flight) => {
     console.log(`${flight.id} picked for flight`)
     setSelectedFlight(flight)
+    handleComplete()
   };
 
   return (
     <Stack spacing={2} useFlexGap>
       {count > 0 ? <>
         {items.map((flight) => {
-          // const isSelected = selected.includes(flight.id)
           const isSelected = selectedFlight?.id === flight.id
 
           return (
@@ -96,147 +98,148 @@ export const FlightsFormList = (props) => {
                     width: '100%'
                   }}
                 >
-                  <Stack
+                  <Grid
+                    container
                     spacing={2}
                   >
-                    <Stack
-                      direction="row"
-                      spacing={2}
-                      alignItems="flex-start"
-                      useFlexGap
-                      flexWrap='wrap'
+                    <Grid
+                      item
+                      xs={8}
+                      md={4}
                     >
                       <Stack
-                        width='-webkit-fill-available'
-                        spacing={1}
-                        useFlexGap={true}
+                        direction="row"
+                        spacing={2}
+                        alignItems="center"
                       >
-                        <Stack
-                          direction="row"
-                          spacing={2}
-                          alignItems="center"
-                        >
-                          <img
-                            src={flight.airlineLogo}
-                            alt={flight.airline}
-                            loading="lazy"
-                            style={{ width: "2.5rem" }}
-                          />
-                          <Typography 
-                            variant='h6'
-                            component='span'
-                            sx = {{
-                              fontSize: '1rem',
-                              lineHeight: 'unset',
-                            }}
-                          >
-                            {flight.airline}
-                          </Typography>
-                        </Stack>
-                        <Stack
-                          direction="row"
-                          spacing={1.5}
-                          alignItems="center"
-                          sx={{ 
-                            mx: 0.5,
-                            px: 1.5,
-                            border: '1px solid',
-                            borderRadius: '32px',
-                            width: 'fit-content'
+                        <img
+                          src={flight.airlineLogo}
+                          alt={flight.airline}
+                          loading="lazy"
+                          style={{ width: "2.5rem" }}
+                        />
+                        <Typography
+                          variant='h6'
+                          component='span'
+                          sx={{
+                            fontSize: '1rem',
+                            lineHeight: 'unset',
                           }}
                         >
-                          <FlightFeature
-                            text={flight.weightLimit}
-                            icon={<WorkOutlineRoundedIcon />}
-                          />
-                          <FlightFeature
-                            text={flight.sizeLimit}
-                            icon={<SwitchCameraRoundedIcon />}
-                          />
-                        </Stack>
+                          {flight.airline}
+                        </Typography>
                       </Stack>
                       <Stack
                         direction="row"
-                        justifyContent="space-between"
-                        alignItems="flex-start"
+                        spacing={1.5}
+                        alignItems="center"
+                        sx={{
+                          mt: 1,
+                          mx: 0.5,
+                          px: 1.5,
+                          border: '1px solid',
+                          borderRadius: '32px',
+                          width: 'fit-content'
+                        }}
+                      >
+                        <FlightFeature
+                          text={flight.weightLimit}
+                          icon={<WorkOutlineRoundedIcon />}
+                        />
+                        <FlightFeature
+                          text={flight.sizeLimit}
+                          icon={<SwitchCameraRoundedIcon />}
+                        />
+                      </Stack>
+                    </Grid>
+                    <Grid
+                      item
+                      xs={4}
+                      md={4}
+                    >
+                      <FlightSummary
+                        departureTime={flight.departure.time}
+                        departureAirport={flight.departure.airport}
+                        arrivalTime={flight.arrival.time}
+                        arrivalAirport={flight.arrival.airport}
+                      />
+                    </Grid>
+                    <Grid
+                      item
+                      xs={12}
+                      md={4}
+                    >
+                      <Stack
+                        justifyContent="flex-end"
+                        useFlexGap
+                        spacing={2}
                         width='-webkit-fill-available'
                       >
-                        <FlightSummary
-                          departureTime={flight.departure.time}
-                          departureAirport={flight.departure.airport}
-                          arrivalTime={flight.arrival.time}
-                          arrivalAirport={flight.arrival.airport}
-                        />
                         <Stack
-                          justifyContent="flex-end"
-                          useFlexGap
-                          spacing={2}
+                          direction='row'
+                          spacing={0.5}
+                          alignItems='center'
+                          justifyContent='flex-end'
                         >
-                          <Stack 
-                            direction='row'
-                            spacing={0.5}
-                            alignItems='center'
-                          >
-                            <Typography
-                              variant='h6'
-                              component='span'
-                              align='right'
-                              sx={{ 
-                                lineHeight: 'unset',
-                                // color: theme.palette.accent.red
-                              }}
-                            >
-                              {formatCurrency(flight.price)}
-                            </Typography>
-                            <Typography
-                              variant='caption'
-                              component='span'
-                              align='right'
-                              sx={{ 
-                                lineHeight: 'unset',
-                                // color: theme.palette.accent.red
-                              }}
-                            >
-                              /kg
-                            </Typography>
-                          </Stack>
-                          <div 
-                            style={{ 
-                              width: 'fit-content',
-                              marginLeft: 'auto'
+                          <Typography
+                            variant='h6'
+                            component='span'
+                            align='right'
+                            sx={{
+                              lineHeight: 'unset',
+                              // color: theme.palette.accent.red
                             }}
                           >
-                            {isSelected ? (
-                              <Button
-                                variant="outlined"
-                                sx={{ 
-                                  width: 'fit-content',
-                                  cursor: 'default'
-                                }}
-                              >
-                                Selected
-                              </Button>
-                            ) : (
-                              <Button
-                                startIcon={(
-                                  <SvgIcon fontSize="small">
-                                    <AirplaneTicketRoundedIcon />
-                                  </SvgIcon>
-                                )}
-                                variant="contained"
-                                sx={{ 
-                                  width: 'fit-content',
-                                }}
-                                onClick={() => handlePickFlight(flight)}
-                              >
-                                Pick flight
-                              </Button>
-                            )}
-                          </div>
+                            {formatCurrency(flight.price)}
+                          </Typography>
+                          <Typography
+                            variant='caption'
+                            component='span'
+                            align='right'
+                            sx={{
+                              lineHeight: 'unset',
+                              // color: theme.palette.accent.red
+                            }}
+                          >
+                            /kg
+                          </Typography>
                         </Stack>
+                        <div
+                          style={{
+                            width: 'fit-content',
+                            marginLeft: 'auto'
+                          }}
+                        >
+                          {isSelected ? (
+                            <Button
+                              variant="outlined"
+                              sx={{
+                                width: 'fit-content',
+                                cursor: 'default'
+                              }}
+                            >
+                              Selected
+                            </Button>
+                          ) : (
+                            <Button
+                              startIcon={(
+                                <SvgIcon fontSize="small">
+                                  <AirplaneTicketRoundedIcon />
+                                </SvgIcon>
+                              )}
+                              variant="contained"
+                              sx={{
+                                width: 'fit-content',
+                              }}
+                              onClick={() => handlePickFlight(flight)}
+                            >
+                              Pick flight
+                            </Button>
+                          )}
+                        </div>
                       </Stack>
-                    </Stack>
-                  </Stack>
+                    </Grid>
+                  </Grid>
                 </Card>
               </AccordionSummary>
               <AccordionDetails>
@@ -257,7 +260,7 @@ export const FlightsFormList = (props) => {
           rowsPerPageOptions={[5, 10, 25]}
         />
       </> : <>
-        <Stack 
+        <Stack
           spacing={1}
           useFlexGap
           justifyContent="center"
@@ -266,8 +269,8 @@ export const FlightsFormList = (props) => {
             my: 4
           }}
         >
-          <img 
-            src="/assets/searching-illustration.svg" 
+          <img
+            src="/assets/searching-illustration.svg"
             width="30%"
             alt=""
             loading="lazy"
@@ -276,7 +279,7 @@ export const FlightsFormList = (props) => {
             variant='h6'
             component='span'
             align='center'
-            sx={{ 
+            sx={{
               textAlign: 'center',
               marginTop: 3
             }}
@@ -287,7 +290,7 @@ export const FlightsFormList = (props) => {
             variant='body2'
             component='span'
             align='center'
-            sx={{ 
+            sx={{
               textAlign: 'center',
               // p: 4
             }}

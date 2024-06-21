@@ -21,19 +21,24 @@ export const MyDatePicker = (props) => {
   const [open, setOpen] = useState(false);
 
   const handleDateChange = (date) => {
-    props.setSelectedDate(date);
+    if (props.setSelectedDate) {
+      props.setSelectedDate(date);
+    }
+    if (props.customChangeHandler) {
+      props.customChangeHandler(date);
+    }
     setOpen(false);
   };
 
   return (
-    <Box sx={{
-        width: "30%",
+    <Box 
+      sx={{
+        ...props.sx,
         display: 'flex',
         alignItems: 'flex-end',
-        mx: 1.5
       }}
     >
-      {props.icon}
+      {props.icon && props.icon}
       <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={enGB}>
         <DatePicker 
           label={props.label}
@@ -71,5 +76,6 @@ MyDatePicker.propTypes = {
   format: PropTypes.string,
   selectedDate: PropTypes.any,
   setSelectedDate: PropTypes.func,
-  icon: PropTypes.any
+  icon: PropTypes.any,
+  customChangeHandler: PropTypes.func,
 }

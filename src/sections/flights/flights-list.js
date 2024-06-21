@@ -94,10 +94,10 @@ export const FlightsList = (props) => {
                 >
                   <Grid
                     container
+                    spacing={2}
                   >
                     <Grid
                       item
-                      spacing={1}
                       xs={8}
                       md={4}
                     >
@@ -128,6 +128,7 @@ export const FlightsList = (props) => {
                         spacing={1.5}
                         alignItems="center"
                         sx={{ 
+                          mt: 1,
                           mx: 0.5,
                           px: 1.5,
                           border: '1px solid',
@@ -222,7 +223,12 @@ export const FlightsList = (props) => {
                         >
                           <Button
                             component={NextLink}
-                            href="/shipments/add"
+                            href={{
+                              pathname: "/shipments/add",
+                              query: {
+                                flight: JSON.stringify(flight)
+                              }
+                            }}
                             startIcon={(
                               <SvgIcon fontSize="small">
                                 <AirplaneTicketRoundedIcon />
@@ -292,7 +298,6 @@ export const FlightsList = (props) => {
             align='center'
             sx={{ 
               textAlign: 'center',
-              // p: 4
             }}
           >
             Please adjust the filters or change your search

@@ -37,18 +37,20 @@ const useFlightIds = (flights) => {
 
 const FlightsFormSearch = (props) => {
   const {
-    selectedFlight,
-    setSelectedFlight,
+    flight,
+    setFlight,
+    handleComplete,
+    flightSearchParams,
   } = props
 
   const [searchCommenced, setSearchCommenced] = useState(false);
   const [departureAirport, setDepartureAirport] = useState(null);
   const [arrivalAirport, setArrivalAirport] = useState(null);
-  const [date, setDate] = useState(null);
-  const [weight, setWeight] = useState(null);
-  const [size, setSize] = useState(null);
-  const [categories, setCategories] = useState([])
-  const [packaging, setPackaging] = useState([])
+  const [date, setDate] = useState(flightSearchParams.departureDate);
+  const [weight, setWeight] = useState(flightSearchParams.weight);
+  const [size, setSize] = useState(flightSearchParams.size);
+  const [categories, setCategories] = useState(flightSearchParams.categories)
+  const [packaging, setPackaging] = useState(flightSearchParams.packaging)
   const [flights, setFlights] = useState([]);
   const [filteredFlights, setFilteredFlights] = useState([]);
 
@@ -113,8 +115,8 @@ const FlightsFormSearch = (props) => {
               <FlightsFormList 
                 count={validFlights.length}
                 items={validFlights}
-                selectedFlight={selectedFlight}
-                setSelectedFlight={setSelectedFlight}
+                selectedFlight={flight}
+                setSelectedFlight={setFlight}
                 onDeselectAll={validFlightsSelection.handleDeselectAll}
                 onDeselectOne={validFlightsSelection.handleDeselectOne}
                 onPageChange={handlePageChange}
@@ -124,6 +126,7 @@ const FlightsFormSearch = (props) => {
                 page={page}
                 rowsPerPage={rowsPerPage}
                 selected={validFlightsSelection.selected}
+                handleComplete={handleComplete}
               />
           </Box>
         </Stack>
