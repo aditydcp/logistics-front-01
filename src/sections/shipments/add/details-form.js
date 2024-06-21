@@ -101,9 +101,9 @@ export const DetailsForm = (props) => {
                 variant="standard"
               />
               <MyDatePicker
-                label="Departure Date"
+                label="Shipment Date"
                 format="EEEE, dd MMMM yyyy"
-                selectedDate={shipment.date}
+                selectedDate={shipment.departureDate}
                 setSelectedDate={(date) => {
                   updateShipment('departureDate', date)
                   updateFlightSearchParams('departureDate', date)

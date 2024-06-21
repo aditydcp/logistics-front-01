@@ -38,7 +38,7 @@ export const FlightsFormSelected = (props) => {
   const onContinue = () => {
     handleNext()
   }
-  
+
   const onDeselect = () => {
     setFlight(null)
     handleIncomplete()
@@ -253,9 +253,9 @@ export const FlightsFormSelected = (props) => {
               </Container>
             </Grid>
             <Grid
-            item
-            xs={12}
-            md={4}
+              item
+              xs={12}
+              md={4}
             >
               <Typography
                 variant='caption'
@@ -304,25 +304,25 @@ export const FlightsFormSelected = (props) => {
             sx={{
               mt: 1
             }}
+          >
+            <Button
+              variant='outlined'
+              sx={{
+                width: 'fit-content',
+              }}
+              onClick={onDeselect}
             >
-          <Button
-            variant='outlined'
-            sx={{
-              width: 'fit-content',
-            }}
-            onClick={onDeselect}
-          >
-            Cancel selection
-          </Button>
-          <Button
-            variant='contained'
-            sx={{
-              width: 'fit-content',
-            }}
-            onClick={onContinue}
-          >
-            Next step
-          </Button>
+              Cancel selection
+            </Button>
+            <Button
+              variant='contained'
+              sx={{
+                width: 'fit-content',
+              }}
+              onClick={onContinue}
+            >
+              Next step
+            </Button>
           </Stack>
         </Stack>
       </Card>

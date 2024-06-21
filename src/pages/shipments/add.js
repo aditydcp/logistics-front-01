@@ -221,6 +221,7 @@ const Page = () => {
                       <ShipmentFormReview
                         shipment={shipment}
                         flight={flight}
+                        handleComplete={handleComplete}
                       />
                     }
 

@@ -71,6 +71,9 @@ export const FlightDetail = (props) => {
               </Typography>
               <Typography
                 variant='body2'
+                sx={{
+                  textWrap: 'nowrap'
+                }}
               >
                 {format(flight.departure.time, 'd MMM')}
               </Typography>
@@ -114,6 +117,9 @@ export const FlightDetail = (props) => {
               </Typography>
               <Typography
                 variant='body2'
+                sx={{
+                  textWrap: 'nowrap'
+                }}
               >
                 {format(flight.arrival.time, 'd MMM')}
               </Typography>
