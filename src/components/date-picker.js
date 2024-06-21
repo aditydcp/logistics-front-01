@@ -71,7 +71,7 @@ export const MyDatePicker = (props) => {
   );
 };
 
-MyDatePicker.PropTypes = {
+MyDatePicker.propTypes = {
   label: PropTypes.string,
   format: PropTypes.string,
   selectedDate: PropTypes.any,

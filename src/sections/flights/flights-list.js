@@ -21,6 +21,7 @@ import ZoomOutMapRoundedIcon from '@mui/icons-material/ZoomOutMapRounded';
 import OpenInFullRoundedIcon from '@mui/icons-material/OpenInFullRounded';
 import SwitchCameraRoundedIcon from '@mui/icons-material/SwitchCameraRounded';
 import AirplaneTicketRoundedIcon from '@mui/icons-material/AirplaneTicketRounded';
+import ConnectingAirportsRoundedIcon from '@mui/icons-material/ConnectingAirportsRounded';
 import { FlightFeature } from 'src/components/flights/flights-feature';
 import { formatCurrency } from 'src/utils/format-currency';
 import { FlightSummary } from 'src/components/flights/flights-summary';
@@ -149,13 +150,30 @@ export const FlightsList = (props) => {
                       item
                       xs={4}
                       md={4}
+                      container
+                      direction='column'
                     >
-                      <FlightSummary
-                        departureTime={flight.departure.time}
-                        departureAirport={flight.departure.airport}
-                        arrivalTime={flight.arrival.time}
-                        arrivalAirport={flight.arrival.airport}
-                      />
+                      <Stack
+                        direction='column'
+                        alignItems='center'
+                        justifyContent='flex-start'
+                      >
+                        <FlightSummary
+                          departureTime={flight.departure.time}
+                          departureAirport={flight.departure.airport}
+                          arrivalTime={flight.arrival.time}
+                          arrivalAirport={flight.arrival.airport}
+                        />
+                        {flight.transitDetails && 
+                          <FlightFeature
+                            text={flight.transitDetails.length - 1}
+                            icon={<ConnectingAirportsRoundedIcon />}
+                            iconSize='1.5rem'
+                            fontSize='1rem'
+                            reverse
+                          />
+                        }
+                      </Stack>
                     </Grid>
                     <Grid
                       item
