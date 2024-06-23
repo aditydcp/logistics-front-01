@@ -27,7 +27,10 @@ import AssignmentRoundedIcon from '@mui/icons-material/AssignmentRounded';
 import FlightRoundedIcon from '@mui/icons-material/FlightRounded';
 import WorkOutlineRoundedIcon from '@mui/icons-material/WorkOutlineRounded';
 import SwitchCameraRoundedIcon from '@mui/icons-material/SwitchCameraRounded';
-import { shipmentPropertyNameMap, shipmentPropertyValueMap } from 'src/utils/shipment-data';
+import { FlightTimelineExtended } from 'src/components/flights/flights-timeline-extended';
+import { ShipmentReview } from './review-shipment';
+import { FlightAvatar } from 'src/components/flights/flights-avatar';
+import { FlightTicketDetails } from 'src/components/flights/flights-ticket-details';
 
 export const ShipmentFormReview = (props) => {
   const {
@@ -78,30 +81,7 @@ export const ShipmentFormReview = (props) => {
               </Typography>
             </Stack>
             {shipmentIsFilled ? (
-              <Grid container spacing={1} sx={{ ml: 5, width: 'auto' }}>
-                {Object.entries(shipment).map(([key, value]) => (
-                  shipmentPropertyNameMap[key] &&
-                  <Grid item xs={12} key={key}>
-                    <Grid container spacing={0}>
-                      <Grid item xs={5}>
-                    <Typography variant='body1' sx={{ fontWeight: 'bold' }}>
-                      {shipmentPropertyNameMap[key]}
-                    </Typography>
-                    </Grid>
-                    <Grid item xs={7}>
-                    <Typography variant='body1'>
-                      {shipmentPropertyValueMap(shipmentPropertyNameMap[key], value)}
-                      {shipmentPropertyNameMap[key] === 'Total Weight' && ' kg'}
-                      {shipmentPropertyNameMap[key] === 'Cargo Size' && ' m'}
-                      {shipmentPropertyNameMap[key] === 'Cargo Size' && (
-                        <sup>3</sup>
-                      )}
-                    </Typography>
-                    </Grid>
-                    </Grid>
-                  </Grid>
-                ))}
-              </Grid>
+              <ShipmentReview shipment={shipment} />
             ) : (
               <Typography variant='body'>
                 Please fill out shipment details first
@@ -113,7 +93,7 @@ export const ShipmentFormReview = (props) => {
           orientation='vertical'
           flexItem
           sx={{
-            borderColor: theme.palette.neutral[300]
+            borderColor: theme.palette.neutral[400]
           }}
         />
         <Box
@@ -142,25 +122,12 @@ export const ShipmentFormReview = (props) => {
                 spacing={2}
                 useFlexGap
               >
-                <Stack
-                  direction='row'
-                  spacing={1.5}
-                  alignItems='center'
-                  justifyContent='flex-start'
+                <FlightAvatar
+                  airline={flight.airlines[0]}
                   sx={{
                     ml: 1
                   }}
-                >
-                  <img
-                    src={flight.airlineLogo}
-                    alt={flight.airline}
-                    loading="lazy"
-                    style={{ width: "3rem" }}
-                  />
-                  <Typography variant='h6' component='span'>
-                    {flight.airline}
-                  </Typography>
-                </Stack>
+                />
                 <Grid
                   container
                   rowSpacing={2}
@@ -174,69 +141,54 @@ export const ShipmentFormReview = (props) => {
                     md={6}
                   >
                     <Stack
-                      spacing={0.5}
+                      spacing={2}
                       alignItems="flex-center"
                     >
-                      <Typography variant='subtitle1' component='span'>
-                        {flight.planeModel}
+                      <FlightTicketDetails
+                        flight={flight}
+                      />
+                      <Stack
+                        spacing={0.5}
+                      >
+                      <Typography // price title
+                        variant='caption'
+                        component='span'
+                        // align='right'
+                        sx={{
+                          lineHeight: 'unset',
+                          // color: theme.palette.accent.red
+                        }}
+                      >
+                        Rate
                       </Typography>
-                      <Stack
+                      <Stack // price number
                         direction='row'
-                        spacing={1}
+                        spacing={0.5}
                         alignItems='center'
                       >
-                        <SvgIcon sx={{ fontSize: '1rem' }}>
-                          <WorkOutlineRoundedIcon />
-                        </SvgIcon>
-                        <Typography variant='body2'>
-                          Available {flight.weightLimit} kg
+                        <Typography
+                          variant='h6'
+                          component='span'
+                          align='right'
+                          sx={{
+                            lineHeight: 'unset',
+                            // color: theme.palette.accent.red
+                          }}
+                        >
+                          {formatCurrency(flight.price)}
+                        </Typography>
+                        <Typography
+                          variant='caption'
+                          component='span'
+                          align='right'
+                          sx={{
+                            lineHeight: 'unset',
+                            // color: theme.palette.accent.red
+                          }}
+                        >
+                          /kg
                         </Typography>
                       </Stack>
-                      <Stack
-                        direction='row'
-                        spacing={1}
-                        alignItems='center'
-                      >
-                        <SvgIcon sx={{ fontSize: '1rem' }}>
-                          <SwitchCameraRoundedIcon />
-                        </SvgIcon>
-                        <Typography variant='body2'>
-                          Size Available {flight.sizeLimit} m<sup>3</sup>
-                        </Typography>
-                      </Stack>
-                      <Stack
-                        spacing={1}
-                      >
-                        <Stack spacing={0.5} >
-                          <Typography variant='body2'>
-                            Categories
-                          </Typography>
-                          <Stack
-                            direction='row'
-                            flexWrap='wrap'
-                            spacing={1}
-                            useFlexGap
-                          >
-                            {flight.categories.map((category) => (
-                              <Chip key={category} label={category} size='small' />
-                            ))}
-                          </Stack>
-                        </Stack>
-                        <Stack spacing={0.5} >
-                          <Typography variant='body2'>
-                            Packaging
-                          </Typography>
-                          <Stack
-                            direction='row'
-                            flexWrap='wrap'
-                            spacing={1}
-                            useFlexGap
-                          >
-                            {flight.packagings.map((packaging) => (
-                              <Chip key={packaging} label={packaging} size='small' />
-                            ))}
-                          </Stack>
-                        </Stack>
                       </Stack>
                     </Stack>
                   </Grid>
@@ -248,142 +200,11 @@ export const ShipmentFormReview = (props) => {
                     <Container
                       disableGutters
                     >
-                      <Timeline
-                        position='right'
-                        sx={{
-                          [`& .${timelineOppositeContentClasses.root}`]: {
-                            flex: 0.2,
-                          },
-                          p: 0,
-                          m: 0
-                        }}
-                      >
-                        <TimelineItem
-                          sx={{
-                            minHeight: '5rem',
-                          }}
-                        >
-                          <TimelineOppositeContent align='right' sx={{ paddingLeft: 0 }}>
-                            <Typography
-                              variant='body1'
-                            >
-                              {format(flight.departure.time, 'HH:mm')}
-                            </Typography>
-                            <Typography
-                              variant='body2'
-                              sx={{
-                                textWrap: 'nowrap'
-                              }}
-                            >
-                              {format(flight.departure.time, 'd MMM')}
-                            </Typography>
-                          </TimelineOppositeContent>
-                          <TimelineSeparator>
-                            <TimelineDot />
-                            <TimelineConnector />
-                          </TimelineSeparator>
-                          <TimelineContent>
-                            <Typography
-                              variant='body1'
-                            >
-                              {flight.departure.airport.city} ({flight.departure.airport.code})
-                            </Typography>
-                            <Typography
-                              variant='body2'
-                              sx={{
-                                wordWrap: 'break-word'
-                              }}
-                            >
-                              {flight.departure.airport.name}
-                            </Typography>
-                          </TimelineContent>
-                        </TimelineItem>
-                        <TimelineItem
-                          sx={{
-                            minHeight: 0,
-                          }}
-                        >
-                          <TimelineOppositeContent align='right' sx={{ paddingLeft: 0 }}>
-                            <Typography
-                              variant='body1'
-                            >
-                              {format(flight.arrival.time, 'HH:mm')}
-                            </Typography>
-                            <Typography
-                              variant='body2'
-                              sx={{
-                                textWrap: 'nowrap'
-                              }}
-                            >
-                              {format(flight.arrival.time, 'd MMM')}
-                            </Typography>
-                          </TimelineOppositeContent>
-                          <TimelineSeparator>
-                            <TimelineDot />
-                          </TimelineSeparator>
-                          <TimelineContent>
-                            <Typography
-                              variant='body1'
-                            >
-                              {flight.arrival.airport.city} ({flight.arrival.airport.code})
-                            </Typography>
-                            <Typography
-                              variant='body2'
-                              sx={{
-                                wordWrap: 'break-word'
-                              }}
-                            >
-                              {flight.arrival.airport.name}
-                            </Typography>
-                          </TimelineContent>
-                        </TimelineItem>
-                      </Timeline>
+                      <FlightTimelineExtended
+                        flights={flight.legs}
+                        airlines={flight.airlines}
+                      />
                     </Container>
-                  </Grid>
-                  <Grid
-                    item
-                    xs={12}
-                    md={12}
-                  >
-                    <Typography
-                      variant='caption'
-                      component='span'
-                      // align='right'
-                      sx={{
-                        lineHeight: 'unset',
-                        // color: theme.palette.accent.red
-                      }}
-                    >
-                      Rate
-                    </Typography>
-                    <Stack
-                      direction='row'
-                      spacing={0.5}
-                      alignItems='center'
-                    >
-                      <Typography
-                        variant='h6'
-                        component='span'
-                        align='right'
-                        sx={{
-                          lineHeight: 'unset',
-                          // color: theme.palette.accent.red
-                        }}
-                      >
-                        {formatCurrency(flight.price)}
-                      </Typography>
-                      <Typography
-                        variant='caption'
-                        component='span'
-                        align='right'
-                        sx={{
-                          lineHeight: 'unset',
-                          // color: theme.palette.accent.red
-                        }}
-                      >
-                        /kg
-                      </Typography>
-                    </Stack>
                   </Grid>
                 </Grid>
               </Stack>

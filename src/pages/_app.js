@@ -25,9 +25,6 @@ const App = (props) => {
 
   return (
     <CacheProvider value={emotionCache}>
-      {/* TODO: DELETE THIS BEFORE PRODUCTION */}
-      {/* <script src="http://localhost:8097"></script> */}
-      
       <Head>
         <title>
           Dashboard Kit

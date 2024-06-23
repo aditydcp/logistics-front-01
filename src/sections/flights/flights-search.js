@@ -102,19 +102,18 @@ export const FlightsSearch = (props) => {
       return []
     }
     return flights.filter(flight => {
-      const departureMatches = flight.departure.airport.name === departureAirport.name;
       // Filter by departure airport
-      if (flight.departure.airport.name !== departureAirport.name) {
+      if (flight.journeyDetails.departure.airport.name !== departureAirport.name) {
         return false
       }
 
       // Filter by arrival airport
-      if (flight.arrival.airport.name !== arrivalAirport.name) {
+      if (flight.journeyDetails.arrival.airport.name !== arrivalAirport.name) {
         return false
       }
 
       // Filter by date
-      if (new Date(flight.departure.time).toDateString() !== new Date(date).toDateString()) {
+      if (new Date(flight.journeyDetails.departure.time).toDateString() !== new Date(date).toDateString()) {
         return false
       }
       
@@ -185,7 +184,7 @@ export const FlightsSearch = (props) => {
             direction="row"
             justifyContent="space-between"
             spacing={1}
-            useFlexGap={true}
+            useFlexGap
           >
             <Stack
               direction="row"
