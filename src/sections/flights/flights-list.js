@@ -1,16 +1,17 @@
 import PropTypes from 'prop-types';
-import { format } from 'date-fns';
+import { formatDistance } from 'date-fns';
 import NextLink from 'next/link';
 import { useRouter } from 'next/navigation';
-import { 
+import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
   Button,
-  Card, 
+  Card,
+  Divider,
   Grid,
   Link,
-  Stack, 
+  Stack,
   SvgIcon,
   TablePagination,
   Typography
@@ -33,7 +34,7 @@ export const FlightsList = (props) => {
     items = [],
     onDeselectAll,
     onDeselectOne,
-    onPageChange = () => {},
+    onPageChange = () => { },
     onRowsPerPageChange,
     onSelectAll,
     onSelectOne,
@@ -72,6 +73,9 @@ export const FlightsList = (props) => {
                     borderRadius: '20px'
                   },
                 },
+                '&': {
+                  backgroundColor: theme.palette.neutral[50]
+                },
               }}
             >
               <AccordionSummary
@@ -106,28 +110,29 @@ export const FlightsList = (props) => {
                         spacing={2}
                         alignItems="center"
                       >
+                        {/* TODO : Handle if there are multiple airlines */}
                         <img
-                          src={flight.airlineLogo}
-                          alt={flight.airline}
+                          src={flight.airlines[0].logo}
+                          alt={flight.airlines[0].name}
                           loading="lazy"
                           style={{ width: "2.5rem" }}
                         />
-                        <Typography 
+                        <Typography
                           variant='h6'
                           component='span'
-                          sx = {{
+                          sx={{
                             fontSize: '1rem',
                             lineHeight: 'unset',
                           }}
                         >
-                          {flight.airline}
+                          {flight.airlines[0].name}
                         </Typography>
                       </Stack>
                       <Stack
                         direction="row"
                         spacing={1.5}
                         alignItems="center"
-                        sx={{ 
+                        sx={{
                           mt: 1,
                           mx: 0.5,
                           px: 1.5,
@@ -159,14 +164,14 @@ export const FlightsList = (props) => {
                         justifyContent='flex-start'
                       >
                         <FlightSummary
-                          departureTime={flight.departure.time}
-                          departureAirport={flight.departure.airport}
-                          arrivalTime={flight.arrival.time}
-                          arrivalAirport={flight.arrival.airport}
+                          departureTime={flight.journeyDetails.departure.time}
+                          departureAirport={flight.journeyDetails.departure.airport}
+                          arrivalTime={flight.journeyDetails.arrival.time}
+                          arrivalAirport={flight.journeyDetails.arrival.airport}
                         />
-                        {flight.transitDetails && 
+                        {flight.legs.length > 1 &&
                           <FlightFeature
-                            text={flight.transitDetails.length - 1}
+                            text={flight.legs.length - 1}
                             icon={<ConnectingAirportsRoundedIcon />}
                             iconSize='1.5rem'
                             fontSize='1rem'
@@ -186,7 +191,7 @@ export const FlightsList = (props) => {
                         spacing={2}
                         width='-webkit-fill-available'
                       >
-                        <Stack 
+                        <Stack
                           direction='row'
                           spacing={0.5}
                           alignItems='center'
@@ -196,7 +201,7 @@ export const FlightsList = (props) => {
                             variant='h6'
                             component='span'
                             align='right'
-                            sx={{ 
+                            sx={{
                               lineHeight: 'unset',
                               // color: theme.palette.accent.red
                             }}
@@ -207,7 +212,7 @@ export const FlightsList = (props) => {
                             variant='caption'
                             component='span'
                             align='right'
-                            sx={{ 
+                            sx={{
                               lineHeight: 'unset',
                               // color: theme.palette.accent.red
                             }}
@@ -215,8 +220,8 @@ export const FlightsList = (props) => {
                             /kg
                           </Typography>
                         </Stack>
-                        <div 
-                          style={{ 
+                        <div
+                          style={{
                             width: 'fit-content',
                             marginLeft: 'auto'
                           }}
@@ -235,7 +240,7 @@ export const FlightsList = (props) => {
                               </SvgIcon>
                             )}
                             variant="contained"
-                            sx={{ 
+                            sx={{
                               width: 'fit-content',
                             }}
                             onClick={() => handlePickFlight(flight)}
@@ -248,10 +253,46 @@ export const FlightsList = (props) => {
                   </Grid>
                 </Card>
               </AccordionSummary>
-              <AccordionDetails>
-                <FlightDetail
-                  flight={flight}
-                />
+              <AccordionDetails
+                sx={{
+                  px: 1,
+                }}
+              >
+                <Stack
+                  useFlexGap
+                >
+                  {flight.legs.map((leg, index, arr) => (
+                    <Stack
+                      key={index}
+                      useFlexGap
+                    >
+                      <FlightDetail
+                        flight={leg}
+                        airline={flight.airlines[leg.airlineRef]}
+                      />
+                      {index !== arr.length - 1 && (
+                        <Divider
+                          variant="middle"
+                          sx={{
+                            my: 1.5,
+                            '&::before, &::after': {
+                              borderColor: theme.palette.neutral[400]
+                            }
+                          }}
+                        >
+                          <Typography
+                            variant='body2'
+                          >
+                            {`Wait for ${formatDistance(
+                              leg.arrival.time,
+                              arr[index + 1].departure.time,
+                            )}`}
+                          </Typography>
+                        </Divider>
+                      )}
+                    </Stack>
+                  ))}
+                </Stack>
               </AccordionDetails>
             </Accordion>
           )
@@ -266,7 +307,7 @@ export const FlightsList = (props) => {
           rowsPerPageOptions={[5, 10, 25]}
         />
       </> : <>
-        <Stack 
+        <Stack
           spacing={1}
           useFlexGap
           justifyContent="center"
@@ -275,8 +316,8 @@ export const FlightsList = (props) => {
             my: 4
           }}
         >
-          <img 
-            src="/assets/searching-illustration.svg" 
+          <img
+            src="/assets/searching-illustration.svg"
             width="30%"
             alt=""
             loading="lazy"
@@ -285,7 +326,7 @@ export const FlightsList = (props) => {
             variant='h6'
             component='span'
             align='center'
-            sx={{ 
+            sx={{
               textAlign: 'center',
               marginTop: 3
             }}
@@ -296,7 +337,7 @@ export const FlightsList = (props) => {
             variant='body2'
             component='span'
             align='center'
-            sx={{ 
+            sx={{
               textAlign: 'center',
             }}
           >

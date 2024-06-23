@@ -71,13 +71,13 @@ export const FlightsFormSelected = (props) => {
             }}
           >
             <img
-              src={flight.airlineLogo}
-              alt={flight.airline}
+              src={flight.airlines.logo}
+              alt={flight.airlines.name}
               loading="lazy"
               style={{ width: "3rem" }}
             />
             <Typography variant='h6' component='span'>
-              {flight.airline}
+              {flight.airlines.name}
             </Typography>
           </Stack>
           <Grid
@@ -185,12 +185,12 @@ export const FlightsFormSelected = (props) => {
                       <Typography
                         variant='body1'
                       >
-                        {format(flight.departure.time, 'HH:mm')}
+                        {format(flight.journeyDetails.departure.time, 'HH:mm')}
                       </Typography>
                       <Typography
                         variant='body2'
                       >
-                        {format(flight.departure.time, 'd MMM')}
+                        {format(flight.journeyDetails.departure.time, 'd MMM')}
                       </Typography>
                     </TimelineOppositeContent>
                     <TimelineSeparator>
@@ -201,7 +201,7 @@ export const FlightsFormSelected = (props) => {
                       <Typography
                         variant='body1'
                       >
-                        {flight.departure.airport.city} ({flight.departure.airport.code})
+                        {flight.journeyDetails.departure.airport.city} ({flight.journeyDetails.departure.airport.code})
                       </Typography>
                       <Typography
                         variant='body2'
@@ -209,7 +209,7 @@ export const FlightsFormSelected = (props) => {
                           wordWrap: 'break-word'
                         }}
                       >
-                        {flight.departure.airport.name}
+                        {flight.journeyDetails.departure.airport.name}
                       </Typography>
                     </TimelineContent>
                   </TimelineItem>
@@ -222,12 +222,12 @@ export const FlightsFormSelected = (props) => {
                       <Typography
                         variant='body1'
                       >
-                        {format(flight.arrival.time, 'HH:mm')}
+                        {format(flight.journeyDetails.arrival.time, 'HH:mm')}
                       </Typography>
                       <Typography
                         variant='body2'
                       >
-                        {format(flight.arrival.time, 'd MMM')}
+                        {format(flight.journeyDetails.arrival.time, 'd MMM')}
                       </Typography>
                     </TimelineOppositeContent>
                     <TimelineSeparator>
@@ -237,7 +237,7 @@ export const FlightsFormSelected = (props) => {
                       <Typography
                         variant='body1'
                       >
-                        {flight.arrival.airport.city} ({flight.arrival.airport.code})
+                        {flight.journeyDetails.arrival.airport.city} ({flight.journeyDetails.arrival.airport.code})
                       </Typography>
                       <Typography
                         variant='body2'
@@ -245,7 +245,7 @@ export const FlightsFormSelected = (props) => {
                           wordWrap: 'break-word'
                         }}
                       >
-                        {flight.arrival.airport.name}
+                        {flight.journeyDetails.arrival.airport.name}
                       </Typography>
                     </TimelineContent>
                   </TimelineItem>

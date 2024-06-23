@@ -113,8 +113,8 @@ export const FlightsFormList = (props) => {
                         alignItems="center"
                       >
                         <img
-                          src={flight.airlineLogo}
-                          alt={flight.airline}
+                          src={flight.airlines.logo}
+                          alt={flight.airlines.name}
                           loading="lazy"
                           style={{ width: "2.5rem" }}
                         />
@@ -126,7 +126,7 @@ export const FlightsFormList = (props) => {
                             lineHeight: 'unset',
                           }}
                         >
-                          {flight.airline}
+                          {flight.airlines.name}
                         </Typography>
                       </Stack>
                       <Stack
@@ -158,10 +158,10 @@ export const FlightsFormList = (props) => {
                       md={4}
                     >
                       <FlightSummary
-                        departureTime={flight.departure.time}
-                        departureAirport={flight.departure.airport}
-                        arrivalTime={flight.arrival.time}
-                        arrivalAirport={flight.arrival.airport}
+                        departureTime={flight.journeyDetails.departure.time}
+                        departureAirport={flight.journeyDetails.departure.airport}
+                        arrivalTime={flight.journeyDetails.arrival.time}
+                        arrivalAirport={flight.journeyDetails.arrival.airport}
                       />
                     </Grid>
                     <Grid

@@ -43,31 +43,31 @@ export const airportsData = [
     city: "Singapore",
     country: "Singapura"
   },
-  { 
+  {
     name: "Kuala Lumpur International Airport",
     code: "KUL",
     city: "Kuala Lumpur",
     country: "Malaysia"
   },
-  { 
+  {
     name: "Soekarno Hatta International Airport",
     code: "CGK",
     city: "Jakarta",
     country: "Indonesia"
   },
-  { 
+  {
     name: "Yogyakarta International Airport",
     code: "YIA",
     city: "Yogyakarta",
     country: "Indonesia"
   },
-  { 
+  {
     name: "Adi Sutjipto",
     code: "YOG",
     city: "Yogyakarta",
-    country: "Indonesia" 
+    country: "Indonesia"
   },
-  { 
+  {
     name: "Juanda",
     code: "ADD",
     city: "Surabaya",
@@ -75,138 +75,335 @@ export const airportsData = [
   },
 ];
 
-export const flightsData = [
+export const airlinesData = [
   {
     id: '1',
-    airline: 'Malaysia Airlines',
-    airlineLogo: '/assets/logos/airlines/logo-malaysiaairlines-square.png',
-    planeModel: 'MH-360',
-    weightLimit: 1000,
-    sizeLimit: 100,
-    departure: {
-      airport: airportsData[0],
-      time: addDays(addHours(now, 6), 0).getTime(),
-    },
-    arrival: {
-      airport: airportsData[1],
-      time: addDays(addHours(now, 9), 0).getTime(),
-    },
-    price: 55000,
-    categories: ['General Cargo', 'Special Cargo'],
-    packagings: ['Palet', 'Wooden Box', 'Wooden Palet'],
+    name: 'Malaysia Airlines',
+    logo: '/assets/logos/airlines/logo-malaysiaairlines-square.png',
   },
   {
     id: '2',
-    airline: 'Malaysia Airlines',
-    airlineLogo: '/assets/logos/airlines/logo-malaysiaairlines-square.png',
-    planeModel: 'MH-871',
-    weightLimit: 1000,
-    sizeLimit: 100,
-    departure: {
-      airport: airportsData[1],
-      time: addDays(addHours(now, 1), 0).getTime(),
-    },
-    arrival: {
-      airport: airportsData[5],
-      time: addDays(addHours(now, 17), 0).getTime(),
-    },
-    price: 55000,
-    categories: ['General Cargo', 'Special Cargo'],
-    packagings: ['Palet', 'Wooden Box', 'Wooden Palet'],
+    name: 'Citilink',
+    logo: '/assets/logos/airlines/logo-citilink-square.png',
   },
   {
     id: '3',
-    airline: 'Citilink',
-    airlineLogo: '/assets/logos/airlines/logo-citilink-square.png',
-    planeModel: 'QG-252',
+    name: 'Garuda Indonesia',
+    logo: '/assets/logos/airlines/logo-garudaindonesia-square.png',
+  },
+]
+
+export const flightsData = [
+  {
+    id: '1',
+    airlines: [airlinesData[0]],
+    journeyDetails: {
+      departure: {
+        airport: airportsData[0],
+        time: addDays(addHours(now, 6), 0).getTime(),
+      },
+      arrival: {
+        airport: airportsData[1],
+        time: addDays(addHours(now, 9), 0).getTime(),
+      },
+    },
+    weightLimit: 1000,
+    sizeLimit: 100,
+    categories: ['General Cargo', 'Special Cargo'],
+    packagings: ['Palet', 'Wooden Box', 'Wooden Palet'],
+    legs: [
+      {
+        airlineRef: 0,
+        planeModel: 'MH-360',
+        weightLimit: 1000,
+        sizeLimit: 100,
+        categories: ['General Cargo', 'Special Cargo'],
+        packagings: ['Palet', 'Wooden Box', 'Wooden Palet'],
+        departure: {
+          airport: airportsData[0],
+          time: addDays(addHours(now, 6), 0).getTime(),
+        },
+        arrival: {
+          airport: airportsData[1],
+          time: addDays(addHours(now, 9), 0).getTime(),
+        },
+      },
+    ],
+    price: 55000,
+  },
+  {
+    id: '2',
+    airlines: [airlinesData[0]],
+    journeyDetails: {
+      departure: {
+        airport: airportsData[1],
+        time: addDays(addHours(now, 1), 0).getTime(),
+      },
+      arrival: {
+        airport: airportsData[5],
+        time: addDays(addHours(now, 17), 0).getTime(),
+      },
+    },
+    weightLimit: 1000,
+    sizeLimit: 100,
+    categories: ['General Cargo', 'Special Cargo'],
+    packagings: ['Palet', 'Wooden Box', 'Wooden Palet'],
+    legs: [
+      {
+        airlineRef: 0,
+        planeModel: 'MH-871',
+        weightLimit: 1000,
+        sizeLimit: 100,
+        categories: ['General Cargo', 'Special Cargo'],
+        packagings: ['Palet', 'Wooden Box', 'Wooden Palet'],
+        departure: {
+          airport: airportsData[1],
+          time: addDays(addHours(now, 1), 0).getTime(),
+        },
+        arrival: {
+          airport: airportsData[5],
+          time: addDays(addHours(now, 17), 0).getTime(),
+        },
+      },
+    ],
+    price: 55000,
+  },
+  {
+    id: '3',
+    airlines: [airlinesData[1]],
+    journeyDetails: {
+      departure: {
+        airport: airportsData[2],
+        time: addDays(addHours(now, 2), 0).getTime(),
+      },
+      arrival: {
+        airport: airportsData[5],
+        time: addDays(addHours(now, 10), 0).getTime(),
+      },
+    },
     weightLimit: 350,
     sizeLimit: 100,
-    departure: {
-      airport: airportsData[2],
-      time: addDays(addHours(now, 2), 0).getTime(),
-    },
-    arrival: {
-      airport: airportsData[5],
-      time: addDays(addHours(now, 10), 0).getTime(),
-    },
-    price: 50000,
     categories: ['General Cargo', 'Mail Cargo'],
     packagings: ['Keranjang', 'Karton', 'Wooden Box'],
+    legs: [
+      {
+        airlineRef: 0,
+        planeModel: 'QG-252',
+        weightLimit: 350,
+        sizeLimit: 100,
+        categories: ['General Cargo', 'Mail Cargo'],
+        packagings: ['Keranjang', 'Karton', 'Wooden Box'],
+        departure: {
+          airport: airportsData[2],
+          time: addDays(addHours(now, 2), 0).getTime(),
+        },
+        arrival: {
+          airport: airportsData[5],
+          time: addDays(addHours(now, 10), 0).getTime(),
+        },
+      },
+    ],
+    price: 50000,
   },
   {
     id: '4',
-    airline: 'Garuda Indonesia',
-    airlineLogo: '/assets/logos/airlines/logo-garudaindonesia-square.png',
-    planeModel: 'GA-855',
+    airlines: [airlinesData[2]],
+    journeyDetails: {
+      departure: {
+        airport: airportsData[0],
+        time: addDays(addHours(now, 4), 0).getTime(),
+      },
+      arrival: {
+        airport: airportsData[5],
+        time: addDays(addHours(now, 7), 0).getTime(),
+      },
+    },
     weightLimit: 1500,
     sizeLimit: 100,
-    departure: {
-      airport: airportsData[0],
-      time: addDays(addHours(now, 4), 0).getTime(),
-    },
-    arrival: {
-      airport: airportsData[5],
-      time: addDays(addHours(now, 7), 0).getTime(),
-    },
-    price: 60000,
     categories: ['General Cargo', 'Special Cargo'],
     packagings: ['Palet', 'Wooden Box', 'Wooden Palet'],
+    legs: [
+      {
+        airlineRef: 0,
+        planeModel: 'GA-855',
+        weightLimit: 1500,
+        sizeLimit: 100,
+        categories: ['General Cargo', 'Special Cargo'],
+        packagings: ['Palet', 'Wooden Box', 'Wooden Palet'],
+        departure: {
+          airport: airportsData[0],
+          time: addDays(addHours(now, 4), 0).getTime(),
+        },
+        arrival: {
+          airport: airportsData[5],
+          time: addDays(addHours(now, 7), 0).getTime(),
+        },
+      },
+    ],
+    price: 60000,
   },
   {
     id: '5',
-    airline: 'Garuda Indonesia',
-    airlineLogo: '/assets/logos/airlines/logo-garudaindonesia-square.png',
-    planeModel: 'GA-837',
+    airlines: [airlinesData[2]],
+    journeyDetails: {
+      departure: {
+        airport: airportsData[0],
+        time: addDays(addHours(now, 7), 0).getTime(),
+      },
+      arrival: {
+        airport: airportsData[2],
+        time: addDays(addHours(now, 19), 0).getTime(),
+      },
+    },
     weightLimit: 1500,
     sizeLimit: 100,
-    departure: {
-      airport: airportsData[0],
-      time: addDays(addHours(now, 7), 0).getTime(),
-    },
-    arrival: {
-      airport: airportsData[2],
-      time: addDays(addHours(now, 19), 0).getTime(),
-    },
-    price: 60000,
     categories: ['General Cargo', 'Special Cargo'],
     packagings: ['Palet', 'Wooden Box', 'Wooden Palet'],
+    legs: [
+      {
+        airlineRef: 0,
+        planeModel: 'GA-837',
+        weightLimit: 1500,
+        sizeLimit: 100,
+        categories: ['General Cargo', 'Special Cargo'],
+        packagings: ['Palet', 'Wooden Box', 'Wooden Palet'],
+        departure: {
+          airport: airportsData[0],
+          time: addDays(addHours(now, 7), 0).getTime(),
+        },
+        arrival: {
+          airport: airportsData[2],
+          time: addDays(addHours(now, 19), 0).getTime(),
+        },
+      },
+    ],
+    price: 60000,
   },
   {
     id: '6',
-    airline: 'Garuda Indonesia',
-    airlineLogo: '/assets/logos/airlines/logo-garudaindonesia-square.png',
-    planeModel: 'GA-304',
+    airlines: [airlinesData[2]],
+    journeyDetails: {
+      departure: {
+        airport: airportsData[2],
+        time: addDays(addHours(now, 7), 0).getTime(),
+      },
+      arrival: {
+        airport: airportsData[5],
+        time: addDays(addHours(now, 13), 0).getTime(),
+      },
+    },
     weightLimit: 1500,
     sizeLimit: 100,
-    departure: {
-      airport: airportsData[2],
-      time: addDays(addHours(now, 7), 0).getTime(),
-    },
-    arrival: {
-      airport: airportsData[5],
-      time: addDays(addHours(now, 13), 0).getTime(),
-    },
-    price: 60000,
     categories: ['General Cargo', 'Special Cargo'],
     packagings: ['Palet', 'Wooden Box', 'Wooden Palet'],
+    legs: [
+      {
+        airlineRef: 0,
+        planeModel: 'GA-304',
+        weightLimit: 1500,
+        sizeLimit: 100,
+        categories: ['General Cargo', 'Special Cargo'],
+        packagings: ['Palet', 'Wooden Box', 'Wooden Palet'],
+        departure: {
+          airport: airportsData[2],
+          time: addDays(addHours(now, 7), 0).getTime(),
+        },
+        arrival: {
+          airport: airportsData[5],
+          time: addDays(addHours(now, 13), 0).getTime(),
+        },
+      },
+    ],
+    price: 60000,
   },
   {
     id: '7',
-    airline: 'Citilink',
-    airlineLogo: '/assets/logos/airlines/logo-citilink-square.png',
-    planeModel: 'QG-527',
+    airlines: [airlinesData[1]],
+    journeyDetails: {
+      departure: {
+        airport: airportsData[0],
+        time: addDays(addHours(now, 4), 0).getTime(),
+      },
+      arrival: {
+        airport: airportsData[2],
+        time: addDays(addHours(now, 12), 0).getTime(),
+      },
+    },
+    weightLimit: 350,
+    sizeLimit: 250,
+    categories: ['General Cargo', 'Mail Cargo'],
+    packagings: ['Keranjang', 'Karton'],
+    legs: [
+      {
+        airlineRef: 0,
+        planeModel: 'QG-527',
+        weightLimit: 350,
+        sizeLimit: 250,
+        categories: ['General Cargo', 'Mail Cargo'],
+        packagings: ['Keranjang', 'Karton'],
+        departure: {
+          airport: airportsData[0],
+          time: addDays(addHours(now, 4), 0).getTime(),
+        },
+        arrival: {
+          airport: airportsData[2],
+          time: addDays(addHours(now, 12), 0).getTime(),
+        },
+      },
+    ],
+    price: 50000,
+  },
+  {
+    id: '8',
+    airlines: [airlinesData[1]],
+    journeyDetails: {
+      departure: {
+        airport: airportsData[0],
+        time: addDays(addHours(now, 4), 0).getTime(),
+      },
+      arrival: {
+        airport: airportsData[3],
+        time: addDays(addHours(now, 16), 0).getTime(),
+      },
+    },
     weightLimit: 350,
     sizeLimit: 100,
-    departure: {
-      airport: airportsData[0],
-      time: addDays(addHours(now, 4), 0).getTime(),
-    },
-    arrival: {
-      airport: airportsData[2],
-      time: addDays(addHours(now, 12), 0).getTime(),
-    },
-    price: 50000,
-    categories: ['General Cargo', 'Mail Cargo'],
-    packagings: ['Keranjang', 'Karton', 'Wooden Box'],
+    categories: ['General Cargo'],
+    packagings: ['Keranjang', 'Karton'],
+    legs: [
+      {
+        airlineRef: 0,
+        planeModel: 'QG-527',
+        weightLimit: 350,
+        sizeLimit: 250,
+        categories: ['General Cargo', 'Mail Cargo'],
+        packagings: ['Keranjang', 'Karton'],
+        departure: {
+          airport: airportsData[0],
+          time: addDays(addHours(now, 4), 0).getTime(),
+        },
+        arrival: {
+          airport: airportsData[2],
+          time: addDays(addHours(now, 12), 0).getTime(),
+        },
+      },
+      {
+        airlineRef: 0,
+        planeModel: 'QG-577',
+        weightLimit: 700,
+        sizeLimit: 100,
+        categories: ['General Cargo'],
+        packagings: ['Keranjang', 'Karton', 'Wooden Box'],
+        departure: {
+          airport: airportsData[2],
+          time: addDays(addHours(now, 14), 0).getTime(),
+        },
+        arrival: {
+          airport: airportsData[2],
+          time: addDays(addHours(now, 16), 0).getTime(),
+        },
+      },
+    ],
+    price: 60000,
   },
 ]
