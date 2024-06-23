@@ -100,7 +100,7 @@ const FlightsFormSearch = (props) => {
         setCategories={setCategories}
         setPackaging={setPackaging}
       />
-      {searchCommenced ?
+      {searchCommenced && flights ?
         <Stack 
           direction='row'
           spacing={2}

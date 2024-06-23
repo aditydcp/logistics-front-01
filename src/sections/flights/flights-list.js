@@ -27,6 +27,7 @@ import { FlightFeature } from 'src/components/flights/flights-feature';
 import { formatCurrency } from 'src/utils/format-currency';
 import { FlightSummary } from 'src/components/flights/flights-summary';
 import { FlightDetail } from './flights-detail';
+import { FlightAvatar } from 'src/components/flights/flights-avatar';
 
 export const FlightsList = (props) => {
   const {
@@ -105,29 +106,16 @@ export const FlightsList = (props) => {
                       xs={8}
                       md={4}
                     >
-                      <Stack
-                        direction="row"
-                        spacing={2}
-                        alignItems="center"
-                      >
-                        {/* TODO : Handle if there are multiple airlines */}
-                        <img
-                          src={flight.airlines[0].logo}
-                          alt={flight.airlines[0].name}
-                          loading="lazy"
-                          style={{ width: "2.5rem" }}
-                        />
-                        <Typography
-                          variant='h6'
-                          component='span'
-                          sx={{
-                            fontSize: '1rem',
-                            lineHeight: 'unset',
-                          }}
-                        >
-                          {flight.airlines[0].name}
-                        </Typography>
-                      </Stack>
+                      {/* TODO : Handle if there are multiple airlines */}
+                      <FlightAvatar
+                        airline={flight.airlines[0]}
+                        size="medium"
+                        stackSpacing={2}
+                        typeSx={{
+                          fontSize: '1rem',
+                          lineHeight: 'unset',
+                        }}
+                      />
                       <Stack
                         direction="row"
                         spacing={1.5}

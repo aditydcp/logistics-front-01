@@ -1,27 +1,12 @@
-import { format } from 'date-fns';
 import {
   Card,
-  Chip,
   Container,
   Stack,
-  SvgIcon,
-  Typography
 } from '@mui/material'
-import {
-  Timeline,
-  TimelineItem,
-  TimelineSeparator,
-  TimelineConnector,
-  TimelineContent,
-  TimelineOppositeContent,
-  timelineOppositeContentClasses,
-  TimelineDot,
-} from '@mui/lab'
+import { FlightTimeline } from 'src/components/flights/flights-timeline';
 import { useTheme } from '@mui/material/styles'
-import WorkOutlineRoundedIcon from '@mui/icons-material/WorkOutlineRounded';
-import ZoomOutMapRoundedIcon from '@mui/icons-material/ZoomOutMapRounded';
-import OpenInFullRoundedIcon from '@mui/icons-material/OpenInFullRounded';
-import SwitchCameraRoundedIcon from '@mui/icons-material/SwitchCameraRounded';
+import { FlightAvatar } from 'src/components/flights/flights-avatar';
+import { FlightTicketDetails } from 'src/components/flights/flights-ticket-details';
 
 export const FlightDetail = (props) => {
   const {
@@ -33,7 +18,7 @@ export const FlightDetail = (props) => {
 
   return (
     <Card
-    elevation={1}
+      elevation={1}
       variant='outlined'
     >
       <Stack
@@ -50,102 +35,7 @@ export const FlightDetail = (props) => {
             width: '40%'
           }}
         >
-          <Timeline
-            position='right'
-            sx={{
-              [`& .${timelineOppositeContentClasses.root}`]: {
-                flex: 0.2,
-              },
-              p: 0,
-              m: 0
-            }}
-          >
-            <TimelineItem
-              sx={{
-                minHeight: '5rem',
-              }}
-            >
-              <TimelineOppositeContent align='right' sx={{ paddingLeft: 0 }}>
-                <Typography
-                  variant='body1'
-                >
-                  {format(flight.departure.time, 'HH:mm')}
-                </Typography>
-                <Typography
-                  variant='body2'
-                  sx={{
-                    textWrap: 'nowrap'
-                  }}
-                >
-                  {format(flight.departure.time, 'd MMM')}
-                </Typography>
-              </TimelineOppositeContent>
-              <TimelineSeparator>
-                <TimelineDot />
-                <TimelineConnector />
-              </TimelineSeparator>
-              <TimelineContent>
-                <Typography
-                  variant='body1'
-                >
-                  {flight.departure.airport.city} ({flight.departure.airport.code})
-                </Typography>
-                <Typography
-                  variant='body2'
-                  sx={{
-                    wordWrap: 'break-word'
-                  }}
-                >
-                  {flight.departure.airport.name}
-                </Typography>
-              </TimelineContent>
-            </TimelineItem>
-            <TimelineItem
-              sx={{
-                minHeight: 0,
-              }}
-            >
-              <TimelineOppositeContent
-                align='right'
-                sx={{
-                  paddingLeft: 0,
-                  textWrap: 'nowrap',
-                }}
-              >
-                <Typography
-                  variant='body1'
-                >
-                  {format(flight.arrival.time, 'HH:mm')}
-                </Typography>
-                <Typography
-                  variant='body2'
-                  sx={{
-                    textWrap: 'nowrap'
-                  }}
-                >
-                  {format(flight.arrival.time, 'd MMM')}
-                </Typography>
-              </TimelineOppositeContent>
-              <TimelineSeparator>
-                <TimelineDot />
-              </TimelineSeparator>
-              <TimelineContent>
-                <Typography
-                  variant='body1'
-                >
-                  {flight.arrival.airport.city} ({flight.arrival.airport.code})
-                </Typography>
-                <Typography
-                  variant='body2'
-                  sx={{
-                    wordWrap: 'break-word'
-                  }}
-                >
-                  {flight.arrival.airport.name}
-                </Typography>
-              </TimelineContent>
-            </TimelineItem>
-          </Timeline>
+          <FlightTimeline flight={flight} />
         </Container>
         <Stack
           spacing={0.5}
@@ -153,101 +43,15 @@ export const FlightDetail = (props) => {
             width: '60%'
           }}
         >
-          <Stack
-            direction='row'
-            spacing={1.5}
-            alignItems='flex-start'
-            justifyContent='flex-start'
-          >
-            <img
-              src={airline.logo}
-              alt={airline.name}
-              loading="lazy"
-              style={{ width: "2.5rem" }}
-            />
-            <Stack
-            >
-              <Typography variant='body1'>
-                {airline.name}
-              </Typography>
-              <Typography variant='body2'>
-                {flight.planeModel}
-              </Typography>
-            </Stack>
-          </Stack>
-          <Stack
-            direction='row'
-            spacing={2}
-            alignItems='flex-start'
-          >
-            <Stack
-              sx={{
-                width: '-webkit-fill-available'
-              }}
-            >
-              <Stack
-                direction='row'
-                spacing={1}
-                alignItems='center'
-              >
-                <SvgIcon sx={{ fontSize: '1rem' }}>
-                  <WorkOutlineRoundedIcon />
-                </SvgIcon>
-                <Typography variant='body2'>
-                  Available {flight.weightLimit} kg
-                </Typography>
-              </Stack>
-              <Stack
-                direction='row'
-                spacing={1}
-                alignItems='center'
-              >
-                <SvgIcon sx={{ fontSize: '1rem' }}>
-                  <SwitchCameraRoundedIcon />
-                </SvgIcon>
-                <Typography variant='body2'>
-                  Size Available {flight.sizeLimit} m<sup>3</sup>
-                </Typography>
-              </Stack>
-            </Stack>
-            <Stack
-              spacing={1}
-              sx={{
-                width: '-webkit-fill-available'
-              }}
-            >
-              <Stack spacing={0.5} >
-                <Typography variant='body2'>
-                  Categories
-                </Typography>
-                <Stack
-                  direction='row'
-                  flexWrap='wrap'
-                  spacing={1}
-                  useFlexGap
-                >
-                  {flight.categories.map((category) => (
-                    <Chip key={category} label={category} size='small' />
-                  ))}
-                </Stack>
-              </Stack>
-              <Stack spacing={0.5} >
-                <Typography variant='body2'>
-                  Packaging
-                </Typography>
-                <Stack
-                  direction='row'
-                  flexWrap='wrap'
-                  spacing={1}
-                  useFlexGap
-                >
-                  {flight.packagings.map((packaging) => (
-                    <Chip key={packaging} label={packaging} size='small' />
-                  ))}
-                </Stack>
-              </Stack>
-            </Stack>
-          </Stack>
+          <FlightAvatar
+            flight={flight}
+            airline={airline}
+          />
+          <FlightTicketDetails
+            flight={flight}
+            type='row'
+            topLevelAlignItems='flex-start'
+          />
         </Stack>
       </Stack>
     </Card>

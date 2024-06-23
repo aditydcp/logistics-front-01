@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { format } from 'date-fns';
+import { formatDistance } from 'date-fns';
 import NextLink from 'next/link';
 import { useRouter } from 'next/navigation';
 import {
@@ -8,6 +8,7 @@ import {
   AccordionDetails,
   Button,
   Card,
+  Divider,
   Grid,
   Link,
   Stack,
@@ -21,6 +22,7 @@ import ZoomOutMapRoundedIcon from '@mui/icons-material/ZoomOutMapRounded';
 import OpenInFullRoundedIcon from '@mui/icons-material/OpenInFullRounded';
 import SwitchCameraRoundedIcon from '@mui/icons-material/SwitchCameraRounded';
 import AirplaneTicketRoundedIcon from '@mui/icons-material/AirplaneTicketRounded';
+import ConnectingAirportsRoundedIcon from '@mui/icons-material/ConnectingAirportsRounded';
 import { FlightFeature } from 'src/components/flights/flights-feature';
 import { formatCurrency } from 'src/utils/format-currency';
 import { FlightSummary } from 'src/components/flights/flights-summary';
@@ -76,6 +78,9 @@ export const FlightsFormList = (props) => {
                     borderRadius: '20px'
                   },
                 },
+                '&': {
+                  backgroundColor: theme.palette.neutral[50]
+                },
                 boxShadow: isSelected ? `0px 3px 14px ${theme.palette.primary.main}` : 'none',
                 transition: 'box-shadow 0.3s ease', // Add transition for smooth effect
               }}
@@ -107,28 +112,16 @@ export const FlightsFormList = (props) => {
                       xs={8}
                       md={4}
                     >
-                      <Stack
-                        direction="row"
-                        spacing={2}
-                        alignItems="center"
-                      >
-                        <img
-                          src={flight.airlines.logo}
-                          alt={flight.airlines.name}
-                          loading="lazy"
-                          style={{ width: "2.5rem" }}
-                        />
-                        <Typography
-                          variant='h6'
-                          component='span'
-                          sx={{
-                            fontSize: '1rem',
-                            lineHeight: 'unset',
-                          }}
-                        >
-                          {flight.airlines.name}
-                        </Typography>
-                      </Stack>
+                      {/* TODO : Handle if there are multiple airlines */}
+                      <FlightAvatar
+                        airline={flight.airlines[0]}
+                        size="medium"
+                        stackSpacing={2}
+                        typeSx={{
+                          fontSize: '1rem',
+                          lineHeight: 'unset',
+                        }}
+                      />
                       <Stack
                         direction="row"
                         spacing={1.5}
@@ -156,13 +149,30 @@ export const FlightsFormList = (props) => {
                       item
                       xs={4}
                       md={4}
+                      container
+                      direction='column'
                     >
-                      <FlightSummary
-                        departureTime={flight.journeyDetails.departure.time}
-                        departureAirport={flight.journeyDetails.departure.airport}
-                        arrivalTime={flight.journeyDetails.arrival.time}
-                        arrivalAirport={flight.journeyDetails.arrival.airport}
-                      />
+                      <Stack
+                        direction='column'
+                        alignItems='center'
+                        justifyContent='flex-start'
+                      >
+                        <FlightSummary
+                          departureTime={flight.journeyDetails.departure.time}
+                          departureAirport={flight.journeyDetails.departure.airport}
+                          arrivalTime={flight.journeyDetails.arrival.time}
+                          arrivalAirport={flight.journeyDetails.arrival.airport}
+                        />
+                        {flight.legs.length > 1 &&
+                          <FlightFeature
+                            text={flight.legs.length - 1}
+                            icon={<ConnectingAirportsRoundedIcon />}
+                            iconSize='1.5rem'
+                            fontSize='1rem'
+                            reverse
+                          />
+                        }
+                      </Stack>
                     </Grid>
                     <Grid
                       item
@@ -242,10 +252,46 @@ export const FlightsFormList = (props) => {
                   </Grid>
                 </Card>
               </AccordionSummary>
-              <AccordionDetails>
-                <FlightDetail
-                  flight={flight}
-                />
+              <AccordionDetails
+                sx={{
+                  px: 1,
+                }}
+              >
+                <Stack
+                  useFlexGap
+                >
+                  {flight.legs.map((leg, index, arr) => (
+                    <Stack
+                      key={index}
+                      useFlexGap
+                    >
+                      <FlightDetail
+                        flight={leg}
+                        airline={flight.airlines[leg.airlineRef]}
+                      />
+                      {index !== arr.length - 1 && (
+                        <Divider
+                          variant="middle"
+                          sx={{
+                            my: 1.5,
+                            '&::before, &::after': {
+                              borderColor: theme.palette.neutral[400]
+                            }
+                          }}
+                        >
+                          <Typography
+                            variant='body2'
+                          >
+                            {`Wait for ${formatDistance(
+                              leg.arrival.time,
+                              arr[index + 1].departure.time,
+                            )}`}
+                          </Typography>
+                        </Divider>
+                      )}
+                    </Stack>
+                  ))}
+                </Stack>
               </AccordionDetails>
             </Accordion>
           )
