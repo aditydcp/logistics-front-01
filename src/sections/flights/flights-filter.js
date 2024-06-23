@@ -34,17 +34,7 @@ export const FlightsFilter = (props) => {
     setFilteredFlights
   } = props
 
-  const airlines = flights.reduce((acc, current) => { // get unique airlines value
-    const x = acc.find(item => item.airline === current.airline);
-    if (!x) {
-       return acc.concat([current]);
-    } else {
-       return acc;
-    }
-  }, []).map(flight => ({ // get only the airline and logo
-    name: flight.airline,
-    logo: flight.airlineLogo
-  })).sort((a, b) => a.name.localeCompare(b.name)) // sort alphabetically
+  const [airlines, setAirlines] = useState([])
 
   const [selectedAirlines, setSelectedAirlines] = useState([...new Set(airlines.map(airline => airline.name))])
   const [priceRange, setPriceRange] = useState(defaultRange)
@@ -87,16 +77,39 @@ export const FlightsFilter = (props) => {
     });
   }
 
+  const getUniqueAirlines = (flights) => {
+    return flights.reduce((acc, current) => { // get unique airlines value
+      const x = acc.find(item => item.airline === current.airline);
+      if (!x) {
+         return acc.concat([current]);
+      } else {
+         return acc;
+      }
+    }, []).map(flight => ({ // get only the airline and logo
+      name: flight.airline,
+      logo: flight.airlineLogo
+    })).sort((a, b) => a.name.localeCompare(b.name)) // sort alphabetically
+  }
+
+  useEffect(() => {
+    setAirlines(getUniqueAirlines(flights))
+   setSelectedAirlines([...new Set(getUniqueAirlines(flights).map(airline => airline.name))])
+  }, [flights])
+
   useEffect(() => {
     const filteredFlights = flights.filter(flight =>
       selectedAirlines.includes(flight.airline) &&
       flight.price >= calculateValue(priceRange[0]) &&
-      flight.price <= calculateValue(priceRange[1]) &&
-      selectedTransitOptions.includes(flight.transitDetails?.length ? flight.transitDetails.length - 1 : 0)
+      flight.price <= calculateValue(priceRange[1])
+      // &&
+      // selectedTransitOptions.includes(flight.transitDetails?.length ? flight.transitDetails.length - 1 : 0)
     );
     console.log(filteredFlights)
     setFilteredFlights(filteredFlights);
-  }, [selectedAirlines, priceRange, flights, selectedTransitOptions]);
+  }, [selectedAirlines, priceRange, 
+    // flights, 
+    // selectedTransitOptions
+  ]);
 
   return (
     <Stack 
@@ -202,7 +215,7 @@ export const FlightsFilter = (props) => {
           />
         </AccordionDetails>
       </Accordion>
-      <Accordion 
+      {/* <Accordion 
         disableGutters={true}
         elevation={0}
         sx={{
@@ -241,7 +254,7 @@ export const FlightsFilter = (props) => {
               })}
           </FormGroup>
         </AccordionDetails>
-      </Accordion>
+      </Accordion> */}
     </Stack>
   )
 }
