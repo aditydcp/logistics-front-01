@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import { format } from 'date-fns';
 import {
-  Avatar,
   Button,
   Box,
   Card,
@@ -13,10 +12,8 @@ import {
   TableHead,
   TablePagination,
   TableRow,
-  Typography
 } from '@mui/material';
 import { Scrollbar } from 'src/components/scrollbar';
-import { getInitials } from 'src/utils/get-initials';
 import { SeverityPill } from 'src/components/severity-pill';
 
 const statusMap = {
@@ -30,7 +27,7 @@ export const CompaniesTable = (props) => {
     items = [],
     onDeselectAll,
     onDeselectOne,
-    onPageChange = () => {},
+    onPageChange = () => { },
     onRowsPerPageChange,
     onSelectAll,
     onSelectOne,
@@ -103,18 +100,7 @@ export const CompaniesTable = (props) => {
                       />
                     </TableCell>
                     <TableCell>
-                      {/* <Stack
-                        alignItems="center"
-                        direction="row"
-                        spacing={2}
-                      >
-                        <Avatar src={customer.avatar}>
-                          {getInitials(customer.name)}
-                        </Avatar>
-                        <Typography variant="subtitle2"> */}
-                          {company.name}
-                        {/* </Typography>
-                      </Stack> */}
+                      {company.name}
                     </TableCell>
                     <TableCell>
                       {company.email}
@@ -126,11 +112,14 @@ export const CompaniesTable = (props) => {
                       {company.address.city}, {company.address.state}, {company.address.country}
                     </TableCell>
                     <TableCell>
-                      <Stack spacing={1} width='fit-content'>
+                      <Stack
+                        spacing={1}
+                        width='fit-content'
+                      >
                         <SeverityPill color={statusMap[company.status]}>
                           {company.status}
                         </SeverityPill>
-                        {company.status === 'unverified' && 
+                        {company.status === 'unverified' &&
                           <Button
                             size='small'
                             color='warning'

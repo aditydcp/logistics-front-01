@@ -8,7 +8,7 @@ import { Box, TextField } from "@mui/material"
 
 const TextFieldWrapper = (props) => {
   return (
-    <TextField 
+    <TextField
       {...props}
       value={props.value === "EEEE, DD MMMM YYYY" ? "" : props.value}
       placeholder=""
@@ -31,7 +31,7 @@ export const MyDatePicker = (props) => {
   };
 
   return (
-    <Box 
+    <Box
       sx={{
         ...props.sx,
         display: 'flex',
@@ -39,13 +39,16 @@ export const MyDatePicker = (props) => {
       }}
     >
       {props.icon && props.icon}
-      <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={enGB}>
-        <DatePicker 
+      <LocalizationProvider
+        dateAdapter={AdapterDateFns}
+        adapterLocale={enGB}
+      >
+        <DatePicker
           label={props.label}
           format={props.format}
           disablePast
           defaultValue={null}
-          value={props.selectedDate} 
+          value={props.selectedDate}
           onChange={handleDateChange}
           open={open}
           onOpen={() => setOpen(true)} // Open calendar on focus

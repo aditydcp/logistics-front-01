@@ -76,7 +76,13 @@ export const ShipmentFormReview = (props) => {
               <SvgIcon>
                 <AssignmentRoundedIcon />
               </SvgIcon>
-              <Typography variant='h6' component='span' sx={{ mb: .5 }}>
+              <Typography
+                variant='h6'
+                component='span'
+                sx={{
+                  mb: .5
+                }}
+              >
                 Shipment Details
               </Typography>
             </Stack>
@@ -113,7 +119,13 @@ export const ShipmentFormReview = (props) => {
               <SvgIcon>
                 <FlightRoundedIcon />
               </SvgIcon>
-              <Typography variant='h6' component='span' sx={{ mb: .5 }}>
+              <Typography
+                variant='h6'
+                component='span'
+                sx={{
+                  mb: .5
+                }}
+              >
                 Flight Details
               </Typography>
             </Stack>
@@ -150,45 +162,45 @@ export const ShipmentFormReview = (props) => {
                       <Stack
                         spacing={0.5}
                       >
-                      <Typography // price title
-                        variant='caption'
-                        component='span'
-                        // align='right'
-                        sx={{
-                          lineHeight: 'unset',
-                          // color: theme.palette.accent.red
-                        }}
-                      >
-                        Rate
-                      </Typography>
-                      <Stack // price number
-                        direction='row'
-                        spacing={0.5}
-                        alignItems='center'
-                      >
-                        <Typography
-                          variant='h6'
-                          component='span'
-                          align='right'
-                          sx={{
-                            lineHeight: 'unset',
-                            // color: theme.palette.accent.red
-                          }}
-                        >
-                          {formatCurrency(flight.price)}
-                        </Typography>
-                        <Typography
+                        <Typography // price title
                           variant='caption'
                           component='span'
-                          align='right'
+                          // align='right'
                           sx={{
                             lineHeight: 'unset',
                             // color: theme.palette.accent.red
                           }}
                         >
-                          /kg
+                          Rate
                         </Typography>
-                      </Stack>
+                        <Stack // price number
+                          direction='row'
+                          spacing={0.5}
+                          alignItems='center'
+                        >
+                          <Typography
+                            variant='h6'
+                            component='span'
+                            align='right'
+                            sx={{
+                              lineHeight: 'unset',
+                              // color: theme.palette.accent.red
+                            }}
+                          >
+                            {formatCurrency(flight.price)}
+                          </Typography>
+                          <Typography
+                            variant='caption'
+                            component='span'
+                            align='right'
+                            sx={{
+                              lineHeight: 'unset',
+                              // color: theme.palette.accent.red
+                            }}
+                          >
+                            /kg
+                          </Typography>
+                        </Stack>
                       </Stack>
                     </Stack>
                   </Grid>

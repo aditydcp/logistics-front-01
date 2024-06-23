@@ -85,11 +85,22 @@ export const DetailsForm = (props) => {
         <Typography variant='h6'>
           Fill out this form
         </Typography>
-        <Typography variant='subtitle1' sx={{ mt: 1 }}>
+        <Typography
+          variant='subtitle1'
+          sx={{
+            mt: 1
+          }}
+        >
           General Information
         </Typography>
-        <Grid container spacing={2}>
-          <Grid item xs={12} md={6}>
+        <Grid
+          container
+          spacing={2}>
+          <Grid
+            item
+            xs={12}
+            md={6}
+          >
             <Stack spacing={2}>
               <TextField
                 id="details-pic"
@@ -111,7 +122,11 @@ export const DetailsForm = (props) => {
               />
             </Stack>
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid
+            item
+            xs={12}
+            md={6}
+          >
             <Stack spacing={2}>
               <CompanySearch
                 id='shipment-exporter'
@@ -134,12 +149,27 @@ export const DetailsForm = (props) => {
             </Stack>
           </Grid>
         </Grid>
-        <Typography variant='subtitle1' sx={{ mt: 1 }}>
+        <Typography
+          variant='subtitle1'
+          sx={{
+            mt: 1
+          }}
+        >
           Cargo Information
         </Typography>
-        <Grid container spacing={2}>
-          <Grid item xs={12} md={12}>
-            <Stack direction='row' spacing={2}>
+        <Grid
+          container
+          spacing={2}
+        >
+          <Grid
+            item
+            xs={12}
+            md={12}
+          >
+            <Stack
+              direction='row'
+              spacing={2}
+            >
               <TextField
                 id="quantity"
                 label="Quantity"
@@ -171,7 +201,11 @@ export const DetailsForm = (props) => {
               />
             </Stack>
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid
+            item
+            xs={12}
+            md={6}
+          >
             <DropdownMultiInput
               labelId="categories-select-label"
               selectId="categories-select"
@@ -184,7 +218,11 @@ export const DetailsForm = (props) => {
               }}
             />
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid
+            item
+            xs={12}
+            md={6}
+          >
             <DropdownMultiInput
               labelId="packaging-select-label"
               selectId="packaging-select"
@@ -197,7 +235,11 @@ export const DetailsForm = (props) => {
               }}
             />
           </Grid>
-          <Grid item xs={12} md={12}>
+          <Grid
+            item
+            xs={12}
+            md={12}
+          >
             <Stack
               direction='row'
               spacing={2}
@@ -288,7 +330,11 @@ export const DetailsForm = (props) => {
               </Grid>
             </Stack>
           </Grid>
-          <Grid item xs={12} md={12}>
+          <Grid
+            item
+            xs={12}
+            md={12}
+          >
             <Stack
               direction='row'
               spacing={2}

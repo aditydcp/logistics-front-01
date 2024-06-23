@@ -36,7 +36,10 @@ export const FlightTimelineExtended = (props) => {
           minHeight: '5rem',
         }}
       >
-        <TimelineOppositeContent align='right' sx={{ paddingLeft: 0 }}>
+        <TimelineOppositeContent
+          align='right'
+          sx={{ paddingLeft: 0 }}
+        >
           <Typography
             variant='body1'
           >
@@ -86,6 +89,7 @@ export const FlightTimelineExtended = (props) => {
       </TimelineItem>
       {flights.map((flight, index, array) => (
         <TimelineItem
+          key={index}
           sx={{
             minHeight: 0,
           }}

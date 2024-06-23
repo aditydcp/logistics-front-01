@@ -61,7 +61,10 @@ export const FlightsFormSelected = (props) => {
           spacing={2}
           useFlexGap
         >
-          <Typography variant='h6' component='span'>
+          <Typography
+            variant='h6'
+            component='span'
+          >
             Flight has been selected
           </Typography>
           {/* TODO : Handle if there are multiple airlines */}

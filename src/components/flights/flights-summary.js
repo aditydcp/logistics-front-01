@@ -22,7 +22,10 @@ export const FlightSummary = (props) => {
       }}
     >
       {dateDifference > 0 &&
-        <Typography variant='caption' sx={{ visibility: 'collapse' }}>
+        <Typography
+          variant='caption'
+          sx={{ visibility: 'collapse' }}
+        >
           {`+ ${dateDifference} day${dateDifference === 1 ? '' : 's'}`}
         </Typography>
       }

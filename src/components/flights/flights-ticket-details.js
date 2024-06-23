@@ -75,7 +75,11 @@ export const FlightTicketDetails = (props) => {
             useFlexGap
           >
             {flight.categories.map((category) => (
-              <Chip key={category} label={category} size='small' />
+              <Chip
+                key={category}
+                label={category}
+                size='small'
+              />
             ))}
           </Stack>
         </Stack>
@@ -92,7 +96,11 @@ export const FlightTicketDetails = (props) => {
             useFlexGap
           >
             {flight.packagings.map((packaging) => (
-              <Chip key={packaging} label={packaging} size='small' />
+              <Chip
+                key={packaging}
+                label={packaging}
+                size='small'
+              />
             ))}
           </Stack>
         </Stack>
