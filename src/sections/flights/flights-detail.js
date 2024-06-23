@@ -28,7 +28,6 @@ import WorkOutlineRoundedIcon from '@mui/icons-material/WorkOutlineRounded';
 import ZoomOutMapRoundedIcon from '@mui/icons-material/ZoomOutMapRounded';
 import OpenInFullRoundedIcon from '@mui/icons-material/OpenInFullRounded';
 import SwitchCameraRoundedIcon from '@mui/icons-material/SwitchCameraRounded';
-import PendingRoundedIcon from '@mui/icons-material/PendingRounded';
 
 export const FlightDetail = (props) => {
   const { flight } = props

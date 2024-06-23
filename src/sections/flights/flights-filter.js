@@ -88,10 +88,6 @@ export const FlightsFilter = (props) => {
   }
 
   useEffect(() => {
-    setSelectedAirlines([...new Set(airlines.map(airline => airline.name))])
-  }, [airlines])
-
-  useEffect(() => {
     const filteredFlights = flights.filter(flight =>
       selectedAirlines.includes(flight.airline) &&
       flight.price >= calculateValue(priceRange[0]) &&
