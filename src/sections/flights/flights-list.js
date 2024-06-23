@@ -54,7 +54,10 @@ export const FlightsList = (props) => {
   };
 
   return (
-    <Stack spacing={2} useFlexGap>
+    <Stack
+      spacing={2}
+      useFlexGap
+    >
       {count > 0 ? <>
         {items.map((flight) => {
           const isSelected = selected.includes(flight.id)

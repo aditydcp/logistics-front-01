@@ -10,17 +10,42 @@ export const ShipmentReview = (props) => {
   } = props
 
   return (
-    <Grid container spacing={1} sx={{ ml: 5, width: 'auto' }}>
+    <Grid
+      container
+      spacing={1}
+      sx={{
+        ml: 5,
+        width: 'auto'
+      }}
+    >
       {Object.entries(shipment).map(([key, value]) => (
         shipmentPropertyNameMap[key] &&
-        <Grid item xs={12} key={key}>
-          <Grid container spacing={0}>
-            <Grid item xs={5}>
-              <Typography variant='body1' sx={{ fontWeight: 'bold' }}>
+        <Grid
+          item
+          xs={12}
+          key={key}
+        >
+          <Grid
+            container
+            spacing={0}
+          >
+            <Grid
+              item
+              xs={5}
+            >
+              <Typography
+                variant='body1'
+                sx={{
+                  fontWeight: 'bold'
+                }}
+              >
                 {shipmentPropertyNameMap[key]}
               </Typography>
             </Grid>
-            <Grid item xs={7}>
+            <Grid
+              item
+              xs={7}
+            >
               <Typography variant='body1'>
                 {shipmentPropertyValueMap(shipmentPropertyNameMap[key], value)}
                 {shipmentPropertyNameMap[key] === 'Total Weight' && ' kg'}

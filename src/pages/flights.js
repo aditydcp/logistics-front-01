@@ -1,12 +1,12 @@
 import { useEffect, useState, useCallback, useMemo } from 'react';
 import Head from 'next/head';
 import format from 'date-fns/format';
-import { 
-  Box, 
+import {
+  Box,
   Card,
-  Container, 
-  Stack, 
-  Typography, 
+  Container,
+  Stack,
+  Typography,
   Unstable_Grid2 as Grid
 } from '@mui/material';
 import { useSelection } from 'src/hooks/use-selection';
@@ -65,7 +65,7 @@ const Page = () => {
     },
     []
   );
-  
+
   useEffect(
     () => {
       setFilteredFlights(flights)
@@ -87,11 +87,14 @@ const Page = () => {
         }}
       >
         <Container maxWidth="xl">
-          <Stack spacing={3} useFlexGap>
+          <Stack
+            spacing={3}
+            useFlexGap
+          >
             <Typography variant="h4">
               Flights
             </Typography>
-            <FlightsSearch 
+            <FlightsSearch
               departureAirport={departureAirport}
               setDepartureAirport={setDepartureAirport}
               arrivalAirport={arrivalAirport}
@@ -110,7 +113,7 @@ const Page = () => {
               setPackaging={setPackaging}
             />
             {searchCommenced && flights ?
-              <Stack 
+              <Stack
                 direction='row'
                 spacing={2}
               >
@@ -121,31 +124,31 @@ const Page = () => {
                   />
                 </Card>
                 <Box sx={{ width: '70%' }}>
-                    <FlightsList 
-                      count={validFlights.length}
-                      items={validFlights}
-                      onDeselectAll={validFlightsSelection.handleDeselectAll}
-                      onDeselectOne={validFlightsSelection.handleDeselectOne}
-                      onPageChange={handlePageChange}
-                      onRowsPerPageChange={handleRowsPerPageChange}
-                      onSelectAll={validFlightsSelection.handleSelectAll}
-                      onSelectOne={validFlightsSelection.handleSelectOne}
-                      page={page}
-                      rowsPerPage={rowsPerPage}
-                      selected={validFlightsSelection.selected}
-                    />
+                  <FlightsList
+                    count={validFlights.length}
+                    items={validFlights}
+                    onDeselectAll={validFlightsSelection.handleDeselectAll}
+                    onDeselectOne={validFlightsSelection.handleDeselectOne}
+                    onPageChange={handlePageChange}
+                    onRowsPerPageChange={handleRowsPerPageChange}
+                    onSelectAll={validFlightsSelection.handleSelectAll}
+                    onSelectOne={validFlightsSelection.handleSelectOne}
+                    page={page}
+                    rowsPerPage={rowsPerPage}
+                    selected={validFlightsSelection.selected}
+                  />
                 </Box>
               </Stack>
-            :
-              <Stack 
+              :
+              <Stack
                 spacing={2}
                 alignItems="center"
                 sx={{
                   my: 4
                 }}
               >
-                <img 
-                  src="/assets/aircraft-illustration.svg" 
+                <img
+                  src="/assets/aircraft-illustration.svg"
                   width="50%"
                   alt=""
                   loading="lazy"
@@ -154,7 +157,7 @@ const Page = () => {
                   variant='h6'
                   component='span'
                   align='center'
-                  sx={{ 
+                  sx={{
                     textAlign: 'center',
                     p: 4
                   }}

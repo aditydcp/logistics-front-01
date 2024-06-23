@@ -1,12 +1,12 @@
 import { useEffect, useState, useCallback, useMemo } from 'react';
 import Head from 'next/head';
 import format from 'date-fns/format';
-import { 
-  Box, 
+import {
+  Box,
   Card,
-  Container, 
-  Stack, 
-  Typography, 
+  Container,
+  Stack,
+  Typography,
   Unstable_Grid2 as Grid
 } from '@mui/material';
 import { useSelection } from 'src/hooks/use-selection';
@@ -73,16 +73,19 @@ const FlightsFormSearch = (props) => {
     },
     []
   );
-  
+
   useEffect(
     () => {
       setFilteredFlights(flights)
     }, [flights]
   )
-  
+
   return (
-    <Stack spacing={3} useFlexGap>
-      <FlightsSearch 
+    <Stack
+      spacing={3}
+      useFlexGap
+    >
+      <FlightsSearch
         departureAirport={departureAirport}
         setDepartureAirport={setDepartureAirport}
         arrivalAirport={arrivalAirport}
@@ -101,7 +104,7 @@ const FlightsFormSearch = (props) => {
         setPackaging={setPackaging}
       />
       {searchCommenced && flights ?
-        <Stack 
+        <Stack
           direction='row'
           spacing={2}
         >
@@ -112,34 +115,34 @@ const FlightsFormSearch = (props) => {
             />
           </Card>
           <Box sx={{ width: '70%' }}>
-              <FlightsFormList 
-                count={validFlights.length}
-                items={validFlights}
-                selectedFlight={flight}
-                setSelectedFlight={setFlight}
-                onDeselectAll={validFlightsSelection.handleDeselectAll}
-                onDeselectOne={validFlightsSelection.handleDeselectOne}
-                onPageChange={handlePageChange}
-                onRowsPerPageChange={handleRowsPerPageChange}
-                onSelectAll={validFlightsSelection.handleSelectAll}
-                onSelectOne={validFlightsSelection.handleSelectOne}
-                page={page}
-                rowsPerPage={rowsPerPage}
-                selected={validFlightsSelection.selected}
-                handleComplete={handleComplete}
-              />
+            <FlightsFormList
+              count={validFlights.length}
+              items={validFlights}
+              selectedFlight={flight}
+              setSelectedFlight={setFlight}
+              onDeselectAll={validFlightsSelection.handleDeselectAll}
+              onDeselectOne={validFlightsSelection.handleDeselectOne}
+              onPageChange={handlePageChange}
+              onRowsPerPageChange={handleRowsPerPageChange}
+              onSelectAll={validFlightsSelection.handleSelectAll}
+              onSelectOne={validFlightsSelection.handleSelectOne}
+              page={page}
+              rowsPerPage={rowsPerPage}
+              selected={validFlightsSelection.selected}
+              handleComplete={handleComplete}
+            />
           </Box>
         </Stack>
-      :
-        <Stack 
+        :
+        <Stack
           spacing={2}
           alignItems="center"
           sx={{
             my: 4
           }}
         >
-          <img 
-            src="/assets/aircraft-illustration.svg" 
+          <img
+            src="/assets/aircraft-illustration.svg"
             width="50%"
             alt=""
             loading="lazy"
@@ -148,7 +151,7 @@ const FlightsFormSearch = (props) => {
             variant='h6'
             component='span'
             align='center'
-            sx={{ 
+            sx={{
               textAlign: 'center',
               p: 4
             }}

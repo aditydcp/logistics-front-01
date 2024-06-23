@@ -148,9 +148,15 @@ const Page = () => {
                 px: 5
               }}
             >
-              <Stepper nonLinear activeStep={activeStep}>
+              <Stepper
+                nonLinear
+                activeStep={activeStep}
+              >
                 {steps.map((label, index) => (
-                  <Step key={label} completed={completed[index]}>
+                  <Step
+                    key={label}
+                    completed={completed[index]}
+                  >
                     <StepLabel
                       onClick={handleStep(index)}
                       sx={{

@@ -34,7 +34,10 @@ export const FlightTimeline = (props) => {
           minHeight: '5rem',
         }}
       >
-        <TimelineOppositeContent align='right' sx={{ paddingLeft: 0 }}>
+        <TimelineOppositeContent
+          align='right'
+          sx={{ paddingLeft: 0 }}
+        >
           <Typography
             variant='body1'
           >

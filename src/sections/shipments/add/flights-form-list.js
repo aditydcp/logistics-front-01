@@ -26,6 +26,7 @@ import ConnectingAirportsRoundedIcon from '@mui/icons-material/ConnectingAirport
 import { FlightFeature } from 'src/components/flights/flights-feature';
 import { formatCurrency } from 'src/utils/format-currency';
 import { FlightSummary } from 'src/components/flights/flights-summary';
+import { FlightAvatar } from 'src/components/flights/flights-avatar';
 import { FlightDetail } from 'src/sections/flights/flights-detail';
 
 export const FlightsFormList = (props) => {
@@ -58,7 +59,10 @@ export const FlightsFormList = (props) => {
   };
 
   return (
-    <Stack spacing={2} useFlexGap>
+    <Stack 
+    spacing={2}
+     useFlexGap
+     >
       {count > 0 ? <>
         {items.map((flight) => {
           const isSelected = selectedFlight?.id === flight.id
