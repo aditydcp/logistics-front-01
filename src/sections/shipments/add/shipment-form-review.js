@@ -25,12 +25,15 @@ import { format } from 'date-fns';
 import { formatCurrency } from 'src/utils/format-currency';
 import AssignmentRoundedIcon from '@mui/icons-material/AssignmentRounded';
 import FlightRoundedIcon from '@mui/icons-material/FlightRounded';
+import SellRoundedIcon from '@mui/icons-material/SellRounded';
 import WorkOutlineRoundedIcon from '@mui/icons-material/WorkOutlineRounded';
 import SwitchCameraRoundedIcon from '@mui/icons-material/SwitchCameraRounded';
 import { FlightTimelineExtended } from 'src/components/flights/flights-timeline-extended';
 import { ShipmentReview } from './review-shipment';
+import { PricingReview } from './review-pricing';
 import { FlightAvatar } from 'src/components/flights/flights-avatar';
 import { FlightTicketDetails } from 'src/components/flights/flights-ticket-details';
+import { FlightRates } from 'src/components/flights/flights-rates';
 
 export const ShipmentFormReview = (props) => {
   const {
@@ -43,6 +46,16 @@ export const ShipmentFormReview = (props) => {
   const router = useRouter()
 
   const shipmentIsFilled = Object.values(shipment).every(item => item !== null);
+
+  let pricingErrorTopic = ''
+
+  if (!shipmentIsFilled) {
+    pricingErrorTopic += 'fill out shipment details'
+  }
+  if (!flight) {
+    pricingErrorTopic += (!shipmentIsFilled ? ' and ' : '')
+    pricingErrorTopic += 'pick a flight'
+  }
 
   const onSubmit = () => {
     handleComplete()
@@ -65,34 +78,74 @@ export const ShipmentFormReview = (props) => {
           }}
         >
           <Stack
-            spacing={1}
+            spacing={4}
             useFlexGap
           >
             <Stack
               spacing={1}
               useFlexGap
-              direction='row'
             >
-              <SvgIcon>
-                <AssignmentRoundedIcon />
-              </SvgIcon>
-              <Typography
-                variant='h6'
-                component='span'
-                sx={{
-                  mb: .5
-                }}
+              <Stack
+                spacing={1}
+                useFlexGap
+                direction='row'
               >
-                Shipment Details
-              </Typography>
+                <SvgIcon>
+                  <AssignmentRoundedIcon />
+                </SvgIcon>
+                <Typography
+                  variant='h6'
+                  component='span'
+                  sx={{
+                    mb: .5
+                  }}
+                >
+                  Shipment Details
+                </Typography>
+              </Stack>
+              {shipmentIsFilled ? (
+                <ShipmentReview shipment={shipment} />
+              ) : (
+                <Typography variant='body1'>
+                  Please fill out shipment details first
+                </Typography>
+              )}
             </Stack>
-            {shipmentIsFilled ? (
-              <ShipmentReview shipment={shipment} />
-            ) : (
-              <Typography variant='body'>
-                Please fill out shipment details first
-              </Typography>
-            )}
+            <Stack
+              spacing={1}
+              useFlexGap
+            >
+              <Stack
+                spacing={1}
+                useFlexGap
+                direction='row'
+              >
+                <SvgIcon>
+                  <SellRoundedIcon />
+                </SvgIcon>
+                <Typography
+                  variant='h6'
+                  component='span'
+                  sx={{
+                    mb: .5
+                  }}
+                >
+                  Pricing Details
+                </Typography>
+              </Stack>
+              {shipmentIsFilled && flight ? (
+                <PricingReview
+                  shipment={shipment}
+                  flight={flight}
+                />
+              ) : (
+                <Typography
+                  variant='body1'
+                >
+                  Please {pricingErrorTopic} first
+                </Typography>
+              )}
+            </Stack>
           </Stack>
         </Box>
         <Divider
@@ -153,55 +206,16 @@ export const ShipmentFormReview = (props) => {
                     md={6}
                   >
                     <Stack
-                      spacing={2}
+                      spacing={3}
                       alignItems="flex-center"
                     >
                       <FlightTicketDetails
                         flight={flight}
                       />
-                      <Stack
-                        spacing={0.5}
-                      >
-                        <Typography // price title
-                          variant='caption'
-                          component='span'
-                          // align='right'
-                          sx={{
-                            lineHeight: 'unset',
-                            // color: theme.palette.accent.red
-                          }}
-                        >
-                          Rate
-                        </Typography>
-                        <Stack // price number
-                          direction='row'
-                          spacing={0.5}
-                          alignItems='center'
-                        >
-                          <Typography
-                            variant='h6'
-                            component='span'
-                            align='right'
-                            sx={{
-                              lineHeight: 'unset',
-                              // color: theme.palette.accent.red
-                            }}
-                          >
-                            {formatCurrency(flight.price)}
-                          </Typography>
-                          <Typography
-                            variant='caption'
-                            component='span'
-                            align='right'
-                            sx={{
-                              lineHeight: 'unset',
-                              // color: theme.palette.accent.red
-                            }}
-                          >
-                            /kg
-                          </Typography>
-                        </Stack>
-                      </Stack>
+                      <FlightRates
+                        flight={flight}
+                        shipment={shipment}
+                      />
                     </Stack>
                   </Grid>
                   <Grid
@@ -221,7 +235,7 @@ export const ShipmentFormReview = (props) => {
                 </Grid>
               </Stack>
             ) : (
-              <Typography variant='body'>
+              <Typography variant='body1'>
                 Please choose a flight first
               </Typography>
             )}

@@ -27,7 +27,8 @@ import { FlightFeature } from 'src/components/flights/flights-feature';
 import { formatCurrency } from 'src/utils/format-currency';
 import { FlightSummary } from 'src/components/flights/flights-summary';
 import { FlightAvatar } from 'src/components/flights/flights-avatar';
-import { FlightDetail } from 'src/sections/flights/flights-detail';
+import { FlightDetailSection } from 'src/sections/flights/flights-detail';
+import { FlightInfo } from 'src/sections/flights/flights-info';
 
 export const FlightsFormList = (props) => {
   const {
@@ -261,41 +262,9 @@ export const FlightsFormList = (props) => {
                   px: 1,
                 }}
               >
-                <Stack
-                  useFlexGap
-                >
-                  {flight.legs.map((leg, index, arr) => (
-                    <Stack
-                      key={index}
-                      useFlexGap
-                    >
-                      <FlightDetail
-                        flight={leg}
-                        airline={flight.airlines[leg.airlineRef]}
-                      />
-                      {index !== arr.length - 1 && (
-                        <Divider
-                          variant="middle"
-                          sx={{
-                            my: 1.5,
-                            '&::before, &::after': {
-                              borderColor: theme.palette.neutral[400]
-                            }
-                          }}
-                        >
-                          <Typography
-                            variant='body2'
-                          >
-                            {`Wait for ${formatDistance(
-                              leg.arrival.time,
-                              arr[index + 1].departure.time,
-                            )}`}
-                          </Typography>
-                        </Divider>
-                      )}
-                    </Stack>
-                  ))}
-                </Stack>
+                <FlightInfo
+                  flight={flight}
+                />
               </AccordionDetails>
             </Accordion>
           )

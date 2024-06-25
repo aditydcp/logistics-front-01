@@ -25,12 +25,27 @@ const statusMap = {
   canceled: 'error'
 };
 
-const buttonColorMap = {
-  'Details': 'primary',
-  'Edit': 'primary',
-  'Confirm': 'success',
-  'View Report': 'primary',
-  'Cancel': 'error'
+const buttonMap = {
+  'Details': {
+    color: 'primary',
+    onClick: () => {},
+  },
+  'Edit': {
+    color: 'primary',
+    onClick: () => {},
+  },
+  'Confirm': {
+    color: 'success',
+    onClick: () => {},
+  },
+  'View Report': {
+    color: 'primary',
+    onClick: () => window.open('/assets/report-template.pdf', '_blank'),
+  },
+  'Cancel': {
+    color: 'error',
+    onClick: () => {},
+  },
 }
 
 export const ShipmentsTable = (props) => {
@@ -173,9 +188,10 @@ export const ShipmentsTable = (props) => {
                         {shipment.actions.map((action) => {
                           return (
                             <Button
-                              color={buttonColorMap[action]}
+                              color={buttonMap[action].color}
                               variant='outlined'
                               key={action}
+                              onClick={() => buttonMap[action].onClick(shipment)}
                             >
                               {action}
                             </Button>

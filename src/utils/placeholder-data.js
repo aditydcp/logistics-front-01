@@ -130,6 +130,20 @@ export const flightsData = [
       },
     ],
     price: 55000,
+    rates: [
+      {
+        min: 0,
+        price: 55000,
+      },
+      {
+        min: 100,
+        price: 50000,
+      },
+      {
+        min: 200,
+        price: 45000,
+      },
+    ],
   },
   {
     id: '2',
@@ -167,6 +181,20 @@ export const flightsData = [
       },
     ],
     price: 55000,
+    rates: [
+      {
+        min: 0,
+        price: 55000,
+      },
+      {
+        min: 100,
+        price: 50000,
+      },
+      {
+        min: 200,
+        price: 45000,
+      },
+    ],
   },
   {
     id: '3',
@@ -204,6 +232,20 @@ export const flightsData = [
       },
     ],
     price: 50000,
+    rates: [
+      {
+        min: 0,
+        price: 50000,
+      },
+      {
+        min: 100,
+        price: 45000,
+      },
+      {
+        min: 200,
+        price: 40000,
+      },
+    ],
   },
   {
     id: '4',
@@ -241,6 +283,20 @@ export const flightsData = [
       },
     ],
     price: 60000,
+    rates: [
+      {
+        min: 0,
+        price: 60000,
+      },
+      {
+        min: 100,
+        price: 55000,
+      },
+      {
+        min: 200,
+        price: 50000,
+      },
+    ],
   },
   {
     id: '5',
@@ -278,6 +334,20 @@ export const flightsData = [
       },
     ],
     price: 60000,
+    rates: [
+      {
+        min: 0,
+        price: 60000,
+      },
+      {
+        min: 100,
+        price: 55000,
+      },
+      {
+        min: 200,
+        price: 50000,
+      },
+    ],
   },
   {
     id: '6',
@@ -315,6 +385,20 @@ export const flightsData = [
       },
     ],
     price: 60000,
+    rates: [
+      {
+        min: 0,
+        price: 60000,
+      },
+      {
+        min: 100,
+        price: 55000,
+      },
+      {
+        min: 200,
+        price: 50000,
+      },
+    ],
   },
   {
     id: '7',
@@ -352,6 +436,20 @@ export const flightsData = [
       },
     ],
     price: 50000,
+    rates: [
+      {
+        min: 0,
+        price: 50000,
+      },
+      {
+        min: 100,
+        price: 45000,
+      },
+      {
+        min: 200,
+        price: 30000,
+      },
+    ],
   },
   {
     id: '8',
@@ -404,6 +502,20 @@ export const flightsData = [
         },
       },
     ],
-    price: 60000,
+    price: 50000,
+    rates: [
+      {
+        min: 0,
+        price: 50000,
+      },
+      {
+        min: 100,
+        price: 40000,
+      },
+      {
+        min: 200,
+        price: 45000,
+      },
+    ],
   },
 ]
