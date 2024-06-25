@@ -27,6 +27,7 @@ import WorkOutlineRoundedIcon from '@mui/icons-material/WorkOutlineRounded';
 import SwitchCameraRoundedIcon from '@mui/icons-material/SwitchCameraRounded';
 import { FlightTimelineExtended } from 'src/components/flights/flights-timeline-extended';
 import { FlightTicketDetails } from 'src/components/flights/flights-ticket-details';
+import { FlightRates } from 'src/components/flights/flights-rates';
 
 export const FlightsFormSelected = (props) => {
   const {
@@ -108,45 +109,9 @@ export const FlightsFormSelected = (props) => {
               xs={12}
               md={4}
             >
-              <Typography
-                variant='caption'
-                component='span'
-                // align='right'
-                sx={{
-                  lineHeight: 'unset',
-                  // color: theme.palette.accent.red
-                }}
-              >
-                Rate
-              </Typography>
-              <Stack
-                direction='row'
-                spacing={0.5}
-                alignItems='center'
-              >
-                <Typography
-                  variant='h6'
-                  component='span'
-                  align='right'
-                  sx={{
-                    lineHeight: 'unset',
-                    // color: theme.palette.accent.red
-                  }}
-                >
-                  {formatCurrency(flight.price)}
-                </Typography>
-                <Typography
-                  variant='caption'
-                  component='span'
-                  align='right'
-                  sx={{
-                    lineHeight: 'unset',
-                    // color: theme.palette.accent.red
-                  }}
-                >
-                  /kg
-                </Typography>
-              </Stack>
+              <FlightRates
+                flight={flight}
+              />
             </Grid>
           </Grid>
           <Stack

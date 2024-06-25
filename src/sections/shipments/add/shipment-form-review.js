@@ -33,6 +33,7 @@ import { ShipmentReview } from './review-shipment';
 import { PricingReview } from './review-pricing';
 import { FlightAvatar } from 'src/components/flights/flights-avatar';
 import { FlightTicketDetails } from 'src/components/flights/flights-ticket-details';
+import { FlightRates } from 'src/components/flights/flights-rates';
 
 export const ShipmentFormReview = (props) => {
   const {
@@ -205,55 +206,16 @@ export const ShipmentFormReview = (props) => {
                     md={6}
                   >
                     <Stack
-                      spacing={2}
+                      spacing={3}
                       alignItems="flex-center"
                     >
                       <FlightTicketDetails
                         flight={flight}
                       />
-                      <Stack
-                        spacing={0.5}
-                      >
-                        <Typography // price title
-                          variant='caption'
-                          component='span'
-                          // align='right'
-                          sx={{
-                            lineHeight: 'unset',
-                            // color: theme.palette.accent.red
-                          }}
-                        >
-                          Rate
-                        </Typography>
-                        <Stack // price number
-                          direction='row'
-                          spacing={0.5}
-                          alignItems='center'
-                        >
-                          <Typography
-                            variant='h6'
-                            component='span'
-                            align='right'
-                            sx={{
-                              lineHeight: 'unset',
-                              // color: theme.palette.accent.red
-                            }}
-                          >
-                            {formatCurrency(flight.price)}
-                          </Typography>
-                          <Typography
-                            variant='caption'
-                            component='span'
-                            align='right'
-                            sx={{
-                              lineHeight: 'unset',
-                              // color: theme.palette.accent.red
-                            }}
-                          >
-                            /kg
-                          </Typography>
-                        </Stack>
-                      </Stack>
+                      <FlightRates
+                        flight={flight}
+                        shipment={shipment}
+                      />
                     </Stack>
                   </Grid>
                   <Grid
