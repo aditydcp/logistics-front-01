@@ -10,6 +10,7 @@ export const FlightRates = (props) => {
   const {
     flight,
     shipment,
+    titleHeader = false,
   } = props
 
   const theme = useTheme()
@@ -22,9 +23,11 @@ export const FlightRates = (props) => {
   }
 
   return (
-    <Stack>
+    <Stack
+      spacing={titleHeader ? 1 : 0}
+    >
       <Typography
-        variant='caption'
+        variant={titleHeader ? 'h6' : 'caption'}
         component='span'
         // align='right'
         sx={{

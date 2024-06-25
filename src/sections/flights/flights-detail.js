@@ -1,59 +1,51 @@
 import {
-  Card,
-  Container,
+  Divider,
   Stack,
-} from '@mui/material'
-import { FlightTimeline } from 'src/components/flights/flights-timeline';
-import { useTheme } from '@mui/material/styles'
-import { FlightAvatar } from 'src/components/flights/flights-avatar';
-import { FlightTicketDetails } from 'src/components/flights/flights-ticket-details';
+  Typography,
+} from "@mui/material"
+import { formatDistance } from "date-fns"
+import { FlightDetail } from 'src/components/flights/flights-detail'
 
-export const FlightDetail = (props) => {
+export const FlightDetailSection = (props) => {
   const {
-    flight,
-    airline,
+    flight
   } = props
 
-  const theme = useTheme()
-
   return (
-    <Card
-      elevation={1}
-      variant='outlined'
+    <Stack
+      useFlexGap
     >
-      <Stack
-        direction='row'
-        spacing={2}
-        sx={{
-          p: 2
-        }}
-        justifyContent='flex-start'
-      >
-        <Container
-          disableGutters
-          sx={{
-            width: '40%'
-          }}
-        >
-          <FlightTimeline flight={flight} />
-        </Container>
+      {flight.legs.map((leg, index, arr) => (
         <Stack
-          spacing={0.5}
-          sx={{
-            width: '60%'
-          }}
+          key={index}
+          useFlexGap
         >
-          <FlightAvatar
-            flight={flight}
-            airline={airline}
+          <FlightDetail
+            flight={leg}
+            airline={flight.airlines[leg.airlineRef]}
           />
-          <FlightTicketDetails
-            flight={flight}
-            type='row'
-            topLevelAlignItems='flex-start'
-          />
+          {index !== arr.length - 1 && (
+            <Divider
+              variant="middle"
+              sx={{
+                my: 1.5,
+                '&::before, &::after': {
+                  borderColor: theme.palette.neutral[400]
+                }
+              }}
+            >
+              <Typography
+                variant='body2'
+              >
+                {`Wait for ${formatDistance(
+                  leg.arrival.time,
+                  arr[index + 1].departure.time,
+                )}`}
+              </Typography>
+            </Divider>
+          )}
         </Stack>
-      </Stack>
-    </Card>
+      ))}
+    </Stack>
   )
 }
