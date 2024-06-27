@@ -3,6 +3,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material"
+import { useTheme } from '@mui/material/styles'
 import { formatDistance } from "date-fns"
 import { FlightDetail } from 'src/components/flights/flights-detail'
 
@@ -10,6 +11,8 @@ export const FlightDetailSection = (props) => {
   const {
     flight
   } = props
+
+  const theme = useTheme()
 
   return (
     <Stack
