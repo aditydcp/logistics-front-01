@@ -38,6 +38,7 @@ export const FlightsFilter = (props) => {
 
   const [selectedAirlines, setSelectedAirlines] = useState([...new Set(airlines.map(airline => airline.id))])
   const [priceRange, setPriceRange] = useState(defaultRange)
+  const [selectedTransitOptions, setSelectedTransitOptions] = useState([...new Set(transitOptions.map(option => option.index))])
 
   const handleAirlinesChange = (airline) => {
     setSelectedAirlines(prev => {
@@ -99,15 +100,15 @@ export const FlightsFilter = (props) => {
       flight.airlines.some(airline => selectedAirlines.includes(airline.id)) &&
       flight.price >= calculateValue(priceRange[0]) &&
       flight.price <= calculateValue(priceRange[1])
-      // &&
-      // selectedTransitOptions.includes(flight.transitDetails?.length ? flight.transitDetails.length - 1 : 0)
+      &&
+      selectedTransitOptions.includes(flight.legs.length ? flight.legs.length - 1 : 0)
     );
     console.log(selectedAirlines)
     console.log(filteredFlights)
     setFilteredFlights(filteredFlights);
   }, [selectedAirlines, priceRange,
     // flights, 
-    // selectedTransitOptions
+    selectedTransitOptions
   ]);
 
   return (
@@ -214,7 +215,7 @@ export const FlightsFilter = (props) => {
           />
         </AccordionDetails>
       </Accordion>
-      {/* <Accordion 
+      <Accordion 
         disableGutters={true}
         elevation={0}
         sx={{
@@ -253,7 +254,7 @@ export const FlightsFilter = (props) => {
               })}
           </FormGroup>
         </AccordionDetails>
-      </Accordion> */}
+      </Accordion>
     </Stack>
   )
 }
