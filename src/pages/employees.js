@@ -9,7 +9,7 @@ import { useSelection } from 'src/hooks/use-selection';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
 import { CustomersTable } from 'src/sections/customer/customers-table';
 import { CustomersSearch } from 'src/sections/customer/customers-search';
-import { applyPagination } from 'src/utils/apply-pagination';
+import { applyPagination } from 'src/utils/helpers/apply-pagination';
 import { EmployeesSearch } from 'src/sections/employees/employees-search';
 import { EmployeesTable } from 'src/sections/employees/employees-table';
 

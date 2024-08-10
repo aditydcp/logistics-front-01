@@ -12,7 +12,7 @@ import {
   Typography
 } from '@mui/material';
 import PropTypes from 'prop-types';
-import { formatCurrency } from 'src/utils/format-currency';
+import { formatCurrency } from 'src/utils/helpers/format-currency';
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
 
 const minDistance = 5

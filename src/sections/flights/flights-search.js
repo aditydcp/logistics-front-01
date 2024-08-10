@@ -39,7 +39,7 @@ import {
   packagingData,
   airportsData,
   flightsData
-} from 'src/utils/placeholder-data';
+} from 'src/utils/helpers/placeholder-data';
 import DropdownMultiInput from 'src/components/dropdown-multi-input';
 
 export const FlightsSearch = (props) => {

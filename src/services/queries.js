@@ -1,5 +1,5 @@
 import { supabase } from "./db"
-import { getPageItemLimit } from "src/utils/apply-pagination"
+import { getPageItemLimit } from "src/utils/helpers/apply-pagination"
 
 export const getAll = async (table) => {
   const { data, error } = await supabase

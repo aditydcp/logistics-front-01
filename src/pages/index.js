@@ -18,7 +18,7 @@ import { OverviewTotalProfit } from 'src/sections/overview/overview-total-profit
 import { OverviewTraffic } from 'src/sections/overview/overview-traffic';
 import { ShipmentsTable } from 'src/sections/overview/shipments-table';
 import { useSelection } from 'src/hooks/use-selection';
-import { applyPagination } from 'src/utils/apply-pagination';
+import { applyPagination } from 'src/utils/helpers/apply-pagination';
 
 const now = new Date();
 
