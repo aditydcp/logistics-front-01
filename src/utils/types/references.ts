@@ -7,7 +7,7 @@ export interface Reference {
   updated_at: string;
 }
 
-export const referencesSchema = {
+export const referenceSchema = {
   id: 'integer',
   name: 'text',
   created_at: 'timestamp with time zone',
@@ -16,7 +16,7 @@ export const referencesSchema = {
 
 export async function createCategoriesTable(supabase: SupabaseClient) {
   const { error } = await supabase.rpc('create_categories_table', {
-    schema: JSON.stringify(referencesSchema),
+    schema: JSON.stringify(referenceSchema),
   });
 
   if (error) {
@@ -28,7 +28,7 @@ export async function createCategoriesTable(supabase: SupabaseClient) {
 
 export async function createPackagingsTable(supabase: SupabaseClient) {
   const { error } = await supabase.rpc('create_packagings_table', {
-    schema: JSON.stringify(referencesSchema),
+    schema: JSON.stringify(referenceSchema),
   });
 
   if (error) {

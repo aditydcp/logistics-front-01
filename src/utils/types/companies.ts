@@ -8,7 +8,7 @@ export interface Company {
   name: string;
   address: string | null;
   contact: string | null;
-  logo_url: string | null;
+  logo: string | null;
   verified_at: string | null;
   created_at: string;
   updated_at: string;
@@ -19,7 +19,7 @@ export const companySchema = {
   name: 'text',
   address: 'text',
   contact: 'text',
-  logo_url: 'text',
+  logo: 'text',
   verified_at: 'timestamp with time zone',
   created_at: 'timestamp with time zone',
   updated_at: 'timestamp with time zone',
@@ -54,7 +54,7 @@ export function isValidCompany(data: any): data is Company {
     typeof data.name === 'string' &&
     (data.address === null || typeof data.address === 'string') &&
     (data.contact === null || typeof data.contact === 'string') &&
-    (data.logo_url === null || typeof data.logo_url === 'string') &&
-    Object.keys(data).every(key => ['name', 'address', 'contact', 'logo_url'].includes(key))
+    (data.logo === null || typeof data.logo === 'string') &&
+    Object.keys(data).every(key => ['name', 'address', 'contact', 'logo'].includes(key))
   )
 }
