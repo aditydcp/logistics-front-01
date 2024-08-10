@@ -1,5 +1,8 @@
 import { SupabaseClient } from '@supabase/supabase-js';
 
+export const tableExporters = 'exporters';
+export const tableImporters = 'importers';
+
 export interface Company {
   id: number;
   name: string;
@@ -11,7 +14,7 @@ export interface Company {
   updated_at: string;
 }
 
-export const companiesSchema = {
+export const companySchema = {
   id: 'integer',
   name: 'text',
   address: 'text',
@@ -24,7 +27,7 @@ export const companiesSchema = {
 
 export async function createExportersTable(supabase: SupabaseClient) {
   const { error } = await supabase.rpc('create_exporters_table', {
-    schema: JSON.stringify(companiesSchema),
+    schema: JSON.stringify(companySchema),
   });
 
   if (error) {
@@ -36,7 +39,7 @@ export async function createExportersTable(supabase: SupabaseClient) {
 
 export async function createImportersTable(supabase: SupabaseClient) {
   const { error } = await supabase.rpc('create_importers_table', {
-    schema: JSON.stringify(companiesSchema),
+    schema: JSON.stringify(companySchema),
   });
 
   if (error) {

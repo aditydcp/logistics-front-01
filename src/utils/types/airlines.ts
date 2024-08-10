@@ -1,5 +1,7 @@
 import { SupabaseClient } from '@supabase/supabase-js';
 
+export const table = 'airlines';
+
 export interface Airline {
   id: number;
   name: string;
@@ -8,7 +10,7 @@ export interface Airline {
   updated_at: string;
 }
 
-export const airlinesSchema = {
+export const airlineSchema = {
   id: 'integer',
   name: 'text',
   logo: 'text',
@@ -18,7 +20,7 @@ export const airlinesSchema = {
 
 export async function createAirlinesTable(supabase: SupabaseClient) {
   const { error } = await supabase.rpc('create_airlines_table', {
-    schema: JSON.stringify(airlinesSchema),
+    schema: JSON.stringify(airlineSchema),
   });
 
   if (error) {

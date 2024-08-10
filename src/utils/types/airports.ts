@@ -1,5 +1,7 @@
 import { SupabaseClient } from '@supabase/supabase-js';
 
+export const table = 'airports';
+
 export interface Airport {
   id: number;
   name: string;

@@ -1,7 +1,5 @@
 import { getAll, createItem } from "../../../utils/services/queries"
-import { isValidAirport } from "../../../utils/types/airports"
-
-const table = 'airports'
+import { isValidAirport, table } from "../../../utils/types/airports"
 
 export default async function handler(req, res) {
   if (req.method === 'GET') {

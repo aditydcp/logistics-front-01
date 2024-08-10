@@ -1,5 +1,7 @@
 import { SupabaseClient } from '@supabase/supabase-js';
 
+export const table = 'flight_rates';
+
 export interface FlightRate {
   id: number;
   label: string | null;
@@ -8,7 +10,7 @@ export interface FlightRate {
   updated_at: string;
 }
 
-export const flightRatesSchema = {
+export const flightRateSchema = {
   id: 'integer',
   label: 'text',
   rates_json: 'text',
@@ -18,7 +20,7 @@ export const flightRatesSchema = {
 
 export async function createFlightRatesTable(supabase: SupabaseClient) {
   const { error } = await supabase.rpc('create_flight_rates_table', {
-    schema: JSON.stringify(flightRatesSchema),
+    schema: JSON.stringify(flightRateSchema),
   });
 
   if (error) {
@@ -38,7 +40,7 @@ export function isValidFlightRate(data: any): data is FlightRate {
   )
 }
 
-export function isValidRatesStructure(ratesJson: string): boolean {
+export function isValidRateStructure(ratesJson: string): boolean {
   try {
     const rates = JSON.parse(ratesJson);
     return Array.isArray(rates) && rates.every(rate => 
