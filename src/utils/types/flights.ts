@@ -5,7 +5,6 @@ export const table = 'flights';
 export interface Flight {
   id: number;
   airline_id: number;
-  rates_id: number;
   plane_model: string;
   baggage_size: number;
   departure_airport_id: number;
@@ -19,7 +18,6 @@ export interface Flight {
 export const flightSchema = {
   id: 'integer',
   airline_id: 'integer references airlines(id)',
-  rates_id: 'integer references flight_rates(id)',
   plane_model: 'varchar',
   baggage_size: 'integer',
   departure_airport_id: 'integer references airports(id)',
