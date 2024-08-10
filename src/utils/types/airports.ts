@@ -12,7 +12,7 @@ export interface Airport {
   updated_at: string;
 }
 
-export const airportsSchema = {
+export const airportSchema = {
   id: 'integer',
   name: 'text',
   code: 'varchar',
@@ -24,7 +24,7 @@ export const airportsSchema = {
 
 export async function createAirportsTable(supabase: SupabaseClient) {
   const { error } = await supabase.rpc('create_airports_table', {
-    schema: JSON.stringify(airportsSchema),
+    schema: JSON.stringify(airportSchema),
   });
 
   if (error) {

@@ -3,7 +3,7 @@ import { isValidCompany, tableExporters } from "../../../utils/types/companies";
 
 export default async function handler(req, res) {
   if (req.method === 'GET') {
-    const { data, error } = await getAll(tableexporters)
+    const { data, error } = await getAll(tableExporters)
     res.status(200).json({
       message: 'GET exporters',
       data: data,
@@ -20,7 +20,7 @@ export default async function handler(req, res) {
       })
     }
 
-    const { data, error } = await createItem(tableexporters, body)
+    const { data, error } = await createItem(tableExporters, body)
     if (error) {
       res.status(400).json({
         message: 'Error creating exporter',

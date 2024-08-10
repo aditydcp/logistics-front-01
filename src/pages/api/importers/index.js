@@ -3,7 +3,7 @@ import { isValidCompany, tableImporters } from "../../../utils/types/companies";
 
 export default async function handler(req, res) {
   if (req.method === 'GET') {
-    const { data, error } = await getAll(tableimporters)
+    const { data, error } = await getAll(tableImporters)
     res.status(200).json({
       message: 'GET importers',
       data: data,
@@ -20,7 +20,7 @@ export default async function handler(req, res) {
       })
     }
 
-    const { data, error } = await createItem(tableimporters, body)
+    const { data, error } = await createItem(tableImporters, body)
     if (error) {
       res.status(400).json({
         message: 'Error creating importer',
