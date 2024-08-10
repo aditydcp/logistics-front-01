@@ -22,7 +22,7 @@ import {
 } from '@mui/lab'
 import { useTheme } from '@mui/material/styles'
 import { FlightAvatar } from 'src/components/flights/flights-avatar';
-import { formatCurrency } from 'src/utils/format-currency';
+import { formatCurrency } from 'src/utils/helpers/format-currency';
 import WorkOutlineRoundedIcon from '@mui/icons-material/WorkOutlineRounded';
 import SwitchCameraRoundedIcon from '@mui/icons-material/SwitchCameraRounded';
 import { FlightTimelineExtended } from 'src/components/flights/flights-timeline-extended';

@@ -16,7 +16,7 @@ import {
   Button
 } from '@mui/material';
 import { Scrollbar } from 'src/components/scrollbar';
-import { getInitials } from 'src/utils/get-initials';
+import { getInitials } from 'src/utils/helpers/get-initials';
 import { SeverityPill } from 'src/components/severity-pill';
 
 const statusMap = {

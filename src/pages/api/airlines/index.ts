@@ -1,18 +1,11 @@
-import { getAll, createItem } from "src/services/queries"
+import { NextApiRequest, NextApiResponse } from "next"
+import { getAll, createItem } from "../../../utils/services/queries"
+import { isValidAirline } from "../../../utils/types/airlines"
 
 const table = 'airlines'
 
-export default async function handler(req, res) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {
-    // const { id } = req.query;
-    // console.log(id)
-
-    // if (id) {
-    //   res.status(405).json({
-    //     message: 'Not allowed with GET by ID',
-    //   })
-    // }
-
     const { data, error } = await getAll(table)
     res.status(200).json({
       message: 'GET airlines',
@@ -21,6 +14,15 @@ export default async function handler(req, res) {
     })
   } else if (req.method === 'POST') {
     const { body } = req
+
+    // Validate Airline schema
+    if (!isValidAirline(body)) {
+      res.status(400).json({
+        message: 'Error creating airline',
+        error: 'Request body does not match Airline data model'
+      })
+    }
+
     const { data, error } = await createItem(table, body)
     if (error) {
       res.status(400).json({

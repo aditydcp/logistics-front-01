@@ -1,8 +1,10 @@
-import { getById, updateItem, deleteItem } from "src/services/queries"
+import { NextApiRequest, NextApiResponse } from "next"
+import { getById, updateItem, deleteItem } from "../../../utils/services/queries"
+import { isValidAirline } from "../../../utils/types/airlines";
 
 const table = 'airlines'
 
-export default async function handler(req, res) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { id } = req.query;
 
   if (req.method === 'GET') {
@@ -20,7 +22,17 @@ export default async function handler(req, res) {
       })
     }
   } else if (req.method === 'PUT') {
-    const { data, error } = await updateItem(table, id, req.body);
+    const { body } = req
+
+    // Validate Airline schema
+    if (!isValidAirline(body)) {
+      res.status(400).json({
+        message: 'Error updating airline',
+        error: 'Request body does not match Airline data model'
+      })
+    }
+
+    const { data, error } = await updateItem(table, id, body);
     if (error) {
       res.status(400).json({
         message: `Error updating airline with id ${id}`,
@@ -28,7 +40,9 @@ export default async function handler(req, res) {
       })
     }
     res.status(200).json({
-      message: message
+      message: `PUT airline with id ${id}`,
+      data: data,
+      error: error
     });
   } else if (req.method === 'DELETE') {
     const { data, error } = await deleteItem(table, id);
@@ -39,39 +53,11 @@ export default async function handler(req, res) {
       })
     }
     res.status(200).json({
-      message: message
+      message: `DELETE airline with id ${id}`,
+      data: data,
+      error: error
   });
   } else {
     res.status(405).end('Method Not Allowed')
   }
-}
-
-async function update(id, airline) {
-  const result = await db.query(
-      `UPDATE airlines 
-      SET name="${airline.name}", logo_url="${airline.logo_url}"
-      WHERE id=${id}`
-  );
-
-  let message = 'Error in updating airline';
-
-  if (result.affectedRows) {
-      message = 'Airline updated successfully';
-  }
-
-  return {message};
-}
-
-async function remove(id) {
-  const result = await db.query(
-    `DELETE FROM airlines WHERE id=${id}`
-  );
-
-  let message = 'Error in deleting airline';
-
-  if (result.affectedRows) {
-      message = 'Airline deleted successfully';
-  }
-
-  return {message};
 }

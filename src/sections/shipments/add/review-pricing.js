@@ -2,8 +2,8 @@ import {
   Stack,
   Typography
 } from "@mui/material"
-import { formatCurrency } from "src/utils/format-currency"
-import { getFlightRate } from "src/utils/get-flight-rate"
+import { formatCurrency } from "src/utils/helpers/format-currency"
+import { getFlightRate } from "src/utils/helpers/get-flight-rate"
 import { useTheme } from '@mui/material/styles'
 
 export const PricingReview = (props) => {

@@ -1,5 +1,5 @@
 import { supabase } from "./db"
-import { getPageItemLimit } from "src/utils/apply-pagination"
+import { getPageItemLimit } from "../helpers/apply-pagination"
 
 export const getAll = async (table) => {
   const { data, error } = await supabase
@@ -32,6 +32,7 @@ export const createItem = async (table, object) => {
   const { data, error } = await supabase
       .from(table)
       .insert([object])
+      .select()
 
   return { data, error }
 }
@@ -41,6 +42,7 @@ export const updateItem = async (table, id, object) => {
       .from(table)
       .update(object)
       .eq('id', id)
+      .select()
   
   return { data, error }
 }
@@ -50,6 +52,7 @@ export const deleteItem = async (table, id) => {
       .from(table)
       .delete()
       .eq('id', id)
+      .select()
 
   return { data, error }
 }

@@ -24,7 +24,7 @@ import {
   importers,
   categoriesData,
   packagingData
-} from 'src/utils/placeholder-data';
+} from 'src/utils/helpers/placeholder-data';
 
 export const DetailsForm = (props) => {
   const {

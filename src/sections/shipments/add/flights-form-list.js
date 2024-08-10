@@ -24,7 +24,7 @@ import SwitchCameraRoundedIcon from '@mui/icons-material/SwitchCameraRounded';
 import AirplaneTicketRoundedIcon from '@mui/icons-material/AirplaneTicketRounded';
 import ConnectingAirportsRoundedIcon from '@mui/icons-material/ConnectingAirportsRounded';
 import { FlightFeature } from 'src/components/flights/flights-feature';
-import { formatCurrency } from 'src/utils/format-currency';
+import { formatCurrency } from 'src/utils/helpers/format-currency';
 import { FlightSummary } from 'src/components/flights/flights-summary';
 import { FlightAvatar } from 'src/components/flights/flights-avatar';
 import { FlightDetailSection } from 'src/sections/flights/flights-detail';

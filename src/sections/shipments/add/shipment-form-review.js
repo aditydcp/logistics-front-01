@@ -22,7 +22,7 @@ import {
 } from '@mui/lab'
 import { useTheme } from '@mui/material/styles'
 import { format } from 'date-fns';
-import { formatCurrency } from 'src/utils/format-currency';
+import { formatCurrency } from 'src/utils/helpers/format-currency';
 import AssignmentRoundedIcon from '@mui/icons-material/AssignmentRounded';
 import FlightRoundedIcon from '@mui/icons-material/FlightRounded';
 import SellRoundedIcon from '@mui/icons-material/SellRounded';

@@ -14,7 +14,7 @@ import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
 import { FlightsSearch } from 'src/sections/flights/flights-search';
 import { FlightsList } from 'src/sections/flights/flights-list';
 import { FlightsFormList } from 'src/sections/shipments/add/flights-form-list';
-import { applyPagination } from 'src/utils/apply-pagination';
+import { applyPagination } from 'src/utils/helpers/apply-pagination';
 import { FlightsFilter } from 'src/sections/flights/flights-filter';
 
 const useFlights = (data, page, rowsPerPage) => {
