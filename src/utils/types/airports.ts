@@ -7,6 +7,7 @@ export interface Airport {
   city: string;
   country: string;
   created_at: string;
+  updated_at: string;
 }
 
 export const airportsSchema = {
@@ -16,6 +17,7 @@ export const airportsSchema = {
   city: 'text',
   country: 'text',
   created_at: 'timestamp with time zone',
+  updated_at: 'timestamp with time zone',
 };
 
 export async function createAirportsTable(supabase: SupabaseClient) {
