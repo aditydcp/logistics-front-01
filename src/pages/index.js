@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import Head from 'next/head';
 import NextLink from 'next/link';
 import { subDays, subHours } from 'date-fns';
@@ -22,375 +22,375 @@ import { applyPagination } from 'src/utils/helpers/apply-pagination';
 
 const now = new Date();
 
-const data = [
-  {
-    id: '5e887ac47eed253091be10cb',
-    ref: 'DEV1049',
-    customer: {
-      name: 'Ekaterina Tankova',
-      email: 'ekaterina.tankova@dbkit.io',
-      phone: '304-428-3097'
-    },
-    flight: {
-      airline: 'Citilink',
-      departureDate: subDays(subHours(now, 7), 1).getTime(),
-      departureAirport: 'Changi Intl',
-      arrivalDate: subDays(subHours(now, 8), 1).getTime(),
-      arrivalAirport: 'Yogyakarta International Airport',
-    },
-    exporter: {
-      name: 'Exporter A',
-      email: 'exporter.a@exportera.io',
-      phone: '800-308-2000'
-    },
-    importer: {
-      name: 'Importer A',
-      email: 'importer.a@importera.io',
-      phone: '807-307-2007'
-    },
-    category: 'General Cargo',
-    quantity: '5',
-    packaging: 'Wooden Box',
-    dimension: '30',
-    weight: '1000',
-    note: '-',
-    status: 'confirmed',
-    createdAt: subDays(subHours(now, 7), 1).getTime(),
-    updatedAt: subDays(subHours(now, 7), 1).getTime(),
-    actions: ['View Report']
-  },
-  {
-    id: '5e887b209c28ac3dd97f6db5',
-    ref: 'DEV1050',
-    customer: {
-      email: 'fran.perez@dbkit.io',
-      name: 'Fran Perez',
-      phone: '712-351-5711'
-    },
-    flight: {
-      airline: 'Citilink',
-      departureDate: subDays(subHours(now, 7), 1).getTime(),
-      departureAirport: 'Changi Intl',
-      arrivalDate: subDays(subHours(now, 8), 1).getTime(),
-      arrivalAirport: 'Yogyakarta International Airport',
-    },
-    exporter: {
-      name: 'Exporter A',
-      email: 'exporter.a@exportera.io',
-      phone: '800-308-2000'
-    },
-    importer: {
-      name: 'Importer B',
-      email: 'importer.b@importerb.io',
-      phone: '807-357-2017'
-    },
-    category: 'General Cargo',
-    quantity: '5',
-    packaging: 'Wooden Pallet',
-    dimension: '30',
-    weight: '1000',
-    note: '-',
-    status: 'draft',
-    createdAt: subDays(subHours(now, 1), 2).getTime(),
-    updatedAt: subDays(subHours(now, 1), 2).getTime(),
-    actions: ['Edit', 'Confirm', 'Cancel']
-  },
-  {
-    id: '5e887b7602bdbc4dbb234b27',
-    ref: 'DEV1051',
-    customer: {
-      email: 'fran.perez@dbkit.io',
-      name: 'Fran Perez',
-      phone: '712-351-5711'
-    },
-    flight: {
-      airline: 'Citilink',
-      departureDate: subDays(subHours(now, 7), 1).getTime(),
-      departureAirport: 'Changi Intl',
-      arrivalDate: subDays(subHours(now, 8), 1).getTime(),
-      arrivalAirport: 'Yogyakarta International Airport',
-    },
-    exporter: {
-      name: 'Exporter A',
-      email: 'exporter.a@exportera.io',
-      phone: '800-308-2000'
-    },
-    importer: {
-      name: 'Importer B',
-      email: 'importer.b@importerb.io',
-      phone: '807-357-2017'
-    },
-    category: 'General Cargo',
-    quantity: '5',
-    packaging: 'Wooden Pallet',
-    dimension: '30',
-    weight: '1000',
-    note: '-',
-    status: 'draft',
-    createdAt: subDays(subHours(now, 1), 2).getTime(),
-    updatedAt: subDays(subHours(now, 1), 2).getTime(),
-    actions: ['Edit', 'Confirm', 'Cancel']
-  },
-  {
-    id: '5e86809283e28b96d2d38537',
-    ref: 'DEV1050',
-    customer: {
-      email: 'fran.perez@dbkit.io',
-      name: 'Fran Perez',
-      phone: '712-351-5711'
-    },
-    flight: {
-      airline: 'Citilink',
-      departureDate: subDays(subHours(now, 7), 1).getTime(),
-      departureAirport: 'Changi Intl',
-      arrivalDate: subDays(subHours(now, 8), 1).getTime(),
-      arrivalAirport: 'Yogyakarta International Airport',
-    },
-    exporter: {
-      name: 'Exporter A',
-      email: 'exporter.a@exportera.io',
-      phone: '800-308-2000'
-    },
-    importer: {
-      name: 'Importer B',
-      email: 'importer.b@importerb.io',
-      phone: '807-357-2017'
-    },
-    category: 'General Cargo',
-    quantity: '5',
-    packaging: 'Wooden Pallet',
-    dimension: '30',
-    weight: '1000',
-    note: '-',
-    status: 'confirmed',
-    createdAt: subDays(subHours(now, 7), 1).getTime(),
-    updatedAt: subDays(subHours(now, 7), 1).getTime(),
-    actions: ['View Report']
-  },
-  {
-    id: '5e8680e60cba5019c5ca6fda',
-    ref: 'DEV1052',
-    customer: {
-      email: 'fran.perez@dbkit.io',
-      name: 'Fran Perez',
-      phone: '712-351-5711'
-    },
-    flight: {
-      airline: 'Citilink',
-      departureDate: subDays(subHours(now, 7), 1).getTime(),
-      departureAirport: 'Changi Intl',
-      arrivalDate: subDays(subHours(now, 8), 1).getTime(),
-      arrivalAirport: 'Yogyakarta International Airport',
-    },
-    exporter: {
-      name: 'Exporter A',
-      email: 'exporter.a@exportera.io',
-      phone: '800-308-2000'
-    },
-    importer: {
-      name: 'Importer B',
-      email: 'importer.b@importerb.io',
-      phone: '807-357-2017'
-    },
-    category: 'General Cargo',
-    quantity: '5',
-    packaging: 'Wooden Pallet',
-    dimension: '30',
-    weight: '1000',
-    note: '-',
-    status: 'draft',
-    createdAt: subDays(subHours(now, 1), 2).getTime(),
-    updatedAt: subDays(subHours(now, 1), 2).getTime(),
-    actions: ['Edit', 'Confirm', 'Cancel']
-  },
-  {
-    id: '5e86805e2bafd54f66cc95c3',
-    ref: 'DEV1053',
-    customer: {
-      email: 'fran.perez@dbkit.io',
-      name: 'Fran Perez',
-      phone: '712-351-5711'
-    },
-    flight: {
-      airline: 'Citilink',
-      departureDate: subDays(subHours(now, 7), 1).getTime(),
-      departureAirport: 'Changi Intl',
-      arrivalDate: subDays(subHours(now, 8), 1).getTime(),
-      arrivalAirport: 'Yogyakarta International Airport',
-    },
-    exporter: {
-      name: 'Exporter A',
-      email: 'exporter.a@exportera.io',
-      phone: '800-308-2000'
-    },
-    importer: {
-      name: 'Importer B',
-      email: 'importer.b@importerb.io',
-      phone: '807-357-2017'
-    },
-    category: 'General Cargo',
-    quantity: '5',
-    packaging: 'Wooden Pallet',
-    dimension: '30',
-    weight: '1000',
-    note: '-',
-    status: 'draft',
-    createdAt: subDays(subHours(now, 1), 2).getTime(),
-    updatedAt: subDays(subHours(now, 1), 2).getTime(),
-    actions: ['Edit', 'Confirm', 'Cancel']
-  },
-  {
-    id: '5e887a1fbefd7938eea9c981',
-    ref: 'DEV1054',
-    customer: {
-      email: 'fran.perez@dbkit.io',
-      name: 'Fran Perez',
-      phone: '712-351-5711'
-    },
-    flight: {
-      airline: 'Citilink',
-      departureDate: subDays(subHours(now, 7), 1).getTime(),
-      departureAirport: 'Changi Intl',
-      arrivalDate: subDays(subHours(now, 8), 1).getTime(),
-      arrivalAirport: 'Yogyakarta International Airport',
-    },
-    exporter: {
-      name: 'Exporter A',
-      email: 'exporter.a@exportera.io',
-      phone: '800-308-2000'
-    },
-    importer: {
-      name: 'Importer B',
-      email: 'importer.b@importerb.io',
-      phone: '807-357-2017'
-    },
-    category: 'General Cargo',
-    quantity: '5',
-    packaging: 'Wooden Pallet',
-    dimension: '30',
-    weight: '1000',
-    note: '-',
-    status: 'draft',
-    createdAt: subDays(subHours(now, 1), 2).getTime(),
-    updatedAt: subDays(subHours(now, 1), 2).getTime(),
-    actions: ['Edit', 'Confirm', 'Cancel']
-  },
-  {
-    id: '5e887d0b3d090c1b8f162003',
-    ref: 'DEV1055',
-    customer: {
-      email: 'fran.perez@dbkit.io',
-      name: 'Fran Perez',
-      phone: '712-351-5711'
-    },
-    flight: {
-      airline: 'Citilink',
-      departureDate: subDays(subHours(now, 7), 1).getTime(),
-      departureAirport: 'Changi Intl',
-      arrivalDate: subDays(subHours(now, 8), 1).getTime(),
-      arrivalAirport: 'Yogyakarta International Airport',
-    },
-    exporter: {
-      name: 'Exporter A',
-      email: 'exporter.a@exportera.io',
-      phone: '800-308-2000'
-    },
-    importer: {
-      name: 'Importer B',
-      email: 'importer.b@importerb.io',
-      phone: '807-357-2017'
-    },
-    category: 'General Cargo',
-    quantity: '5',
-    packaging: 'Wooden Pallet',
-    dimension: '30',
-    weight: '1000',
-    note: '-',
-    status: 'draft',
-    createdAt: subDays(subHours(now, 1), 2).getTime(),
-    updatedAt: subDays(subHours(now, 1), 2).getTime(),
-    actions: ['Edit', 'Confirm', 'Cancel']
-  },
-  {
-    id: '5e88792be2d4cfb4bf0971d9',
-    ref: 'DEV1056',
-    customer: {
-      email: 'fran.perez@dbkit.io',
-      name: 'Fran Perez',
-      phone: '712-351-5711'
-    },
-    flight: {
-      airline: 'Citilink',
-      departureDate: subDays(subHours(now, 7), 1).getTime(),
-      departureAirport: 'Changi Intl',
-      arrivalDate: subDays(subHours(now, 8), 1).getTime(),
-      arrivalAirport: 'Yogyakarta International Airport',
-    },
-    exporter: {
-      name: 'Exporter A',
-      email: 'exporter.a@exportera.io',
-      phone: '800-308-2000'
-    },
-    importer: {
-      name: 'Importer B',
-      email: 'importer.b@importerb.io',
-      phone: '807-357-2017'
-    },
-    category: 'General Cargo',
-    quantity: '5',
-    packaging: 'Wooden Pallet',
-    dimension: '30',
-    weight: '1000',
-    note: '-',
-    status: 'draft',
-    createdAt: subDays(subHours(now, 1), 2).getTime(),
-    updatedAt: subDays(subHours(now, 1), 2).getTime(),
-    actions: ['Edit', 'Confirm', 'Cancel']
-  },
-  {
-    id: '5e8877da9a65442b11551975',
-    ref: 'DEV1057',
-    customer: {
-      email: 'fran.perez@dbkit.io',
-      name: 'Fran Perez',
-      phone: '712-351-5711'
-    },
-    flight: {
-      airline: 'Citilink',
-      departureDate: subDays(subHours(now, 7), 1).getTime(),
-      departureAirport: 'Changi Intl',
-      arrivalDate: subDays(subHours(now, 8), 1).getTime(),
-      arrivalAirport: 'Yogyakarta International Airport',
-    },
-    exporter: {
-      name: 'Exporter A',
-      email: 'exporter.a@exportera.io',
-      phone: '800-308-2000'
-    },
-    importer: {
-      name: 'Importer B',
-      email: 'importer.b@importerb.io',
-      phone: '807-357-2017'
-    },
-    category: 'General Cargo',
-    quantity: '5',
-    packaging: 'Wooden Pallet',
-    dimension: '30',
-    weight: '1000',
-    note: '-',
-    status: 'draft',
-    createdAt: subDays(subHours(now, 1), 2).getTime(),
-    updatedAt: subDays(subHours(now, 1), 2).getTime(),
-    actions: ['Edit', 'Confirm', 'Cancel']
-  },
-];
+// const data = [
+//   {
+//     id: '5e887ac47eed253091be10cb',
+//     ref: 'DEV1049',
+//     customer: {
+//       name: 'Ekaterina Tankova',
+//       email: 'ekaterina.tankova@dbkit.io',
+//       phone: '304-428-3097'
+//     },
+//     flight: {
+//       airline: 'Citilink',
+//       departureDate: subDays(subHours(now, 7), 1).getTime(),
+//       departureAirport: 'Changi Intl',
+//       arrivalDate: subDays(subHours(now, 8), 1).getTime(),
+//       arrivalAirport: 'Yogyakarta International Airport',
+//     },
+//     exporter: {
+//       name: 'Exporter A',
+//       email: 'exporter.a@exportera.io',
+//       phone: '800-308-2000'
+//     },
+//     importer: {
+//       name: 'Importer A',
+//       email: 'importer.a@importera.io',
+//       phone: '807-307-2007'
+//     },
+//     category: 'General Cargo',
+//     quantity: '5',
+//     packaging: 'Wooden Box',
+//     dimension: '30',
+//     weight: '1000',
+//     note: '-',
+//     status: 'confirmed',
+//     createdAt: subDays(subHours(now, 7), 1).getTime(),
+//     updatedAt: subDays(subHours(now, 7), 1).getTime(),
+//     actions: ['View Report']
+//   },
+//   {
+//     id: '5e887b209c28ac3dd97f6db5',
+//     ref: 'DEV1050',
+//     customer: {
+//       email: 'fran.perez@dbkit.io',
+//       name: 'Fran Perez',
+//       phone: '712-351-5711'
+//     },
+//     flight: {
+//       airline: 'Citilink',
+//       departureDate: subDays(subHours(now, 7), 1).getTime(),
+//       departureAirport: 'Changi Intl',
+//       arrivalDate: subDays(subHours(now, 8), 1).getTime(),
+//       arrivalAirport: 'Yogyakarta International Airport',
+//     },
+//     exporter: {
+//       name: 'Exporter A',
+//       email: 'exporter.a@exportera.io',
+//       phone: '800-308-2000'
+//     },
+//     importer: {
+//       name: 'Importer B',
+//       email: 'importer.b@importerb.io',
+//       phone: '807-357-2017'
+//     },
+//     category: 'General Cargo',
+//     quantity: '5',
+//     packaging: 'Wooden Pallet',
+//     dimension: '30',
+//     weight: '1000',
+//     note: '-',
+//     status: 'draft',
+//     createdAt: subDays(subHours(now, 1), 2).getTime(),
+//     updatedAt: subDays(subHours(now, 1), 2).getTime(),
+//     actions: ['Edit', 'Confirm', 'Cancel']
+//   },
+//   {
+//     id: '5e887b7602bdbc4dbb234b27',
+//     ref: 'DEV1051',
+//     customer: {
+//       email: 'fran.perez@dbkit.io',
+//       name: 'Fran Perez',
+//       phone: '712-351-5711'
+//     },
+//     flight: {
+//       airline: 'Citilink',
+//       departureDate: subDays(subHours(now, 7), 1).getTime(),
+//       departureAirport: 'Changi Intl',
+//       arrivalDate: subDays(subHours(now, 8), 1).getTime(),
+//       arrivalAirport: 'Yogyakarta International Airport',
+//     },
+//     exporter: {
+//       name: 'Exporter A',
+//       email: 'exporter.a@exportera.io',
+//       phone: '800-308-2000'
+//     },
+//     importer: {
+//       name: 'Importer B',
+//       email: 'importer.b@importerb.io',
+//       phone: '807-357-2017'
+//     },
+//     category: 'General Cargo',
+//     quantity: '5',
+//     packaging: 'Wooden Pallet',
+//     dimension: '30',
+//     weight: '1000',
+//     note: '-',
+//     status: 'draft',
+//     createdAt: subDays(subHours(now, 1), 2).getTime(),
+//     updatedAt: subDays(subHours(now, 1), 2).getTime(),
+//     actions: ['Edit', 'Confirm', 'Cancel']
+//   },
+//   {
+//     id: '5e86809283e28b96d2d38537',
+//     ref: 'DEV1050',
+//     customer: {
+//       email: 'fran.perez@dbkit.io',
+//       name: 'Fran Perez',
+//       phone: '712-351-5711'
+//     },
+//     flight: {
+//       airline: 'Citilink',
+//       departureDate: subDays(subHours(now, 7), 1).getTime(),
+//       departureAirport: 'Changi Intl',
+//       arrivalDate: subDays(subHours(now, 8), 1).getTime(),
+//       arrivalAirport: 'Yogyakarta International Airport',
+//     },
+//     exporter: {
+//       name: 'Exporter A',
+//       email: 'exporter.a@exportera.io',
+//       phone: '800-308-2000'
+//     },
+//     importer: {
+//       name: 'Importer B',
+//       email: 'importer.b@importerb.io',
+//       phone: '807-357-2017'
+//     },
+//     category: 'General Cargo',
+//     quantity: '5',
+//     packaging: 'Wooden Pallet',
+//     dimension: '30',
+//     weight: '1000',
+//     note: '-',
+//     status: 'confirmed',
+//     createdAt: subDays(subHours(now, 7), 1).getTime(),
+//     updatedAt: subDays(subHours(now, 7), 1).getTime(),
+//     actions: ['View Report']
+//   },
+//   {
+//     id: '5e8680e60cba5019c5ca6fda',
+//     ref: 'DEV1052',
+//     customer: {
+//       email: 'fran.perez@dbkit.io',
+//       name: 'Fran Perez',
+//       phone: '712-351-5711'
+//     },
+//     flight: {
+//       airline: 'Citilink',
+//       departureDate: subDays(subHours(now, 7), 1).getTime(),
+//       departureAirport: 'Changi Intl',
+//       arrivalDate: subDays(subHours(now, 8), 1).getTime(),
+//       arrivalAirport: 'Yogyakarta International Airport',
+//     },
+//     exporter: {
+//       name: 'Exporter A',
+//       email: 'exporter.a@exportera.io',
+//       phone: '800-308-2000'
+//     },
+//     importer: {
+//       name: 'Importer B',
+//       email: 'importer.b@importerb.io',
+//       phone: '807-357-2017'
+//     },
+//     category: 'General Cargo',
+//     quantity: '5',
+//     packaging: 'Wooden Pallet',
+//     dimension: '30',
+//     weight: '1000',
+//     note: '-',
+//     status: 'draft',
+//     createdAt: subDays(subHours(now, 1), 2).getTime(),
+//     updatedAt: subDays(subHours(now, 1), 2).getTime(),
+//     actions: ['Edit', 'Confirm', 'Cancel']
+//   },
+//   {
+//     id: '5e86805e2bafd54f66cc95c3',
+//     ref: 'DEV1053',
+//     customer: {
+//       email: 'fran.perez@dbkit.io',
+//       name: 'Fran Perez',
+//       phone: '712-351-5711'
+//     },
+//     flight: {
+//       airline: 'Citilink',
+//       departureDate: subDays(subHours(now, 7), 1).getTime(),
+//       departureAirport: 'Changi Intl',
+//       arrivalDate: subDays(subHours(now, 8), 1).getTime(),
+//       arrivalAirport: 'Yogyakarta International Airport',
+//     },
+//     exporter: {
+//       name: 'Exporter A',
+//       email: 'exporter.a@exportera.io',
+//       phone: '800-308-2000'
+//     },
+//     importer: {
+//       name: 'Importer B',
+//       email: 'importer.b@importerb.io',
+//       phone: '807-357-2017'
+//     },
+//     category: 'General Cargo',
+//     quantity: '5',
+//     packaging: 'Wooden Pallet',
+//     dimension: '30',
+//     weight: '1000',
+//     note: '-',
+//     status: 'draft',
+//     createdAt: subDays(subHours(now, 1), 2).getTime(),
+//     updatedAt: subDays(subHours(now, 1), 2).getTime(),
+//     actions: ['Edit', 'Confirm', 'Cancel']
+//   },
+//   {
+//     id: '5e887a1fbefd7938eea9c981',
+//     ref: 'DEV1054',
+//     customer: {
+//       email: 'fran.perez@dbkit.io',
+//       name: 'Fran Perez',
+//       phone: '712-351-5711'
+//     },
+//     flight: {
+//       airline: 'Citilink',
+//       departureDate: subDays(subHours(now, 7), 1).getTime(),
+//       departureAirport: 'Changi Intl',
+//       arrivalDate: subDays(subHours(now, 8), 1).getTime(),
+//       arrivalAirport: 'Yogyakarta International Airport',
+//     },
+//     exporter: {
+//       name: 'Exporter A',
+//       email: 'exporter.a@exportera.io',
+//       phone: '800-308-2000'
+//     },
+//     importer: {
+//       name: 'Importer B',
+//       email: 'importer.b@importerb.io',
+//       phone: '807-357-2017'
+//     },
+//     category: 'General Cargo',
+//     quantity: '5',
+//     packaging: 'Wooden Pallet',
+//     dimension: '30',
+//     weight: '1000',
+//     note: '-',
+//     status: 'draft',
+//     createdAt: subDays(subHours(now, 1), 2).getTime(),
+//     updatedAt: subDays(subHours(now, 1), 2).getTime(),
+//     actions: ['Edit', 'Confirm', 'Cancel']
+//   },
+//   {
+//     id: '5e887d0b3d090c1b8f162003',
+//     ref: 'DEV1055',
+//     customer: {
+//       email: 'fran.perez@dbkit.io',
+//       name: 'Fran Perez',
+//       phone: '712-351-5711'
+//     },
+//     flight: {
+//       airline: 'Citilink',
+//       departureDate: subDays(subHours(now, 7), 1).getTime(),
+//       departureAirport: 'Changi Intl',
+//       arrivalDate: subDays(subHours(now, 8), 1).getTime(),
+//       arrivalAirport: 'Yogyakarta International Airport',
+//     },
+//     exporter: {
+//       name: 'Exporter A',
+//       email: 'exporter.a@exportera.io',
+//       phone: '800-308-2000'
+//     },
+//     importer: {
+//       name: 'Importer B',
+//       email: 'importer.b@importerb.io',
+//       phone: '807-357-2017'
+//     },
+//     category: 'General Cargo',
+//     quantity: '5',
+//     packaging: 'Wooden Pallet',
+//     dimension: '30',
+//     weight: '1000',
+//     note: '-',
+//     status: 'draft',
+//     createdAt: subDays(subHours(now, 1), 2).getTime(),
+//     updatedAt: subDays(subHours(now, 1), 2).getTime(),
+//     actions: ['Edit', 'Confirm', 'Cancel']
+//   },
+//   {
+//     id: '5e88792be2d4cfb4bf0971d9',
+//     ref: 'DEV1056',
+//     customer: {
+//       email: 'fran.perez@dbkit.io',
+//       name: 'Fran Perez',
+//       phone: '712-351-5711'
+//     },
+//     flight: {
+//       airline: 'Citilink',
+//       departureDate: subDays(subHours(now, 7), 1).getTime(),
+//       departureAirport: 'Changi Intl',
+//       arrivalDate: subDays(subHours(now, 8), 1).getTime(),
+//       arrivalAirport: 'Yogyakarta International Airport',
+//     },
+//     exporter: {
+//       name: 'Exporter A',
+//       email: 'exporter.a@exportera.io',
+//       phone: '800-308-2000'
+//     },
+//     importer: {
+//       name: 'Importer B',
+//       email: 'importer.b@importerb.io',
+//       phone: '807-357-2017'
+//     },
+//     category: 'General Cargo',
+//     quantity: '5',
+//     packaging: 'Wooden Pallet',
+//     dimension: '30',
+//     weight: '1000',
+//     note: '-',
+//     status: 'draft',
+//     createdAt: subDays(subHours(now, 1), 2).getTime(),
+//     updatedAt: subDays(subHours(now, 1), 2).getTime(),
+//     actions: ['Edit', 'Confirm', 'Cancel']
+//   },
+//   {
+//     id: '5e8877da9a65442b11551975',
+//     ref: 'DEV1057',
+//     customer: {
+//       email: 'fran.perez@dbkit.io',
+//       name: 'Fran Perez',
+//       phone: '712-351-5711'
+//     },
+//     flight: {
+//       airline: 'Citilink',
+//       departureDate: subDays(subHours(now, 7), 1).getTime(),
+//       departureAirport: 'Changi Intl',
+//       arrivalDate: subDays(subHours(now, 8), 1).getTime(),
+//       arrivalAirport: 'Yogyakarta International Airport',
+//     },
+//     exporter: {
+//       name: 'Exporter A',
+//       email: 'exporter.a@exportera.io',
+//       phone: '800-308-2000'
+//     },
+//     importer: {
+//       name: 'Importer B',
+//       email: 'importer.b@importerb.io',
+//       phone: '807-357-2017'
+//     },
+//     category: 'General Cargo',
+//     quantity: '5',
+//     packaging: 'Wooden Pallet',
+//     dimension: '30',
+//     weight: '1000',
+//     note: '-',
+//     status: 'draft',
+//     createdAt: subDays(subHours(now, 1), 2).getTime(),
+//     updatedAt: subDays(subHours(now, 1), 2).getTime(),
+//     actions: ['Edit', 'Confirm', 'Cancel']
+//   },
+// ];
 
-const useShipments = (page, rowsPerPage) => {
+const useShipments = (data, page, rowsPerPage) => {
   return useMemo(
     () => {
       return applyPagination(data, page, rowsPerPage);
     },
-    [page, rowsPerPage]
+    [data, page, rowsPerPage]
   );
 };
 
@@ -404,9 +404,24 @@ const useShipmentIds = (shipments) => {
 };
 
 const Page = () => {
+  const [data, setData] = useState([])
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const shipments = useShipments(page, rowsPerPage);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+      const response = await fetch('bookings');
+      setData(response.data.data)
+      } catch (error) {
+        console.error('Error fetching exporters:', error)
+      }
+    };
+
+    fetchData();
+  }, [])
+
+  const shipments = useShipments(data, page, rowsPerPage);
   const shipmentsIds = useShipmentIds(shipments);
   const shipmentsSelection = useSelection(shipmentsIds);
 
