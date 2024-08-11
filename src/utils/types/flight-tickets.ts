@@ -6,14 +6,14 @@ export const table = 'flight_tickets';
 
 export interface FlightTicket {
   id: number;
-  rates_id: number;
+  rates_json: string;
   created_at: string;
   updated_at: string;
 }
 
 export const flightTicketSchema = {
   id: 'integer',
-  rates_id: 'integer references flight_rates(id)',
+  rates_json: 'text',
   created_at: 'timestamp with time zone',
   updated_at: 'timestamp with time zone',
 };
@@ -32,7 +32,7 @@ export async function createFlightTicketsTable(supabase: SupabaseClient) {
 
 export function isValidFlightTicket(data: any): data is FlightTicket {
   return (
-    typeof data.rates_id === 'number' &&
-    Object.keys(data).every(key => ['rates_id'].includes(key))
+    typeof data.rates_json === 'string' &&
+    Object.keys(data).every(key => ['rates_json'].includes(key))
   )
 }
