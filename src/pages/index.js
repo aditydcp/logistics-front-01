@@ -19,6 +19,7 @@ import { OverviewTraffic } from 'src/sections/overview/overview-traffic';
 import { ShipmentsTable } from 'src/sections/overview/shipments-table';
 import { useSelection } from 'src/hooks/use-selection';
 import { applyPagination } from 'src/utils/helpers/apply-pagination';
+import apiClient from '../utils/helpers/api-client';
 
 const now = new Date();
 
@@ -411,7 +412,7 @@ const Page = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-      const response = await fetch('bookings');
+      const response = await apiClient.get('bookings');
       setData(response.data.data)
       } catch (error) {
         console.error('Error fetching exporters:', error)

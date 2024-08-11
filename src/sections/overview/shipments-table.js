@@ -118,9 +118,9 @@ export const ShipmentsTable = (props) => {
             <TableBody>
               {shipments.map((shipment) => {
                 const isSelected = selected.includes(shipment.id);
-                const createdAt = format(shipment.createdAt, 'dd/MM/yyyy');
-                const updatedAt = format(shipment.updatedAt, 'dd/MM/yyyy');
-                const departureDate = format(shipment.flight.departureDate, 'dd/MM/yyyy');
+                const createdAt = format(new Date(shipment.created_at), 'dd/MM/yyyy');
+                const updatedAt = format(new Date(shipment.updated_at), 'dd/MM/yyyy');
+                // const departureDate = format(shipment.flight.departureDate, 'dd/MM/yyyy');
 
                 return (
                   <TableRow
@@ -141,27 +141,27 @@ export const ShipmentsTable = (props) => {
                     />
                     </TableCell>
                     <TableCell>
-                      {shipment.ref}
+                      {shipment.ref ?? '-'}
                     </TableCell>
                     <TableCell>
-                      {createdAt}
+                      {createdAt ?? '-'}
                     </TableCell>
                     <TableCell>
-                      {shipment.flight.airline}<br />
+                      {/* {shipment.flight.airline}<br />
                       {departureDate}<br />
-                      {shipment.flight.departureAirport}<br />
+                      {shipment.flight.departureAirport}<br /> */}
                     </TableCell>
                     <TableCell>
-                      {shipment.exporter.name}
+                      {shipment.exporter?.name ?? '-'}
                     </TableCell>
                     <TableCell>
-                      {shipment.importer.name}
+                      {shipment.importer?.name ?? '-'}
                     </TableCell>
                     <TableCell>
-                      {shipment.category}
+                      {shipment.category ?? '-'}
                     </TableCell>
                     <TableCell>
-                      {shipment.note}
+                      {shipment.note ?? '-'}
                     </TableCell>
                     <TableCell>
                       <SeverityPill color={statusMap[shipment.status]}>
@@ -185,7 +185,7 @@ export const ShipmentsTable = (props) => {
                         direction="column"
                         spacing={1}
                       >
-                        {shipment.actions.map((action) => {
+                        {shipment.actions?.map((action) => {
                           return (
                             <Button
                               color={buttonMap[action].color}
