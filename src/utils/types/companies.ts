@@ -6,8 +6,9 @@ export const tableImporters = 'importers';
 export interface Company {
   id: number;
   name: string;
+  email: string | null;
   address: string | null;
-  contact: string | null;
+  phone: string | null;
   logo: string | null;
   verified_at: string | null;
   created_at: string;
@@ -17,8 +18,9 @@ export interface Company {
 export const companySchema = {
   id: 'integer',
   name: 'text',
+  email: 'text',
   address: 'text',
-  contact: 'text',
+  phone: 'text',
   logo: 'text',
   verified_at: 'timestamp with time zone',
   created_at: 'timestamp with time zone',

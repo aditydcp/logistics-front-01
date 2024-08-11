@@ -79,7 +79,7 @@ export const CompaniesTable = (props) => {
             <TableBody>
               {items.map((company) => {
                 const isSelected = selected.includes(company.id);
-                const createdAt = format(company.createdAt, 'dd/MM/yyyy');
+                const status = company.verified_at === null ? 'unverified' :'verified';
 
                 return (
                   <TableRow
@@ -100,26 +100,26 @@ export const CompaniesTable = (props) => {
                       />
                     </TableCell>
                     <TableCell>
-                      {company.name}
+                      {company.name ?? '-'}
                     </TableCell>
                     <TableCell>
-                      {company.email}
+                      {company.email ?? '-'}
                     </TableCell>
                     <TableCell>
-                      {company.phone}
+                      {company.phone ?? '-'}
                     </TableCell>
                     <TableCell>
-                      {company.address.city}, {company.address.state}, {company.address.country}
+                      {company.address ?? '-'}
                     </TableCell>
                     <TableCell>
                       <Stack
                         spacing={1}
                         width='fit-content'
                       >
-                        <SeverityPill color={statusMap[company.status]}>
-                          {company.status}
+                        <SeverityPill color={statusMap[status]}>
+                          {status}
                         </SeverityPill>
-                        {company.status === 'unverified' &&
+                        {status === 'unverified' &&
                           <Button
                             size='small'
                             color='warning'
