@@ -8,7 +8,8 @@ export interface Flight {
   id: number;
   airline_id: number;
   plane_model: string;
-  baggage_size: number;
+  weight_limit: number;
+  size_limit: number;
   departure_airport_id: number;
   departure_datetime: string;
   arrival_airport_id: number;
@@ -21,7 +22,8 @@ export const flightSchema = {
   id: 'integer',
   airline_id: 'integer references airlines(id)',
   plane_model: 'varchar',
-  baggage_size: 'integer',
+  weight_limit: 'integer',
+  size_limit: 'integer',
   departure_airport_id: 'integer references airports(id)',
   departure_datetime: 'timestamp with time zone',
   arrival_airport_id: 'integer references airports(id)',
