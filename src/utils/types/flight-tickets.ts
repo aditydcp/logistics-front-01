@@ -1,5 +1,7 @@
 import { SupabaseClient } from '@supabase/supabase-js';
 
+// This table contains data about flight tickets, the packaged flight that the user can see and book.
+
 export const table = 'flight_tickets';
 
 export interface FlightTicket {

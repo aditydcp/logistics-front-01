@@ -1,5 +1,7 @@
 import { SupabaseClient } from '@supabase/supabase-js';
 
+// This table contains individual flights data.
+
 export const table = 'flights';
 
 export interface Flight {
