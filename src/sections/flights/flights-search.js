@@ -23,7 +23,7 @@ import {
   IconButton,
   Button,
   Typography,
-  Box, 
+  Box,
   Stack,
   Grid,
   FormControl,
@@ -34,17 +34,21 @@ import {
 } from '@mui/material';
 import { AirportSearch } from 'src/components/flights/flights-airport-search';
 import { MyDatePicker } from 'src/components/date-picker';
-import { 
+import {
   categoriesData,
   packagingData,
   airportsData,
   flightsData
-} from 'src/utils/placeholder-data';
+} from 'src/utils/helpers/placeholder-data';
 import DropdownMultiInput from 'src/components/dropdown-multi-input';
+import apiClient from '../../utils/helpers/api-client';
 
 export const FlightsSearch = (props) => {
   const theme = useTheme()
   const {
+    airportOptions,
+    categoryOptions,
+    packagingOptions,
     departureAirport,
     setDepartureAirport,
     arrivalAirport,
@@ -65,11 +69,11 @@ export const FlightsSearch = (props) => {
 
   const [localDepartureAirport, setLocalDepartureAirport] = useState(departureAirport);
   const [inputDepartureAirport, setInputDepartureAirport] = useState("");
-  const [departureAirportOptions, setDepartureAirportOptions] = useState(airportsData);
+  const [departureAirportOptions, setDepartureAirportOptions] = useState(airportOptions);
 
   const [localArrivalAirport, setLocalArrivalAirport] = useState(arrivalAirport);
   const [inputArrivalAirport, setInputArrivalAirport] = useState("");
-  const [arrivalAirportOptions, setArrivalAirportOptions] = useState(airportsData);
+  const [arrivalAirportOptions, setArrivalAirportOptions] = useState(airportOptions);
 
   const [localDate, setLocalDate] = useState(date);
 
@@ -81,6 +85,11 @@ export const FlightsSearch = (props) => {
   const [localSize, setLocalSize] = useState(size || null);
   const [localCategories, setLocalCategories] = useState(categories || [])
   const [localPackaging, setLocalPackaging] = useState(packaging || [])
+
+  useEffect(() => {
+    setDepartureAirportOptions(airportOptions)
+    setArrivalAirportOptions(airportOptions)
+  }, [airportOptions])
 
   const handleSwapAirport = () => {
     let temp = localArrivalAirport
@@ -116,7 +125,7 @@ export const FlightsSearch = (props) => {
       if (new Date(flight.journeyDetails.departure.time).toDateString() !== new Date(date).toDateString()) {
         return false
       }
-      
+
       if (advanceSearch) {
         // Filter by weight
         if (weight && flight.weightLimit < weight) {
@@ -203,8 +212,8 @@ export const FlightsSearch = (props) => {
                 icon={<FlightTakeoffRoundedIcon sx={{ mx: 1, mr: 1.5, my: 0.5 }} />}
               />
               <Box>
-                <IconButton 
-                  aria-label="airport-swap" 
+                <IconButton
+                  aria-label="airport-swap"
                   size="small"
                   sx={{ height: "fit-content", mt: 2 }}
                   onClick={handleSwapAirport}
@@ -225,7 +234,7 @@ export const FlightsSearch = (props) => {
                 icon={<FlightLandRoundedIcon sx={{ mr: 1.5, my: 0.5 }} />}
               />
             </Stack>
-            <MyDatePicker 
+            <MyDatePicker
               label="Departure Date"
               format="EEEE, dd MMMM yyyy"
               selectedDate={localDate}
@@ -244,7 +253,7 @@ export const FlightsSearch = (props) => {
             spacing={2}
             useFlexGap
           >
-            <Accordion 
+            <Accordion
               disableGutters={true}
               elevation={0}
               expanded={advanceSearch}
@@ -270,16 +279,16 @@ export const FlightsSearch = (props) => {
               <AccordionDetails sx={{ pt: 0 }}>
                 <Stack
                   spacing={2}
-                  sx={{ ml: 1}}
+                  sx={{ ml: 1 }}
                 >
                   <Stack
                     direction='row'
                     spacing={3}
                     useFlexGap
                   >
-                    <FormControl 
+                    <FormControl
                       variant="standard"
-                      sx={{ 
+                      sx={{
                         width: '-webkit-fill-available'
                       }}
                     >
@@ -309,9 +318,9 @@ export const FlightsSearch = (props) => {
                       />
                       {/* <FormHelperText>Flights with a maximum baggage weight equal to or greater than this value will be included in the search results.</FormHelperText> */}
                     </FormControl>
-                    <FormControl 
+                    <FormControl
                       variant="standard"
-                      sx={{ 
+                      sx={{
                         width: '-webkit-fill-available'
                       }}
                     >
@@ -351,7 +360,7 @@ export const FlightsSearch = (props) => {
                       labelId="categories-select-label"
                       selectId="categories-select"
                       label="Cargo Category"
-                      data={categoriesData}
+                      data={categoryOptions}
                       value={localCategories}
                       setValue={setLocalCategories}
                     />
@@ -359,7 +368,7 @@ export const FlightsSearch = (props) => {
                       labelId="packaging-select-label"
                       selectId="packaging-select"
                       label="Packaging"
-                      data={packagingData}
+                      data={packagingOptions}
                       value={localPackaging}
                       setValue={setLocalPackaging}
                     />
@@ -375,7 +384,7 @@ export const FlightsSearch = (props) => {
                 </SvgIcon>
               )}
               variant="contained"
-              sx={{ 
+              sx={{
                 minWidth: '25%',
                 height: 'fit-content',
                 lineHeight: '2',

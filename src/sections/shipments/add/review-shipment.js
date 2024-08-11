@@ -2,7 +2,7 @@ import {
   Grid,
   Typography
 } from '@mui/material';
-import { shipmentPropertyNameMap, shipmentPropertyValueMap } from 'src/utils/shipment-data';
+import { shipmentPropertyNameMap, shipmentPropertyValueMap } from 'src/utils/helpers/shipment-data';
 
 export const ShipmentReview = (props) => {
   const {

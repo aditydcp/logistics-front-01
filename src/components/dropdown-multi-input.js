@@ -4,7 +4,6 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  MenuProps,
   Box,
   Chip,
   IconButton
@@ -79,10 +78,10 @@ const DropdownMultiInput = (props) => {
         >
           {data.map((item) => (
             <MenuItem
-              key={item}
-              value={item}
+              key={item.name}
+              value={item.name}
             >
-              {item}
+              {item.name}
             </MenuItem>
           ))}
         </Select>
