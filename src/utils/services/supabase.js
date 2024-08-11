@@ -32,11 +32,14 @@ const getById = async (table, id) => {
   return { data, error }
 }
 
-const getByField = async (table, field, value) => {
-  const { data, error } = await supabase
-      .from(table)
-      .select()
-      .eq(field, value)
+const getByFields = async (table, fields) => {
+  let query = supabase.from(table).select()
+  
+  Object.entries(fields).forEach(([field, value]) => {
+    query = query.eq(field, value)
+  })
+
+  const { data, error } = await query
 
   return { data, error }
 }
@@ -94,7 +97,7 @@ export {
   getAll,
   getAllFromPage,
   getById,
-  getByField,
+  getByFields,
   createItem,
   updateItem,
   updateByField,

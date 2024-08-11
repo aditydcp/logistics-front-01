@@ -12,8 +12,8 @@ export const getById = async (table, id) => {
   return await db.getById(table, id)
 }
 
-export const getByField = async (table, field, value) => {
-  return await db.getByField(table, field, value)
+export const getByFields = async (table, fields) => {
+  return await db.getByFields(table, fields)
 }
 
 export const createItem = async (table, object) => {
