@@ -32,6 +32,15 @@ const getById = async (table, id) => {
   return { data, error }
 }
 
+const getByField = async (table, field, value) => {
+  const { data, error } = await supabase
+      .from(table)
+      .select()
+      .eq(field, value)
+
+  return { data, error }
+}
+
 const createItem = async (table, object) => {
   const { data, error } = await supabase
       .from(table)
@@ -51,6 +60,16 @@ const updateItem = async (table, id, object) => {
   return { data, error }
 }
 
+const updateByField = async (table, field, value, object) => {
+  const { data, error } = await supabase
+      .from(table)
+      .update(object)
+      .eq(field, value)
+      .select()
+
+  return { data, error }
+}
+
 const deleteItem = async (table, id) => {
   const { data, error } = await supabase
       .from(table)
@@ -61,11 +80,24 @@ const deleteItem = async (table, id) => {
   return { data, error }
 }
 
+const deleteByField = async (table, field, value) => {
+  const { data, error } = await supabase
+      .from(table)
+      .delete()
+      .eq(field, value)
+      .select()
+
+  return { data, error }
+}
+
 export {
   getAll,
   getAllFromPage,
   getById,
+  getByField,
   createItem,
   updateItem,
-  deleteItem
+  updateByField,
+  deleteItem,
+  deleteByField
 }
