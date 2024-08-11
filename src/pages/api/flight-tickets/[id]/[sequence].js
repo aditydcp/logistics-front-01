@@ -1,11 +1,11 @@
-import { updateItem, deleteItem, getByField } from "../../../../utils/services/queries"
+import { updateItem, deleteItem, getByFields } from "../../../../utils/services/queries"
 import { isValidFlightTicketFlight, table } from "../../../../utils/types/flight-ticket-flights"
 
 export default async function handler(req, res) {
   const { id, sequence } = req.query;
 
   if (req.method === 'GET') {
-    const { data, error } = await getByField(table, 'flight_ticket_id', id);
+    const { data, error } = await getByFields(table, {'flight_ticket_id': id});
 
     if (error) {
       res.status(404).json({
@@ -40,7 +40,7 @@ export default async function handler(req, res) {
       })
     }
 
-    const { flightTicketFlightsData, flightTicketFlightsDataError } = await getByField(table, 'flight_ticket_id', id);
+    const { flightTicketFlightsData, flightTicketFlightsDataError } = await getByFields(table, {'flight_ticket_id': id});
 
     if (flightTicketFlightsDataError) {
       res.status(400).json({
@@ -72,7 +72,7 @@ export default async function handler(req, res) {
       error: error
     });
   } else if (req.method === 'DELETE') {
-    const { flightTicketFlightsData, flightTicketFlightsDataError } = await getByField(table, 'flight_ticket_id', id);
+    const { flightTicketFlightsData, flightTicketFlightsDataError } = await getByFields(table, {'flight_ticket_id': id});
 
     if (flightTicketFlightsDataError) {
       res.status(400).json({

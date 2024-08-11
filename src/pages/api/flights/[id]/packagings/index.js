@@ -1,4 +1,4 @@
-import { getByField, createItem } from "../../../../../utils/services/queries"
+import { getByFields, createItem } from "../../../../../utils/services/queries"
 import { isValidFlightReference, table } from "../../../../../utils/types/flight-references";
 
 const refType = 'packaging'
@@ -10,7 +10,7 @@ export default async function handler(req, res) {
     res.status(405).end('Method Not Allowed')
 
     // TODO: Should get by multiple field conditions
-    // const { data, error } = await getByField(table, ['flight_id', 'ref_type'], [id, refType])
+    // const { data, error } = await getByFields(table, ['flight_id', 'ref_type'], [id, refType])
     // res.status(200).json({
     //   message: 'GET packaging from flights',
     //   data: data,

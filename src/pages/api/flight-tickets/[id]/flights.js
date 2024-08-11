@@ -1,11 +1,11 @@
-import { getByField, createItem } from "../../../../utils/services/queries"
+import { getByFields, createItem } from "../../../../utils/services/queries"
 import { isValidFlightTicketFlight, table } from "../../../../utils/types/flight-ticket-flights"
 
 export default async function handler(req, res) {
   const { id } = req.query;
 
   if (req.method === 'GET') {
-    const { data, error } = await getByField(table, 'flight_ticket_id', id)
+    const { data, error } = await getByFields(table, {'flight_ticket_id': id})
     res.status(200).json({
       message: 'GET flights from flight ticket',
       data: data,
@@ -17,7 +17,7 @@ export default async function handler(req, res) {
     // Alter body to include flight ticket id
     body.flight_ticket_id = id
 
-    const { flightsData, flightsDataError } = await getByField(table, 'flight_ticket_id', id)
+    const { flightsData, flightsDataError } = await getByFields(table, {'flight_ticket_id': id})
 
     // if sequence is not provided, set it to the last sequence + 1
     if (!body.sequence) {
