@@ -128,6 +128,10 @@ export const FlightsSearch = (props) => {
       const flightData = transformFlightData(response.data.data)
       setFlights(flightData)
     } catch (error) {
+      if (error.response.data.data.length === 0) {
+        setFlights([])
+        return
+      }
       console.error('Error fetching flights:', error)
     }
   }
