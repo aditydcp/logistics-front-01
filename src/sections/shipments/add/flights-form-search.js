@@ -39,6 +39,9 @@ const FlightsFormSearch = (props) => {
   const {
     flight,
     setFlight,
+    airportOptions,
+    categoryOptions,
+    packagingOptions,
     handleComplete,
     flightSearchParams,
   } = props
@@ -86,6 +89,9 @@ const FlightsFormSearch = (props) => {
       useFlexGap
     >
       <FlightsSearch
+        airportOptions={airportOptions}
+        categoryOptions={categoryOptions}
+        packagingOptions={packagingOptions}
         departureAirport={departureAirport}
         setDepartureAirport={setDepartureAirport}
         arrivalAirport={arrivalAirport}

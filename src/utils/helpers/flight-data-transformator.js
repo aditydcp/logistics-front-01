@@ -1,3 +1,5 @@
+import { packagingData } from "./placeholder-data";
+
 export function transformFlightData(data) {
   return data.map(ticket => {
     const firstFlight = ticket.flights[0];
@@ -23,7 +25,9 @@ export function transformFlightData(data) {
       weightLimit: ticket.weight_limit,
       sizeLimit: ticket.size_limit,
       categories: ticket.category_references,
+      categoriesData: ticket.categories,
       packagings: ticket.packaging_references,
+      packagingData: ticket.packagings,
       legs: ticket.flights.map(flight => ({
         airlineRef: flight.airline.id - 1,
         airline: flight.airline,
@@ -31,7 +35,9 @@ export function transformFlightData(data) {
         weightLimit: flight.weight_limit,
         sizeLimit: flight.size_limit,
         categories: flight.category_references,
+        categoriesData: flight.categories,
         packagings: flight.packaging_references,
+        packagingData: flight.packagings,
         departure: {
           airport: flight.departure_airport,
           time: new Date(flight.departure_datetime).getTime()

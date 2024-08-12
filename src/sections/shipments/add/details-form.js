@@ -31,6 +31,8 @@ export const DetailsForm = (props) => {
     shipment,
     setShipment,
     setFlightSearchParams,
+    categoryOptions,
+    packagingOptions,
     handleNext,
     handleComplete,
     handleIncomplete,
@@ -210,7 +212,7 @@ export const DetailsForm = (props) => {
               labelId="categories-select-label"
               selectId="categories-select"
               label="Cargo Category"
-              data={categoriesData}
+              data={categoryOptions}
               value={shipment.category}
               setValue={(values) => {
                 updateShipment('category', values)
@@ -227,7 +229,7 @@ export const DetailsForm = (props) => {
               labelId="packaging-select-label"
               selectId="packaging-select"
               label="Packaging"
-              data={packagingData}
+              data={packagingOptions}
               value={shipment.packaging}
               setValue={(values) => {
                 updateShipment('packaging', values)

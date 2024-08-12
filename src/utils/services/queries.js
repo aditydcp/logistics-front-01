@@ -56,3 +56,7 @@ export const searchFlights = async (
     packaging_ids,
   )
 }
+
+export const searchFlightById = async (id) => {
+  return await db.searchFlightById(id)
+}

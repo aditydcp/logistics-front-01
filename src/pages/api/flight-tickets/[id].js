@@ -1,15 +1,20 @@
-import { getById, updateItem, deleteItem } from "../../../utils/services/queries"
+import { getById, updateItem, deleteItem, searchFlightById } from "../../../utils/services/queries"
 import { isValidFlightTicket, table } from "../../../utils/types/flight-tickets"
 
 export default async function handler(req, res) {
   const { id } = req.query;
 
   if (req.method === 'GET') {
-    const { data, error } = await getById(table, id);
+    const { data, error } = await searchFlightById(id);
     if (data) {
       res.status(200).json({
         message: `GET flight ticket with id ${id}`,
         data: data,
+        error: error
+      })
+    } else if (error) {
+      res.status(400).json({
+        message: `Error fetching flight ticket`,
         error: error
       })
     } else {

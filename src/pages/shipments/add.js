@@ -22,6 +22,9 @@ import FlightsFormSearch from 'src/sections/shipments/add/flights-form-search';
 import { FlightsFormSelected } from 'src/sections/shipments/add/flights-form-selected';
 import { ShipmentFormReview } from 'src/sections/shipments/add/shipment-form-review';
 import { DetailsForm } from 'src/sections/shipments/add/details-form';
+import { decryptId } from '../../utils/helpers/crypt-client';
+import apiClient from '../../utils/helpers/api-client';
+import { transformFlightData } from '../../utils/helpers/flight-data-transformator';
 
 const steps = [
   'Shipment details',
@@ -35,6 +38,10 @@ const Page = () => {
 
   const [activeStep, setActiveStep] = useState(router.query.flight ? 1 : 0);
   const [completed, setCompleted] = useState(router.query.flight ? { 1: true } : {});
+  const [airportOptions, setAirportOptions] = useState([]);
+  const [categoryOptions, setCategoryOptions] = useState([]);
+  const [packagingOptions, setPackagingOptions] = useState([]);
+
   const [shipment, setShipment] = useState({
     exporter: null,
     importer: null,
@@ -56,7 +63,50 @@ const Page = () => {
     categories: [],
     packaging: [],
   })
-  const [flight, setFlight] = useState(router.query.flight ? JSON.parse(router.query.flight) : null);
+  const [flight, setFlight] = useState(null);
+
+  useEffect(() => {
+    if (router.query.flight) {
+      let flightId = decryptId(router.query.flight)
+      apiClient.get(`flight-tickets/${flightId}`).then((response) => {
+        const flightData = transformFlightData(response.data.data)
+        setFlight(flightData[0])
+      }).catch((error) => {
+        console.error('Error fetching flight:', error)
+      })
+    }
+
+    const fetchAirports = async () => {
+      try {
+        const response = await apiClient.get('airports');
+        setAirportOptions(response.data.data)
+      } catch (error) {
+        console.error('Error fetching airports:', error)
+      }
+    }
+
+    const fetchCategories = async () => {
+      try {
+        const response = await apiClient.get('categories');
+        setCategoryOptions(response.data.data)
+      } catch (error) {
+        console.error('Error fetching categories:', error)
+      }
+    }
+
+    const fetchPackagings = async () => {
+      try {
+        const response = await apiClient.get('packagings');
+        setPackagingOptions(response.data.data)
+      } catch (error) {
+        console.error('Error fetching packagings:', error)
+      }
+    }
+
+    fetchAirports()
+    fetchCategories()
+    fetchPackagings()
+  }, [])
 
   const totalSteps = () => {
     return steps.length;
@@ -196,6 +246,8 @@ const Page = () => {
                         shipment={shipment}
                         setShipment={setShipment}
                         setFlightSearchParams={setFlightSearchParams}
+                        categoryOptions={categoryOptions}
+                        packagingOptions={packagingOptions}
                         handleNext={handleNext}
                         handleComplete={handleComplete}
                         handleIncomplete={handleIncomplete}
@@ -218,6 +270,9 @@ const Page = () => {
                         <FlightsFormSearch
                           flight={flight}
                           setFlight={setFlight}
+                          airportOptions={airportOptions}
+                          categoryOptions={categoryOptions}
+                          packagingOptions={packagingOptions}
                           handleComplete={handleComplete}
                           flightSearchParams={flightSearchParams}
                         />

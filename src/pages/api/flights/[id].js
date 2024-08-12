@@ -12,6 +12,11 @@ export default async function handler(req, res) {
         data: data,
         error: error
       })
+    } else if (error) {
+      res.status(400).json({
+        message: `Error fetching flight`,
+        error: error
+      })
     } else {
       res.status(404).json({
         message: `Flight with id ${id} not found`,

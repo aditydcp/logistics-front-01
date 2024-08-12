@@ -74,7 +74,7 @@ export const FlightTicketDetails = (props) => {
             spacing={1}
             useFlexGap
           >
-            {flight.categories.map((category) => (
+            {flight.categoriesData.map((category) => (
               <Chip
                 key={category.id}
                 label={category.name}
@@ -95,7 +95,7 @@ export const FlightTicketDetails = (props) => {
             spacing={1}
             useFlexGap
           >
-            {flight.packagings.map((packaging) => (
+            {flight.packagingData.map((packaging) => (
               <Chip
                 key={packaging.id}
                 label={packaging.name}
