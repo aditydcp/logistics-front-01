@@ -97,6 +97,49 @@ export const FlightsSearch = (props) => {
     setLocalDepartureAirport(temp)
   }
 
+  const fetchFlights = async (
+    departureAirport,
+    arrivalAirport,
+    date,
+    advanceSearch,
+    weight,
+    size,
+    categories,
+    packaging
+  ) => {
+    console.log("Search flights params:", {
+      departureAirport,
+      arrivalAirport,
+      date,
+      typeDate: typeof date,
+      isoDateGte: date.toISOString(),
+      typeIsoDate: typeof date.toISOString(),
+      isoDateLt: new Date(new Date(date).setDate(date.getDate() + 1)).toISOString(),
+      weight,
+      size,
+      categories,
+      packaging
+    })
+
+    try {
+      const response = await apiClient.get('flights/search', {
+        params: {
+          departure_airport_id: departureAirport.id,
+          arrival_airport_id: arrivalAirport.id,
+          departure_date: date,
+          advance_search: advanceSearch,
+          weight,
+          size,
+          category_ids: categories.map((category) => category.id),
+          packaging_ids: packaging.map((packaging) => packaging.id)
+        }
+      });
+      console.log(response)
+    } catch (error) {
+      console.error('Error fetching flights:', error)
+    }
+  }
+
   const filterFlights = (
     flights,
     departureAirport,
@@ -178,6 +221,16 @@ export const FlightsSearch = (props) => {
         localCategories,
         localPackaging
       )
+    )
+    fetchFlights(
+      localDepartureAirport,
+      localArrivalAirport,
+      localDate,
+      advanceSearch,
+      localWeight,
+      localSize,
+      localCategories,
+      localPackaging
     )
     setSearchCommenced(true)
   }
