@@ -60,15 +60,16 @@ const DropdownMultiInput = (props) => {
             } = event;
             setValue(
               // On autofill we get a stringified value.
-              typeof value === 'string' ? value.split(',') : value,
+              // typeof value === 'string' ? value.split(',') : value,
+              typeof value === 'string' ? [] : value.map(item => ({id: item.id, name: item.name}))
             )
           }}
           renderValue={(selected) => (
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
               {selected.map((value) => (
                 <Chip
-                  key={value}
-                  label={value}
+                  key={value.id}
+                  label={value.name}
                   size='small'
                 />
               ))}
@@ -78,8 +79,8 @@ const DropdownMultiInput = (props) => {
         >
           {data.map((item) => (
             <MenuItem
-              key={item.name}
-              value={item.name}
+              key={item.id}
+              value={{id: item.id, name: item.name}}
             >
               {item.name}
             </MenuItem>
