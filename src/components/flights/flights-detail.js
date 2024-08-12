@@ -42,7 +42,7 @@ export const FlightDetail = (props) => {
         >
           <FlightAvatar
             flight={flight}
-            airline={airline}
+            airline={flight.airline}
           />
           <FlightTicketDetails
             flight={flight}

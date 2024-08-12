@@ -35,3 +35,24 @@ export const deleteItem = async (table, id) => {
 export const deleteByField = async (table, field, value) => {
   return await db.deleteByField(table, field, value)
 }
+
+// custom queries
+export const searchFlights = async (
+  departureDate,
+  departureAirport,
+  arrivalAirport,
+  weight = null,
+  size = null,
+  category_ids = [],
+  packaging_ids = [],
+) => {
+  return await db.searchFlights(
+    departureDate,
+    departureAirport,
+    arrivalAirport,
+    weight,
+    size,
+    category_ids,
+    packaging_ids,
+  )
+}

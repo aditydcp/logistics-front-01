@@ -25,7 +25,7 @@ export const FlightDetailSection = (props) => {
         >
           <FlightDetail
             flight={leg}
-            airline={flight.airlines[leg.airlineRef]}
+            airline={leg.airline}
           />
           {index !== arr.length - 1 && (
             <Divider

@@ -42,6 +42,7 @@ import {
 } from 'src/utils/helpers/placeholder-data';
 import DropdownMultiInput from 'src/components/dropdown-multi-input';
 import apiClient from '../../utils/helpers/api-client';
+import { transformFlightData } from '../../utils/helpers/flight-data-transformator';
 
 export const FlightsSearch = (props) => {
   const theme = useTheme()
@@ -97,67 +98,43 @@ export const FlightsSearch = (props) => {
     setLocalDepartureAirport(temp)
   }
 
-  const filterFlights = (
-    flights,
+  const fetchFlights = async (
     departureAirport,
     arrivalAirport,
     date,
+    advanceSearch,
     weight,
     size,
     categories,
     packaging
   ) => {
     if (!departureAirport || !arrivalAirport) {
-      return []
+      setFlights([])
+      return
     }
-    return flights.filter(flight => {
-      // Filter by departure airport
-      if (flight.journeyDetails.departure.airport.name !== departureAirport.name) {
-        return false
-      }
-
-      // Filter by arrival airport
-      if (flight.journeyDetails.arrival.airport.name !== arrivalAirport.name) {
-        return false
-      }
-
-      // Filter by date
-      if (new Date(flight.journeyDetails.departure.time).toDateString() !== new Date(date).toDateString()) {
-        return false
-      }
-
-      if (advanceSearch) {
-        // Filter by weight
-        if (weight && flight.weightLimit < weight) {
-          return false; // Exclude if flight's weight limit is less than the required weight
+    try {
+      const response = await apiClient.get('flights/search', {
+        params: {
+          departure_airport_id: departureAirport.id,
+          arrival_airport_id: arrivalAirport.id,
+          departure_date: date,
+          advance_search: advanceSearch,
+          weight,
+          size,
+          category_ids: categories.map((category) => category.id),
+          packaging_ids: packaging.map((packaging) => packaging.id)
         }
-
-        // Filter by size
-        if (size && flight.sizeLimit < size) {
-          return false; // Exclude if flight's size limit is less than the required size
-        }
-
-        // Filter by categories
-        if (categories && categories.length > 0) {
-          const hasMatchingCategory = categories.some(category => flight.categories.includes(category));
-          if (!hasMatchingCategory) {
-            return false; // Exclude if no matching category is found
-          }
-        }
-
-        // Filter by packaging
-        if (packaging && packaging.length > 0) {
-          const hasMatchingPackaging = packaging.some(packaging => flight.packaging.includes(packaging));
-          if (!hasMatchingPackaging) {
-            return false; // Exclude if no matching packaging is found
-          }
-        }
+      });
+      const flightData = transformFlightData(response.data.data)
+      setFlights(flightData)
+    } catch (error) {
+      if (error.response.data.data.length === 0) {
+        setFlights([])
+        return
       }
-
-      // If all conditions pass, include the flight
-      return true;
-    });
-  };
+      console.error('Error fetching flights:', error)
+    }
+  }
 
   const handleSearchClick = () => {
     setDepartureAirport(localDepartureAirport)
@@ -167,17 +144,15 @@ export const FlightsSearch = (props) => {
     setSize(localSize)
     setCategories(localCategories)
     setPackaging(localPackaging)
-    setFlights(
-      filterFlights(
-        flightsData,
-        localDepartureAirport,
-        localArrivalAirport,
-        localDate,
-        localWeight,
-        localSize,
-        localCategories,
-        localPackaging
-      )
+    fetchFlights(
+      localDepartureAirport,
+      localArrivalAirport,
+      localDate,
+      advanceSearch,
+      localWeight,
+      localSize,
+      localCategories,
+      localPackaging
     )
     setSearchCommenced(true)
   }
