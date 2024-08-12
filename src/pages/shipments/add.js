@@ -25,6 +25,9 @@ import { DetailsForm } from 'src/sections/shipments/add/details-form';
 import { decryptId } from '../../utils/helpers/crypt-client';
 import apiClient from '../../utils/helpers/api-client';
 import { transformFlightData } from '../../utils/helpers/flight-data-transformator';
+import useAirports from '../../hooks/use-airports';
+import useCategories from '../../hooks/use-categories';
+import usePackagings from '../../hooks/use-packagings';
 
 const steps = [
   'Shipment details',
@@ -38,9 +41,9 @@ const Page = () => {
 
   const [activeStep, setActiveStep] = useState(router.query.flight ? 1 : 0);
   const [completed, setCompleted] = useState(router.query.flight ? { 1: true } : {});
-  const [airportOptions, setAirportOptions] = useState([]);
-  const [categoryOptions, setCategoryOptions] = useState([]);
-  const [packagingOptions, setPackagingOptions] = useState([]);
+  const { airports: airportOptions } = useAirports();
+  const { categories: categoryOptions } = useCategories();
+  const { packagings: packagingOptions } = usePackagings();
 
   const [shipment, setShipment] = useState({
     exporter: null,
@@ -75,37 +78,6 @@ const Page = () => {
         console.error('Error fetching flight:', error)
       })
     }
-
-    const fetchAirports = async () => {
-      try {
-        const response = await apiClient.get('airports');
-        setAirportOptions(response.data.data)
-      } catch (error) {
-        console.error('Error fetching airports:', error)
-      }
-    }
-
-    const fetchCategories = async () => {
-      try {
-        const response = await apiClient.get('categories');
-        setCategoryOptions(response.data.data)
-      } catch (error) {
-        console.error('Error fetching categories:', error)
-      }
-    }
-
-    const fetchPackagings = async () => {
-      try {
-        const response = await apiClient.get('packagings');
-        setPackagingOptions(response.data.data)
-      } catch (error) {
-        console.error('Error fetching packagings:', error)
-      }
-    }
-
-    fetchAirports()
-    fetchCategories()
-    fetchPackagings()
   }, [])
 
   const totalSteps = () => {
