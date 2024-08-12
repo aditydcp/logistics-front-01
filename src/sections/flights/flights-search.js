@@ -42,6 +42,7 @@ import {
 } from 'src/utils/helpers/placeholder-data';
 import DropdownMultiInput from 'src/components/dropdown-multi-input';
 import apiClient from '../../utils/helpers/api-client';
+import { transformFlightData } from '../../utils/helpers/flight-data-transformator';
 
 export const FlightsSearch = (props) => {
   const theme = useTheme()
@@ -107,20 +108,10 @@ export const FlightsSearch = (props) => {
     categories,
     packaging
   ) => {
-    console.log("Search flights params:", {
-      departureAirport,
-      arrivalAirport,
-      date,
-      typeDate: typeof date,
-      isoDateGte: date.toISOString(),
-      typeIsoDate: typeof date.toISOString(),
-      isoDateLt: new Date(new Date(date).setDate(date.getDate() + 1)).toISOString(),
-      weight,
-      size,
-      categories,
-      packaging
-    })
-
+    if (!departureAirport || !arrivalAirport) {
+      setFlights([])
+      return
+    }
     try {
       const response = await apiClient.get('flights/search', {
         params: {
@@ -134,73 +125,12 @@ export const FlightsSearch = (props) => {
           packaging_ids: packaging.map((packaging) => packaging.id)
         }
       });
-      console.log(response)
+      const flightData = transformFlightData(response.data.data)
+      setFlights(flightData)
     } catch (error) {
       console.error('Error fetching flights:', error)
     }
   }
-
-  const filterFlights = (
-    flights,
-    departureAirport,
-    arrivalAirport,
-    date,
-    weight,
-    size,
-    categories,
-    packaging
-  ) => {
-    if (!departureAirport || !arrivalAirport) {
-      return []
-    }
-    return flights.filter(flight => {
-      // Filter by departure airport
-      if (flight.journeyDetails.departure.airport.name !== departureAirport.name) {
-        return false
-      }
-
-      // Filter by arrival airport
-      if (flight.journeyDetails.arrival.airport.name !== arrivalAirport.name) {
-        return false
-      }
-
-      // Filter by date
-      if (new Date(flight.journeyDetails.departure.time).toDateString() !== new Date(date).toDateString()) {
-        return false
-      }
-
-      if (advanceSearch) {
-        // Filter by weight
-        if (weight && flight.weightLimit < weight) {
-          return false; // Exclude if flight's weight limit is less than the required weight
-        }
-
-        // Filter by size
-        if (size && flight.sizeLimit < size) {
-          return false; // Exclude if flight's size limit is less than the required size
-        }
-
-        // Filter by categories
-        if (categories && categories.length > 0) {
-          const hasMatchingCategory = categories.some(category => flight.categories.includes(category));
-          if (!hasMatchingCategory) {
-            return false; // Exclude if no matching category is found
-          }
-        }
-
-        // Filter by packaging
-        if (packaging && packaging.length > 0) {
-          const hasMatchingPackaging = packaging.some(packaging => flight.packaging.includes(packaging));
-          if (!hasMatchingPackaging) {
-            return false; // Exclude if no matching packaging is found
-          }
-        }
-      }
-
-      // If all conditions pass, include the flight
-      return true;
-    });
-  };
 
   const handleSearchClick = () => {
     setDepartureAirport(localDepartureAirport)
@@ -210,18 +140,6 @@ export const FlightsSearch = (props) => {
     setSize(localSize)
     setCategories(localCategories)
     setPackaging(localPackaging)
-    setFlights(
-      filterFlights(
-        flightsData,
-        localDepartureAirport,
-        localArrivalAirport,
-        localDate,
-        localWeight,
-        localSize,
-        localCategories,
-        localPackaging
-      )
-    )
     fetchFlights(
       localDepartureAirport,
       localArrivalAirport,
