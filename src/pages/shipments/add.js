@@ -28,6 +28,8 @@ import { transformFlightData } from '../../utils/helpers/flight-data-transformat
 import useAirports from '../../hooks/use-airports';
 import useCategories from '../../hooks/use-categories';
 import usePackagings from '../../hooks/use-packagings';
+import useExporters from '../../hooks/use-exporters';
+import useImporters from '../../hooks/use-importers';
 
 const steps = [
   'Shipment details',
@@ -44,6 +46,8 @@ const Page = () => {
   const { airports: airportOptions } = useAirports();
   const { categories: categoryOptions } = useCategories();
   const { packagings: packagingOptions } = usePackagings();
+  const { exporters } = useExporters();
+  const { importers } = useImporters();
 
   const [shipment, setShipment] = useState({
     exporter: null,
@@ -220,6 +224,8 @@ const Page = () => {
                         setFlightSearchParams={setFlightSearchParams}
                         categoryOptions={categoryOptions}
                         packagingOptions={packagingOptions}
+                        exporters={exporters}
+                        importers={importers}
                         handleNext={handleNext}
                         handleComplete={handleComplete}
                         handleIncomplete={handleIncomplete}

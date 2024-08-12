@@ -19,12 +19,6 @@ import { CompanySearch } from "src/components/shipments/shipments-company-search
 import { MyDatePicker } from 'src/components/date-picker';
 import { useAuth } from "src/hooks/use-auth";
 import DropdownMultiInput from "src/components/dropdown-multi-input";
-import {
-  exporters,
-  importers,
-  categoriesData,
-  packagingData
-} from 'src/utils/helpers/placeholder-data';
 
 export const DetailsForm = (props) => {
   const {
@@ -33,6 +27,8 @@ export const DetailsForm = (props) => {
     setFlightSearchParams,
     categoryOptions,
     packagingOptions,
+    exporters,
+    importers,
     handleNext,
     handleComplete,
     handleIncomplete,
