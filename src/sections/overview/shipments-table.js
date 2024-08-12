@@ -19,24 +19,36 @@ import { Scrollbar } from 'src/components/scrollbar';
 import { getInitials } from 'src/utils/helpers/get-initials';
 import { SeverityPill } from 'src/components/severity-pill';
 
-const statusMap = {
-  draft: 'warning',
-  confirmed: 'success',
-  canceled: 'error'
-};
+const statusMap = [
+  {
+    name: 'draft',
+    color: 'warning',
+    actions: ['Edit', 'Confirm', 'Cancel']
+  },
+  {
+    name: 'confirmed',
+    color: 'success',
+    actions: []
+  },
+  {
+    name: 'canceled',
+    color: 'error',
+    actions: []
+  }
+]
 
 const buttonMap = {
   'Details': {
     color: 'primary',
-    onClick: () => {},
+    onClick: () => { },
   },
   'Edit': {
     color: 'primary',
-    onClick: () => {},
+    onClick: () => { },
   },
   'Confirm': {
     color: 'success',
-    onClick: () => {},
+    onClick: () => { },
   },
   'View Report': {
     color: 'primary',
@@ -44,7 +56,7 @@ const buttonMap = {
   },
   'Cancel': {
     color: 'error',
-    onClick: () => {},
+    onClick: () => { },
   },
 }
 
@@ -54,7 +66,7 @@ export const ShipmentsTable = (props) => {
     shipments = [],
     onDeselectAll,
     onDeselectOne,
-    onPageChange = () => {},
+    onPageChange = () => { },
     onRowsPerPageChange,
     onSelectAll,
     onSelectOne,
@@ -65,15 +77,15 @@ export const ShipmentsTable = (props) => {
 
   const selectedSome = (selected.length > 0) && (selected.length < shipments.length);
   const selectedAll = (shipments.length > 0) && (selected.length === shipments.length);
-  
+
   return (
     <Card>
       <Scrollbar>
         <Box sx={{ minWidth: 800 }}>
           <Table>
             <TableHead>
-                <TableRow>
-                  <TableCell padding="checkbox">
+              <TableRow>
+                <TableCell padding="checkbox">
                   <Checkbox
                     checked={selectedAll}
                     indeterminate={selectedSome}
@@ -85,35 +97,35 @@ export const ShipmentsTable = (props) => {
                       }
                     }}
                   />
-                  </TableCell>
-                  <TableCell>
-                    Shipment ID
-                  </TableCell>
-                  <TableCell>
-                    Date
-                  </TableCell>
-                  <TableCell>
-                    Flight Info
-                  </TableCell>
-                  <TableCell>
-                    Exporter
-                  </TableCell>
-                  <TableCell>
-                    Importer
-                  </TableCell>
-                  <TableCell>
-                    Category
-                  </TableCell>
-                  <TableCell>
-                    Note
-                  </TableCell>
-                  <TableCell>
-                    Status
-                  </TableCell>
-                  <TableCell>
-                    Actions
-                  </TableCell>
-                </TableRow>
+                </TableCell>
+                <TableCell>
+                  Shipment ID
+                </TableCell>
+                <TableCell>
+                  Date
+                </TableCell>
+                <TableCell>
+                  Flight Info
+                </TableCell>
+                <TableCell>
+                  Exporter
+                </TableCell>
+                <TableCell>
+                  Importer
+                </TableCell>
+                <TableCell>
+                  Category
+                </TableCell>
+                <TableCell>
+                  Note
+                </TableCell>
+                <TableCell>
+                  Status
+                </TableCell>
+                <TableCell>
+                  Actions
+                </TableCell>
+              </TableRow>
             </TableHead>
             <TableBody>
               {shipments.map((shipment) => {
@@ -124,24 +136,24 @@ export const ShipmentsTable = (props) => {
 
                 return (
                   <TableRow
-                      hover
-                      key={shipment.id}
-                      selected={isSelected}
+                    hover
+                    key={shipment.id}
+                    selected={isSelected}
                   >
                     <TableCell padding="checkbox">
-                    <Checkbox
-                      checked={isSelected}
-                      onChange={(event) => {
-                        if (event.target.checked) {
-                          onSelectOne?.(shipment.id);
-                        } else {
-                          onDeselectOne?.(shipment.id);
-                        }
-                      }}
-                    />
+                      <Checkbox
+                        checked={isSelected}
+                        onChange={(event) => {
+                          if (event.target.checked) {
+                            onSelectOne?.(shipment.id);
+                          } else {
+                            onDeselectOne?.(shipment.id);
+                          }
+                        }}
+                      />
                     </TableCell>
                     <TableCell>
-                      {shipment.ref ?? '-'}
+                      {shipment.id ?? '-'}
                     </TableCell>
                     <TableCell>
                       {createdAt ?? '-'}
@@ -164,8 +176,8 @@ export const ShipmentsTable = (props) => {
                       {shipment.note ?? '-'}
                     </TableCell>
                     <TableCell>
-                      <SeverityPill color={statusMap[shipment.status]}>
-                        <Tooltip 
+                      <SeverityPill color={statusMap[shipment.status].color}>
+                        <Tooltip
                           arrow
                           describeChild
                           placement='top'
@@ -174,7 +186,7 @@ export const ShipmentsTable = (props) => {
                           }}
                           title={`Last updated: ${updatedAt}`}
                         >
-                          {shipment.status}
+                          {statusMap[shipment.status].name}
                         </Tooltip>
                       </SeverityPill>
                     </TableCell>

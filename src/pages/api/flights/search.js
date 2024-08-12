@@ -1,3 +1,4 @@
+import { parseQueryValue } from "../../../utils/helpers/query-parser";
 import { searchFlights } from "../../../utils/services/queries"
 
 export default async function handler(req, res) {
@@ -8,19 +9,21 @@ export default async function handler(req, res) {
     advance_search,
     weight,
     size,
-    category_ids,
-    packaging_ids,
   } = req.query
+
+  const advanceSearch = advance_search === 'true'
+  const categoryIds = advanceSearch && req.query['category_ids[]'] ? parseQueryValue(req.query['category_ids[]']) : [];
+  const packagingIds = advanceSearch && req.query['packaging_ids[]'] ? parseQueryValue(req.query['packaging_ids[]']) : [];
   
   if (req.method === 'GET') {
     const { data, error } = await searchFlights(
       departure_date,
       departure_airport_id,
       arrival_airport_id,
-      advance_search? weight : null,
-      advance_search? size : null,
-      advance_search? category_ids: [],
-      advance_search? packaging_ids: []
+      advanceSearch && weight ? parseInt(weight) : null,
+      advanceSearch && size ? parseInt(size) : null,
+      categoryIds,
+      packagingIds,
     )
     
     let statusCode

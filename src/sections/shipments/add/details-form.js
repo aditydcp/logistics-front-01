@@ -19,18 +19,16 @@ import { CompanySearch } from "src/components/shipments/shipments-company-search
 import { MyDatePicker } from 'src/components/date-picker';
 import { useAuth } from "src/hooks/use-auth";
 import DropdownMultiInput from "src/components/dropdown-multi-input";
-import {
-  exporters,
-  importers,
-  categoriesData,
-  packagingData
-} from 'src/utils/helpers/placeholder-data';
 
 export const DetailsForm = (props) => {
   const {
     shipment,
     setShipment,
     setFlightSearchParams,
+    categoryOptions,
+    packagingOptions,
+    exporters,
+    importers,
     handleNext,
     handleComplete,
     handleIncomplete,
@@ -210,7 +208,7 @@ export const DetailsForm = (props) => {
               labelId="categories-select-label"
               selectId="categories-select"
               label="Cargo Category"
-              data={categoriesData}
+              data={categoryOptions}
               value={shipment.category}
               setValue={(values) => {
                 updateShipment('category', values)
@@ -227,7 +225,7 @@ export const DetailsForm = (props) => {
               labelId="packaging-select-label"
               selectId="packaging-select"
               label="Packaging"
-              data={packagingData}
+              data={packagingOptions}
               value={shipment.packaging}
               setValue={(values) => {
                 updateShipment('packaging', values)

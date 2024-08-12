@@ -29,6 +29,7 @@ import { FlightSummary } from 'src/components/flights/flights-summary';
 import { FlightAvatar } from 'src/components/flights/flights-avatar';
 import { FlightDetailSection } from './flights-detail';
 import { FlightInfo } from './flights-info';
+import { encryptId } from '../../utils/helpers/crypt-client';
 
 export const FlightsList = (props) => {
   const {
@@ -223,7 +224,7 @@ export const FlightsList = (props) => {
                             href={{
                               pathname: "/shipments/add",
                               query: {
-                                flight: JSON.stringify(flight)
+                                flight: encryptId(flight.id)
                               }
                             }}
                             startIcon={(

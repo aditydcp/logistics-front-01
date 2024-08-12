@@ -1,5 +1,6 @@
 import { createClient } from '@supabase/supabase-js'
 import { getPageItemLimit } from "../helpers/apply-pagination"
+import { id } from 'date-fns/locale'
 
 const supabaseUrl = process.env.SUPABASE_URL
 const supabaseKey = process.env.SUPABASE_KEY
@@ -116,6 +117,15 @@ const searchFlights = async (
   return { data, error }
 }
 
+const searchFlightById = async (id) => {
+  const { data, error } = await supabase
+    .rpc('get_flight_ticket_details', {
+      p_ticket_id : id
+    });
+
+  return { data, error }
+}
+
 export {
   getAll,
   getAllFromPage,
@@ -126,5 +136,6 @@ export {
   updateByField,
   deleteItem,
   deleteByField,
-  searchFlights
+  searchFlights,
+  searchFlightById
 }

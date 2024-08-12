@@ -16,6 +16,9 @@ import { FlightsList } from 'src/sections/flights/flights-list';
 import { applyPagination } from 'src/utils/helpers/apply-pagination';
 import { FlightsFilter } from 'src/sections/flights/flights-filter';
 import apiClient from '../utils/helpers/api-client';
+import useAirports from '../hooks/use-airports';
+import useCategories from '../hooks/use-categories';
+import usePackagings from '../hooks/use-packagings';
 
 const useFlights = (data, page, rowsPerPage) => {
   return useMemo(
@@ -37,9 +40,9 @@ const useFlightIds = (flights) => {
 
 const Page = () => {
   const [searchCommenced, setSearchCommenced] = useState(false);
-  const [airportOptions, setAirportOptions] = useState([]);
-  const [categoryOptions, setCategoryOptions] = useState([]);
-  const [packagingOptions, setPackagingOptions] = useState([]);
+  const { airports: airportOptions } = useAirports();
+  const { categories: categoryOptions } = useCategories();
+  const { packagings: packagingOptions } = usePackagings();
 
   const [departureAirport, setDepartureAirport] = useState(null);
   const [arrivalAirport, setArrivalAirport] = useState(null);
@@ -56,39 +59,6 @@ const Page = () => {
   const validFlights = useFlights(filteredFlights, page, rowsPerPage);
   const validFlightsIds = useFlightIds(validFlights);
   const validFlightsSelection = useSelection(validFlightsIds);
-
-  useEffect(() => {
-    const fetchAirports = async () => {
-      try {
-        const response = await apiClient.get('airports');
-        setAirportOptions(response.data.data)
-      } catch (error) {
-        console.error('Error fetching airports:', error)
-      }
-    }
-
-    const fetchCategories = async () => {
-      try {
-        const response = await apiClient.get('categories');
-        setCategoryOptions(response.data.data)
-      } catch (error) {
-        console.error('Error fetching categories:', error)
-      }
-    }
-
-    const fetchPackagings = async () => {
-      try {
-        const response = await apiClient.get('packagings');
-        setPackagingOptions(response.data.data)
-      } catch (error) {
-        console.error('Error fetching packagings:', error)
-      }
-    }
-
-    fetchAirports()
-    fetchCategories()
-    fetchPackagings()
-  }, [])
 
   const handlePageChange = useCallback(
     (event, value) => {

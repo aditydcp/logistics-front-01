@@ -34,6 +34,7 @@ import { PricingReview } from './review-pricing';
 import { FlightAvatar } from 'src/components/flights/flights-avatar';
 import { FlightTicketDetails } from 'src/components/flights/flights-ticket-details';
 import { FlightRates } from 'src/components/flights/flights-rates';
+import apiClient from '../../../utils/helpers/api-client';
 
 export const ShipmentFormReview = (props) => {
   const {
@@ -57,7 +58,32 @@ export const ShipmentFormReview = (props) => {
     pricingErrorTopic += 'pick a flight'
   }
 
+  const saveBooking = async (flight, shipment) => {
+    try {
+      const booking = {
+        user_id: 1,
+        exporter_id: shipment.exporter.id,
+        importer_id: shipment.importer.id,
+        flight_id: parseInt(flight.id),
+        category_id: shipment.category[0],
+        packaging_id: shipment.packaging[0],
+        quantity: shipment.quantity,
+        weight: shipment.weightTotal,
+        dimension: shipment.sizeTotal,
+        status: 0
+      }
+      console.log('Booking:', booking)
+      const response = await apiClient.post('/bookings', booking)
+      console.log('Booking saved successfully:', response.data);
+    } catch (error) {
+      console.error('Error saving booking:', error);
+    }
+  }
+  
   const onSubmit = () => {
+    console.log('shipment', shipment)
+    console.log('flight', flight)
+    saveBooking(flight, shipment)
     handleComplete()
     router.push('/')
   }

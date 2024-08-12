@@ -22,6 +22,14 @@ import FlightsFormSearch from 'src/sections/shipments/add/flights-form-search';
 import { FlightsFormSelected } from 'src/sections/shipments/add/flights-form-selected';
 import { ShipmentFormReview } from 'src/sections/shipments/add/shipment-form-review';
 import { DetailsForm } from 'src/sections/shipments/add/details-form';
+import { decryptId } from '../../utils/helpers/crypt-client';
+import apiClient from '../../utils/helpers/api-client';
+import { transformFlightData } from '../../utils/helpers/flight-data-transformator';
+import useAirports from '../../hooks/use-airports';
+import useCategories from '../../hooks/use-categories';
+import usePackagings from '../../hooks/use-packagings';
+import useExporters from '../../hooks/use-exporters';
+import useImporters from '../../hooks/use-importers';
 
 const steps = [
   'Shipment details',
@@ -35,6 +43,12 @@ const Page = () => {
 
   const [activeStep, setActiveStep] = useState(router.query.flight ? 1 : 0);
   const [completed, setCompleted] = useState(router.query.flight ? { 1: true } : {});
+  const { airports: airportOptions } = useAirports();
+  const { categories: categoryOptions } = useCategories();
+  const { packagings: packagingOptions } = usePackagings();
+  const { exporters } = useExporters();
+  const { importers } = useImporters();
+
   const [shipment, setShipment] = useState({
     exporter: null,
     importer: null,
@@ -56,7 +70,19 @@ const Page = () => {
     categories: [],
     packaging: [],
   })
-  const [flight, setFlight] = useState(router.query.flight ? JSON.parse(router.query.flight) : null);
+  const [flight, setFlight] = useState(null);
+
+  useEffect(() => {
+    if (router.query.flight) {
+      let flightId = decryptId(router.query.flight)
+      apiClient.get(`flight-tickets/${flightId}`).then((response) => {
+        const flightData = transformFlightData(response.data.data)
+        setFlight(flightData[0])
+      }).catch((error) => {
+        console.error('Error fetching flight:', error)
+      })
+    }
+  }, [])
 
   const totalSteps = () => {
     return steps.length;
@@ -196,6 +222,10 @@ const Page = () => {
                         shipment={shipment}
                         setShipment={setShipment}
                         setFlightSearchParams={setFlightSearchParams}
+                        categoryOptions={categoryOptions}
+                        packagingOptions={packagingOptions}
+                        exporters={exporters}
+                        importers={importers}
                         handleNext={handleNext}
                         handleComplete={handleComplete}
                         handleIncomplete={handleIncomplete}
@@ -218,6 +248,9 @@ const Page = () => {
                         <FlightsFormSearch
                           flight={flight}
                           setFlight={setFlight}
+                          airportOptions={airportOptions}
+                          categoryOptions={categoryOptions}
+                          packagingOptions={packagingOptions}
                           handleComplete={handleComplete}
                           flightSearchParams={flightSearchParams}
                         />
@@ -230,33 +263,6 @@ const Page = () => {
                         handleComplete={handleComplete}
                       />
                     }
-
-                    {/* <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-                      <Button
-                        color="inherit"
-                        disabled={activeStep === 0}
-                        onClick={handleBack}
-                        sx={{ mr: 1 }}
-                      >
-                        Back
-                      </Button>
-                      <Box sx={{ flex: '1 1 auto' }} />
-                      <Button onClick={handleNext} sx={{ mr: 1 }}>
-                        Next
-                      </Button>
-                      {activeStep !== steps.length &&
-                        (completed[activeStep] ? (
-                          <Typography variant="caption" sx={{ display: 'inline-block' }}>
-                            Step {activeStep + 1} already completed
-                          </Typography>
-                        ) : (
-                          <Button onClick={handleComplete}>
-                            {completedSteps() === totalSteps() - 1
-                              ? 'Finish'
-                              : 'Complete Step'}
-                          </Button>
-                        ))}
-                    </Box> */}
                   </Box>
                 )}
               </div>

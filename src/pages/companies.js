@@ -26,6 +26,8 @@ import { CompanyCard } from 'src/sections/companies/company-card';
 import { CompaniesSearch } from 'src/sections/companies/companies-search';
 import { CompaniesTable } from 'src/sections/companies/companies-table';
 import apiClient from '../utils/helpers/api-client';
+import useImporters from '../hooks/use-importers';
+import useExporters from '../hooks/use-exporters';
 
 const now = new Date();
 
@@ -39,32 +41,11 @@ const Page = () => {
 
   const [exportersPage, setExportersPage] = useState(0);
   const [exportersRowsPerPage, setExportersRowsPerPage] = useState(5);
-  const [exporterData, setExporterData] = useState([]);
+  const { exporters: exporterData } = useExporters()
 
   const [importersPage, setImporterPage] = useState(0);
   const [importersRowsPerPage, setRowsPerPage2] = useState(5);
-  const [importerData, setImporterData] = useState([]);
-
-  useEffect(() => {
-    const fetchExporters = async () => {
-      try {
-        const response = await apiClient.get('exporters');
-        setExporterData(response.data.data)
-      } catch (error) {
-        console.error('Error fetching exporters:', error)
-      }
-    }
-    const fetchImporters = async () => {
-      try {
-        const response = await apiClient.get('importers');
-        setImporterData(response.data.data)
-      } catch (error) {
-        console.error('Error fetching importers:', error)
-      }
-    }
-    fetchExporters();
-    fetchImporters();
-  }, []);
+  const { importers: importerData } = useImporters()
 
   const exporters = useCompanies(exporterData, exportersPage, exportersRowsPerPage);
   const exportersIds = useCompanyIds(exporters);

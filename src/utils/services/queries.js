@@ -17,6 +17,7 @@ export const getByFields = async (table, fields) => {
 }
 
 export const createItem = async (table, object) => {
+  console.log('Creating item to table', table, object)
   return await db.createItem(table, object)
 }
 
@@ -55,4 +56,8 @@ export const searchFlights = async (
     category_ids,
     packaging_ids,
   )
+}
+
+export const searchFlightById = async (id) => {
+  return await db.searchFlightById(id)
 }
