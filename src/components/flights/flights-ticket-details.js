@@ -76,8 +76,8 @@ export const FlightTicketDetails = (props) => {
           >
             {flight.categories.map((category) => (
               <Chip
-                key={category}
-                label={category}
+                key={category.id}
+                label={category.name}
                 size='small'
               />
             ))}
@@ -97,8 +97,8 @@ export const FlightTicketDetails = (props) => {
           >
             {flight.packagings.map((packaging) => (
               <Chip
-                key={packaging}
-                label={packaging}
+                key={packaging.id}
+                label={packaging.name}
                 size='small'
               />
             ))}

@@ -26,17 +26,18 @@ export function transformFlightData(data) {
       packagings: ticket.packaging_references,
       legs: ticket.flights.map(flight => ({
         airlineRef: flight.airline.id - 1,
+        airline: flight.airline,
         planeModel: flight.plane_model,
         weightLimit: flight.weight_limit,
         sizeLimit: flight.size_limit,
-        categories: ticket.category_references,
-        packagings: ticket.packaging_references,
+        categories: flight.category_references,
+        packagings: flight.packaging_references,
         departure: {
-          airport: ticket.departure_airport,
+          airport: flight.departure_airport,
           time: new Date(flight.departure_datetime).getTime()
         },
         arrival: {
-          airport: ticket.arrival_airport,
+          airport: flight.arrival_airport,
           time: new Date(flight.arrival_datetime).getTime()
         }
       })),
