@@ -17,6 +17,7 @@ export const getByFields = async (table, fields) => {
 }
 
 export const createItem = async (table, object) => {
+  console.log('Creating item to table', table, object)
   return await db.createItem(table, object)
 }
 

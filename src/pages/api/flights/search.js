@@ -12,16 +12,16 @@ export default async function handler(req, res) {
   } = req.query
 
   const advanceSearch = advance_search === 'true'
-  const categoryIds = advanceSearch ? parseQueryValue(req.query['category_ids[]']) : [];
-  const packagingIds = advanceSearch ? parseQueryValue(req.query['packaging_ids[]']) : [];
+  const categoryIds = advanceSearch && req.query['category_ids[]'] ? parseQueryValue(req.query['category_ids[]']) : [];
+  const packagingIds = advanceSearch && req.query['packaging_ids[]'] ? parseQueryValue(req.query['packaging_ids[]']) : [];
   
   if (req.method === 'GET') {
     const { data, error } = await searchFlights(
       departure_date,
       departure_airport_id,
       arrival_airport_id,
-      advanceSearch ? parseInt(weight) : null,
-      advanceSearch ? parseInt(size) : null,
+      advanceSearch && weight ? parseInt(weight) : null,
+      advanceSearch && size ? parseInt(size) : null,
       categoryIds,
       packagingIds,
     )
