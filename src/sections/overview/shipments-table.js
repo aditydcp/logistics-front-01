@@ -19,46 +19,28 @@ import { Scrollbar } from 'src/components/scrollbar';
 import { getInitials } from 'src/utils/helpers/get-initials';
 import { SeverityPill } from 'src/components/severity-pill';
 
-const statusMap = [
-  {
-    name: 'draft',
-    color: 'warning',
-    actions: ['Edit', 'Confirm', 'Cancel']
-  },
-  {
-    name: 'confirmed',
-    color: 'success',
-    actions: []
-  },
-  {
-    name: 'canceled',
-    color: 'error',
-    actions: []
-  }
-]
-
-const buttonMap = {
-  'Details': {
-    color: 'primary',
-    onClick: () => { },
-  },
-  'Edit': {
-    color: 'primary',
-    onClick: () => { },
-  },
-  'Confirm': {
-    color: 'success',
-    onClick: () => { },
-  },
-  'View Report': {
-    color: 'primary',
-    onClick: () => window.open('/assets/report-template.pdf', '_blank'),
-  },
-  'Cancel': {
-    color: 'error',
-    onClick: () => { },
-  },
-}
+// const buttonMap = {
+//   'Details': {
+//     color: 'primary',
+//     onClick: () => { },
+//   },
+//   'Edit': {
+//     color: 'primary',
+//     onClick: () => { },
+//   },
+//   'Confirm': {
+//     color: 'success',
+//     onClick: () => { },
+//   },
+//   'View Report': {
+//     color: 'primary',
+//     onClick: () => window.open('/assets/report-template.pdf', '_blank'),
+//   },
+//   'Cancel': {
+//     color: 'error',
+//     onClick: () => { },
+//   },
+// }
 
 export const ShipmentsTable = (props) => {
   const {
@@ -162,6 +144,7 @@ export const ShipmentsTable = (props) => {
                       {/* {shipment.flight.airline}<br />
                       {departureDate}<br />
                       {shipment.flight.departureAirport}<br /> */}
+                      {shipment.flight_id ?? '-'}
                     </TableCell>
                     <TableCell>
                       {shipment.exporter?.name ?? '-'}
@@ -176,7 +159,7 @@ export const ShipmentsTable = (props) => {
                       {shipment.note ?? '-'}
                     </TableCell>
                     <TableCell>
-                      <SeverityPill color={statusMap[shipment.status].color}>
+                      <SeverityPill color={shipment.status.color}>
                         <Tooltip
                           arrow
                           describeChild
@@ -186,7 +169,7 @@ export const ShipmentsTable = (props) => {
                           }}
                           title={`Last updated: ${updatedAt}`}
                         >
-                          {statusMap[shipment.status].name}
+                          {shipment.status.label}
                         </Tooltip>
                       </SeverityPill>
                     </TableCell>
@@ -197,18 +180,18 @@ export const ShipmentsTable = (props) => {
                         direction="column"
                         spacing={1}
                       >
-                        {shipment.actions?.map((action) => {
+                        {shipment.actions ? shipment.actions.map((action, index) => {
                           return (
                             <Button
-                              color={buttonMap[action].color}
+                              color={action.color}
                               variant='outlined'
-                              key={action}
-                              onClick={() => buttonMap[action].onClick(shipment)}
+                              key={index}
+                              onClick={action.onClick}
                             >
-                              {action}
+                              {action.label}
                             </Button>
                           )
-                        })}
+                        }) : '-'}
                       </Stack>
                     </TableCell>
                   </TableRow>
