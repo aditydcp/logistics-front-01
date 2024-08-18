@@ -18,7 +18,7 @@ import {
 import { CompanySearch } from "src/components/shipments/shipments-company-search";
 import { MyDatePicker } from 'src/components/date-picker';
 import { useAuth } from "src/hooks/use-auth";
-import DropdownMultiInput from "src/components/dropdown-multi-input";
+import DropdownSingleInput from "src/components/dropdown-single-input";
 
 export const DetailsForm = (props) => {
   const {
@@ -204,15 +204,15 @@ export const DetailsForm = (props) => {
             xs={12}
             md={6}
           >
-            <DropdownMultiInput
+            <DropdownSingleInput
               labelId="categories-select-label"
               selectId="categories-select"
               label="Cargo Category"
               data={categoryOptions}
               value={shipment.category}
-              setValue={(values) => {
-                updateShipment('category', values)
-                updateFlightSearchParams('categories', values)
+              setValue={(value) => {
+                updateShipment('category', value ? [value] : [])
+                updateFlightSearchParams('categories', value ? [value] : [])
               }}
             />
           </Grid>
@@ -221,15 +221,15 @@ export const DetailsForm = (props) => {
             xs={12}
             md={6}
           >
-            <DropdownMultiInput
+            <DropdownSingleInput
               labelId="packaging-select-label"
               selectId="packaging-select"
               label="Packaging"
               data={packagingOptions}
               value={shipment.packaging}
-              setValue={(values) => {
-                updateShipment('packaging', values)
-                updateFlightSearchParams('packaging', values)
+              setValue={(value) => {
+                updateShipment('packaging', value ? [value] : [])
+                updateFlightSearchParams('packaging', value ? [value] : [])
               }}
             />
           </Grid>
