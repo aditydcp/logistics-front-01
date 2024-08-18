@@ -18,29 +18,9 @@ import {
 import { Scrollbar } from 'src/components/scrollbar';
 import { getInitials } from 'src/utils/helpers/get-initials';
 import { SeverityPill } from 'src/components/severity-pill';
-
-// const buttonMap = {
-//   'Details': {
-//     color: 'primary',
-//     onClick: () => { },
-//   },
-//   'Edit': {
-//     color: 'primary',
-//     onClick: () => { },
-//   },
-//   'Confirm': {
-//     color: 'success',
-//     onClick: () => { },
-//   },
-//   'View Report': {
-//     color: 'primary',
-//     onClick: () => window.open('/assets/report-template.pdf', '_blank'),
-//   },
-//   'Cancel': {
-//     color: 'error',
-//     onClick: () => { },
-//   },
-// }
+import { useRouter } from 'next/router';
+import { bookingStatusMapper } from '../../utils/helpers/booking-status-mapper';
+import apiClient from '../../utils/helpers/api-client';
 
 export const ShipmentsTable = (props) => {
   const {
@@ -57,8 +37,31 @@ export const ShipmentsTable = (props) => {
     selected = []
   } = props;
 
+  const router = useRouter();
+
   const selectedSome = (selected.length > 0) && (selected.length < shipments.length);
   const selectedAll = (shipments.length > 0) && (selected.length === shipments.length);
+
+  const bookingActionMapper = {
+    'edit': (shipment) => { router.push(`/shipments/${shipment.id}/edit`) },
+    'confirm': (shipment) => {
+      let nextStatus = 1;
+      apiClient.put(`/bookings/${shipment.id}/update`, {
+        status: nextStatus
+      }).then(() => {
+        router.reload()
+      })
+    },
+    'cancel': (shipment) => {
+      let nextStatus = 2;
+      apiClient.put(`/bookings/${shipment.id}/update`, {
+        status: nextStatus
+      }).then(() => {
+        router.reload()
+      })
+    },
+    'view-report': (shipment) => window.open('/assets/report-template.pdf', '_blank'),
+  }
 
   return (
     <Card>
@@ -180,13 +183,13 @@ export const ShipmentsTable = (props) => {
                         direction="column"
                         spacing={1}
                       >
-                        {shipment.actions ? shipment.actions.map((action, index) => {
+                        {shipment.actions ? shipment.actions.map((action) => {
                           return (
                             <Button
                               color={action.color}
                               variant='outlined'
-                              key={index}
-                              onClick={action.onClick}
+                              key={action.code}
+                              onClick={() => bookingActionMapper[action.code](shipment)}
                             >
                               {action.label}
                             </Button>

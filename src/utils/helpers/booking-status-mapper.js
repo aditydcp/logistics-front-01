@@ -1,33 +1,37 @@
+const editAction = {
+  code: 'edit',
+  label: 'Edit',
+  color: 'primary'
+}
+
+const confirmAction = {
+  code: 'confirm',
+  label: 'Confirm',
+  color: 'success',
+}
+
+const cancelAction = {
+  code: 'cancel',
+  label: 'Cancel',
+  color: 'error',
+}
+
+const viewReportAction = {
+  code: 'view-report',
+  label: 'View Report',
+  color: 'primary',
+}
+
 export const bookingStatusMapper = [
   {
     label: 'Draft',
     color: 'warning',
-    actions: [
-      {
-        label: 'Edit',
-        color: 'primary',
-        // onClick: () => { },
-      },
-      {
-        label: 'Confirm',
-        color: 'success',
-        // onClick: () => { },
-      }, {
-        label: 'Cancel',
-        color: 'error',
-        // onClick: () => { },
-      }]
+    actions: [editAction, confirmAction, cancelAction]
   },
   {
     label: 'Confirmed',
     color: 'success',
-    actions: [
-      {
-        label: 'View Report',
-        color: 'primary',
-        onClick: () => window.open('/assets/report-template.pdf', '_blank'),
-      }
-    ]
+    actions: [viewReportAction]
   },
   {
     label: 'Canceled',

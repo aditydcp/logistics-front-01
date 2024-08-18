@@ -61,3 +61,10 @@ export function isValidBooking(data: any): data is Booking {
     Object.keys(data).every(key => ['user_id', 'exporter_id', 'importer_id', 'flight_id', 'category_id', 'packaging_id', 'quantity', 'dimension', 'weight', 'status'].includes(key))
   )
 }
+
+export function isValidStatus(data: any): data is Booking {
+  return (
+    typeof data.status === 'number' &&
+    Object.keys(data).every(key => ['status'].includes(key))
+  )
+}
