@@ -23,15 +23,16 @@ import DropdownSingleInput from "src/components/dropdown-single-input";
 export const DetailsForm = (props) => {
   const {
     shipment,
-    setShipment,
-    setFlightSearchParams,
+    updateShipment,
+    updateFlightSearchParams,
+    updateTotalSize,
+    updateTotalWeight,
     categoryOptions,
     packagingOptions,
     exporters,
     importers,
     handleNext,
     handleComplete,
-    handleIncomplete,
   } = props
 
   const auth = useAuth();
@@ -44,35 +45,6 @@ export const DetailsForm = (props) => {
     allPropertiesAreNotNull ? handleComplete() : handleIncomplete()
     handleNext()
   }
-
-  const updateFlightSearchParams = (field, value) => {
-    setFlightSearchParams((prevFlightSearchParams) => ({
-      ...prevFlightSearchParams,
-      [field]: value,
-    }));
-  };
-
-  const updateShipment = (field, value) => {
-    setShipment((prevShipment) => ({
-      ...prevShipment,
-      [field]: value,
-    }));
-    if (!value) handleIncomplete()
-  };
-
-  const updateTotalWeight = ({ newWeight = null, newQuantity = null } = {}) => {
-    const weight = newWeight !== null ? newWeight : shipment.weightIndividual;
-    const quantity = newQuantity !== null ? newQuantity : shipment.quantity;
-    let totalWeight = weight * quantity
-    updateShipment("weightTotal", totalWeight);
-  };
-
-  const updateTotalSize = ({ newSize = null, newQuantity = null } = {}) => {
-    const size = newSize !== null ? newSize : shipment.sizeIndividual;
-    const quantity = newQuantity !== null ? newQuantity : shipment.quantity;
-    let totalSize = size * quantity
-    updateShipment("sizeTotal", totalSize);
-  };
 
   return (
     <Card sx={{ p: 6 }}>
@@ -172,7 +144,7 @@ export const DetailsForm = (props) => {
                 id="quantity"
                 label="Quantity"
                 type="number"
-                value={shipment.quantity}
+                value={shipment.quantity || ''}
                 onChange={(event) => {
                   let value = event.target.value ? Number(event.target.value) : 0
                   updateShipment('quantity', value)
@@ -189,6 +161,7 @@ export const DetailsForm = (props) => {
                 sx={{
                   width: '100%',
                 }}
+                className="number-input"
               />
               <TextField
                 variant="standard"
@@ -209,8 +182,9 @@ export const DetailsForm = (props) => {
               selectId="categories-select"
               label="Cargo Category"
               data={categoryOptions}
-              value={shipment.category}
+              value={shipment.category[0]?.id || ''}
               setValue={(value) => {
+                console.log([value])
                 updateShipment('category', value ? [value] : [])
                 updateFlightSearchParams('categories', value ? [value] : [])
               }}
@@ -226,7 +200,7 @@ export const DetailsForm = (props) => {
               selectId="packaging-select"
               label="Packaging"
               data={packagingOptions}
-              value={shipment.packaging}
+              value={shipment.packaging[0]?.id || ''}
               setValue={(value) => {
                 updateShipment('packaging', value ? [value] : [])
                 updateFlightSearchParams('packaging', value ? [value] : [])
@@ -254,7 +228,7 @@ export const DetailsForm = (props) => {
                 </InputLabel>
                 <Input
                   labelId="baggage-weight-label"
-                  value={shipment.weightIndividual}
+                  value={shipment.weightIndividual || ''}
                   onChange={(event) => {
                     let value = event.target.value ? Number(event.target.value) : 0
                     updateShipment('weightIndividual', value)
@@ -349,7 +323,7 @@ export const DetailsForm = (props) => {
                 </InputLabel>
                 <Input
                   labelId="baggage-size-label"
-                  value={shipment.sizeIndividual}
+                  value={shipment.sizeIndividual || ''}
                   onChange={(event) => {
                     let value = event.target.value ? Number(event.target.value) : 0
                     updateShipment('sizeIndividual', value)

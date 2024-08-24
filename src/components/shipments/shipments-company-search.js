@@ -75,6 +75,7 @@ export const CompanySearch = (props) => {
           return option.name;
         }}
         renderOption={(props, option) => <li {...props}>{option.name}</li>}
+        isOptionEqualToValue={(option, value) => option.id === value.id}
         sx={{ width: "100%", ...props.sx }}
         freeSolo
         renderInput={(params) => (

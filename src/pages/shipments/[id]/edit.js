@@ -22,14 +22,14 @@ import FlightsFormSearch from 'src/sections/shipments/add/flights-form-search';
 import { FlightsFormSelected } from 'src/sections/shipments/add/flights-form-selected';
 import { ShipmentFormReview } from 'src/sections/shipments/add/shipment-form-review';
 import { DetailsForm } from 'src/sections/shipments/add/details-form';
-import { decryptId } from '../../utils/helpers/crypt-client';
-import apiClient from '../../utils/helpers/api-client';
-import { transformFlightData } from '../../utils/helpers/flight-data-transformator';
-import useAirports from '../../hooks/use-airports';
-import useCategories from '../../hooks/use-categories';
-import usePackagings from '../../hooks/use-packagings';
-import useExporters from '../../hooks/use-exporters';
-import useImporters from '../../hooks/use-importers';
+import { decryptId } from '../../../utils/helpers/crypt-client';
+import apiClient from '../../../utils/helpers/api-client';
+import { transformFlightData } from '../../../utils/helpers/flight-data-transformator';
+import useAirports from '../../../hooks/use-airports';
+import useCategories from '../../../hooks/use-categories';
+import usePackagings from '../../../hooks/use-packagings';
+import useExporters from '../../../hooks/use-exporters';
+import useImporters from '../../../hooks/use-importers';
 
 const steps = [
   'Shipment details',
@@ -71,18 +71,6 @@ const Page = () => {
     packaging: [],
   })
   const [flight, setFlight] = useState(null);
-
-  useEffect(() => {
-    if (router.query.flight) {
-      let flightId = decryptId(router.query.flight)
-      apiClient.get(`flight-tickets/${flightId}`).then((response) => {
-        const flightData = transformFlightData(response.data.data)
-        setFlight(flightData[0])
-      }).catch((error) => {
-        console.error('Error fetching flight:', error)
-      })
-    }
-  }, [])
 
   const totalSteps = () => {
     return steps.length;
@@ -176,6 +164,102 @@ const Page = () => {
     let totalSize = size * quantity
     updateShipment("sizeTotal", totalSize);
   };
+
+  useEffect(() => {
+    if (exporters.length > 0 && importers.length > 0, categoryOptions.length > 0 && packagingOptions.length > 0) {
+      const shipmentId = router.query.id
+      apiClient.get(`bookings/${shipmentId}`).then(response => {
+        let shipmentData = response.data.data[0]
+        console.log('raw response: ', shipmentData)
+        console.log('set response: ', {
+          exporter: exporters.find(exporter => exporter.id === shipmentData.exporter_id),
+          importer: importers.find(importer => importer.id.toString() === shipmentData.importer_id),
+          departureDate: shipmentData.date,
+          quantity: shipmentData.quantity,
+          category: categoryOptions.filter(category => category.id === shipmentData.category_id),
+          packaging: packagingOptions.filter(packaging => packaging.id === shipmentData.packaging_id),
+          weightIndividual: shipmentData.weight / shipmentData.quantity,
+          weightTotal: shipmentData.weight,
+          sizeIndividual: shipmentData.dimension / shipmentData.quantity,
+          sizeTotal: shipmentData.dimension,
+        })
+
+        console.log(categoryOptions)
+        
+        setShipment({
+          exporter: exporters.find(exporter => exporter.id === shipmentData.exporter_id),
+          importer: importers.find(importer => importer.id === shipmentData.importer_id),
+          departureDate: shipmentData.date,
+          quantity: shipmentData.quantity,
+          category: categoryOptions.filter(category => category.id === shipmentData.category_id),
+          packaging: packagingOptions.filter(packaging => packaging.id === shipmentData.packaging_id),
+          weightIndividual: shipmentData.weight / shipmentData.quantity,
+          weightTotal: shipmentData.weight,
+          sizeIndividual: shipmentData.dimension / shipmentData.quantity,
+          sizeTotal: shipmentData.dimension,
+        })
+
+        // const inputElements = document.querySelectorAll('input[type="number"], .MuiSelect-select');
+        setTimeout(() => {
+          const inputElements = document.querySelectorAll('input[type="number"]');
+          inputElements.forEach((element) => {
+            const event = new Event('input', { bubbles: true });
+            element.dispatchEvent(event);
+          });
+        })
+      })
+    }
+  }, [exporters, importers, categoryOptions, packagingOptions])
+
+  // useEffect(() => {
+  //   if (router.query.flight) {
+  //     let flightId = decryptId(router.query.flight)
+  //     apiClient.get(`flight-tickets/${flightId}`).then((response) => {
+  //       const flightData = transformFlightData(response.data.data)
+  //       setFlight(flightData[0])
+  //     }).catch((error) => {
+  //       console.error('Error fetching flight:', error)
+  //     })
+  //   }
+
+  //   if (exporters.length > 0 && importers.length > 0) {
+  //     const shipmentId = router.query.id
+  //     apiClient.get(`bookings/${shipmentId}`).then(response => {
+  //       let shipmentData = response.data.data[0]
+  //       console.log(shipmentData)
+  //       console.log({
+  //         exporter: exporters.find(exporter => exporter.id === shipmentData.exporter_id),
+  //         importer: importers.find(importer => importer.id.toString() === shipmentData.importer_id),
+  //         departureDate: shipmentData.date,
+  //         quantity: shipmentData.quantity,
+  //         category: categoryOptions.filter(category => category.id === shipmentData.category_id),
+  //         packaging: packagingOptions.filter(packaging => packaging.id === shipmentData.packaging_id),
+  //         weightIndividual: shipmentData.weight / shipmentData.quantity,
+  //         weightTotal: shipmentData.weight,
+  //         sizeIndividual: shipmentData.dimension / shipmentData.quantity,
+  //         sizeTotal: shipmentData.dimension,
+  //       })
+  //       setShipment({
+  //         exporter: exporters.find(exporter => exporter.id === shipmentData.exporter_id),
+  //         importer: importers.find(importer => importer.id === shipmentData.importer_id),
+  //         departureDate: shipmentData.date,
+  //         quantity: shipmentData.quantity,
+  //         category: categoryOptions.filter(category => category.id === shipmentData.category_id),
+  //         packaging: packagingOptions.filter(packaging => packaging.id === shipmentData.packaging_id),
+  //         weightIndividual: shipmentData.weight / shipmentData.quantity,
+  //         weightTotal: shipmentData.weight,
+  //         sizeIndividual: shipmentData.dimension / shipmentData.quantity,
+  //         sizeTotal: shipmentData.dimension,
+  //       })
+  //     })
+  //   }
+  //     // if (shipmentData.flight) {
+  //     //   setFlight(shipmentData.flight)
+  //     // }
+  //   }).catch((error) => {
+  //     console.error('Error fetching shipment:', error)
+  //   })
+  // }, [exporters, importers, categoryOptions, packagingOptions])
 
   return (
     <>
