@@ -55,8 +55,9 @@ export function isValidCompany(data: any): data is Company {
   return (
     typeof data.name === 'string' &&
     (data.address === null || typeof data.address === 'string') &&
-    (data.contact === null || typeof data.contact === 'string') &&
+    (data.email === null || typeof data.email === 'string') &&
+    (data.phone === null || typeof data.phone === 'string') &&
     (data.logo === null || typeof data.logo === 'string') &&
-    Object.keys(data).every(key => ['name', 'address', 'contact', 'logo'].includes(key))
+    Object.keys(data).every(key => ['name', 'address', 'email', 'phone', 'logo'].includes(key))
   )
 }

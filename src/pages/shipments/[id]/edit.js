@@ -231,7 +231,7 @@ const Page = () => {
     <>
       <Head>
         <title>
-          Add New Shipment | Dashboard Kit
+          Update Shipment | Dashboard Kit
         </title>
       </Head>
       <Box
@@ -244,7 +244,7 @@ const Page = () => {
         <Container maxWidth="xl">
           <Stack spacing={4}>
             <Typography variant="h4">
-              New Shipment
+              Update Shipment
             </Typography>
 
             <Stack

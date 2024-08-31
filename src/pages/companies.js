@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import Head from 'next/head';
-import { subDays, subHours } from 'date-fns';
+import NextLink from 'next/link';
 import ArrowUpOnSquareIcon from '@heroicons/react/24/solid/ArrowUpOnSquareIcon';
 import ArrowDownOnSquareIcon from '@heroicons/react/24/solid/ArrowDownOnSquareIcon';
 import PlusIcon from '@heroicons/react/24/solid/PlusIcon';
@@ -150,6 +150,8 @@ const Page = () => {
                   </Stack>
                   <div>
                     <Button
+                      component={NextLink}
+                      href="/companies/exporters/add"
                       startIcon={(
                         <SvgIcon fontSize="small">
                           <PlusIcon />

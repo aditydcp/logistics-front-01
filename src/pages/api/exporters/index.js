@@ -1,4 +1,4 @@
-import { getAll, createItem } from "../../../utils/services/queries"
+import { getAll, upsertCompanyWithVerify } from "../../../utils/services/queries"
 import { isValidCompany, tableExporters } from "../../../utils/types/companies";
 
 export default async function handler(req, res) {
@@ -11,6 +11,7 @@ export default async function handler(req, res) {
     })
   } else if (req.method === 'POST') {
     const { body } = req
+    const { verify } = req.query
 
     // Validate Exporter schema
     if (!isValidCompany(body)) {
@@ -20,7 +21,7 @@ export default async function handler(req, res) {
       })
     }
 
-    const { data, error } = await createItem(tableExporters, body)
+    const { data, error } = await upsertCompanyWithVerify(tableExporters, body, null, verify)
     if (error) {
       res.status(400).json({
         message: 'Error creating exporter',
