@@ -177,6 +177,28 @@ const Page = () => {
     updateShipment("sizeTotal", totalSize);
   };
 
+  const saveBooking = async (flight, shipment) => {
+    try {
+      const booking = {
+        user_id: 1,
+        exporter_id: shipment.exporter.id,
+        importer_id: shipment.importer.id,
+        flight_id: parseInt(flight.id),
+        category_id: shipment.category.id,
+        packaging_id: shipment.packaging.id,
+        quantity: shipment.quantity,
+        weight: shipment.weightTotal,
+        dimension: shipment.sizeTotal,
+        status: 0
+      }
+      console.log('Booking:', booking)
+      const response = await apiClient.post('/bookings', booking)
+      console.log('Booking saved successfully:', response.data);
+    } catch (error) {
+      console.error('Error saving booking:', error);
+    }
+  }
+
   return (
     <>
       <Head>
@@ -291,6 +313,8 @@ const Page = () => {
                         shipment={shipment}
                         flight={flight}
                         handleComplete={handleComplete}
+                        submitText="Confirm New Shipment"
+                        onSubmit={() => saveBooking(flight, shipment)}
                       />
                     }
                   </Box>

@@ -182,10 +182,9 @@ export const DetailsForm = (props) => {
               selectId="categories-select"
               label="Cargo Category"
               data={categoryOptions}
-              value={shipment.category[0]?.id || ''}
+              value={shipment.category || ''}
               setValue={(value) => {
-                console.log([value])
-                updateShipment('category', value ? [value] : [])
+                updateShipment('category', value)
                 updateFlightSearchParams('categories', value ? [value] : [])
               }}
             />
@@ -200,9 +199,9 @@ export const DetailsForm = (props) => {
               selectId="packaging-select"
               label="Packaging"
               data={packagingOptions}
-              value={shipment.packaging[0]?.id || ''}
+              value={shipment.packaging || ''}
               setValue={(value) => {
-                updateShipment('packaging', value ? [value] : [])
+                updateShipment('packaging', value)
                 updateFlightSearchParams('packaging', value ? [value] : [])
               }}
             />

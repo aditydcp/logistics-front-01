@@ -41,12 +41,14 @@ export const ShipmentFormReview = (props) => {
     shipment,
     flight,
     handleComplete,
+    submitText,
+    onSubmit,
   } = props;
 
   const theme = useTheme()
   const router = useRouter()
 
-  const shipmentIsFilled = Object.values(shipment).every(item => item !== null);
+  const shipmentIsFilled = Object.values(shipment).every(item => item);
 
   let pricingErrorTopic = ''
 
@@ -57,33 +59,11 @@ export const ShipmentFormReview = (props) => {
     pricingErrorTopic += (!shipmentIsFilled ? ' and ' : '')
     pricingErrorTopic += 'pick a flight'
   }
-
-  const saveBooking = async (flight, shipment) => {
-    try {
-      const booking = {
-        user_id: 1,
-        exporter_id: shipment.exporter.id,
-        importer_id: shipment.importer.id,
-        flight_id: parseInt(flight.id),
-        category_id: shipment.category[0],
-        packaging_id: shipment.packaging[0],
-        quantity: shipment.quantity,
-        weight: shipment.weightTotal,
-        dimension: shipment.sizeTotal,
-        status: 0
-      }
-      console.log('Booking:', booking)
-      const response = await apiClient.post('/bookings', booking)
-      console.log('Booking saved successfully:', response.data);
-    } catch (error) {
-      console.error('Error saving booking:', error);
-    }
-  }
   
-  const onSubmit = () => {
+  const handleSubmit = () => {
     console.log('shipment', shipment)
     console.log('flight', flight)
-    saveBooking(flight, shipment)
+    onSubmit()
     handleComplete()
     router.push('/')
   }
@@ -270,10 +250,10 @@ export const ShipmentFormReview = (props) => {
       </Stack>
       <Button
         variant='contained'
-        onClick={onSubmit}
+        onClick={handleSubmit}
         disabled={!shipmentIsFilled && !flight}
       >
-        Confirm New Shipment
+        {submitText}
       </Button>
     </Stack>
   )

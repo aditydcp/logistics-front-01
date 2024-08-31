@@ -68,8 +68,8 @@ const DropdownMultiInput = (props) => {
               <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                 {selected.map((value) => (
                   <Chip
-                    key={value}
-                    label={data.find(item => item.id === value)?.name || 'Undefined'}
+                    key={value.id}
+                    label={value.name ?? 'Undefined'}
                     size='small'
                   />
                 ))}
@@ -81,7 +81,7 @@ const DropdownMultiInput = (props) => {
           {data.map((item) => (
             <MenuItem
               key={item.id}
-              value={item.id}
+              value={item}
             >
               {item.name}
             </MenuItem>

@@ -191,8 +191,8 @@ const Page = () => {
           importer: importers.find(importer => importer.id === shipmentData.importer_id),
           departureDate: shipmentData.date,
           quantity: shipmentData.quantity,
-          category: categoryOptions.filter(category => category.id === shipmentData.category_id),
-          packaging: packagingOptions.filter(packaging => packaging.id === shipmentData.packaging_id),
+          category: categoryOptions.find(category => category.id === shipmentData.category_id),
+          packaging: packagingOptions.find(packaging => packaging.id === shipmentData.packaging_id),
           weightIndividual: shipmentData.weight / shipmentData.quantity,
           weightTotal: shipmentData.weight,
           sizeIndividual: shipmentData.dimension / shipmentData.quantity,
@@ -270,6 +270,28 @@ const Page = () => {
   //     console.error('Error fetching shipment:', error)
   //   })
   // }, [exporters, importers, categoryOptions, packagingOptions])
+  const updateBooking = async (flight, shipment) => {
+    try {
+      const id = router.query.id
+      const booking = {
+        user_id: 1,
+        exporter_id: shipment.exporter.id,
+        importer_id: shipment.importer.id,
+        flight_id: parseInt(flight.id),
+        category_id: shipment.category.id,
+        packaging_id: shipment.packaging.id,
+        quantity: shipment.quantity,
+        weight: shipment.weightTotal,
+        dimension: shipment.sizeTotal,
+        status: 0
+      }
+      console.log('Booking:', booking)
+      const response = await apiClient.put(`/bookings/${id}/update`, booking)
+      console.log('Booking updated successfully:', response.data);
+    } catch (error) {
+      console.error('Error saving booking:', error);
+    }
+  }
 
   return (
     <>
@@ -385,6 +407,8 @@ const Page = () => {
                         shipment={shipment}
                         flight={flight}
                         handleComplete={handleComplete}
+                        submitText={'Update Shipment'}
+                        onSubmit={() => updateBooking(flight, shipment)}
                       />
                     }
                   </Box>
