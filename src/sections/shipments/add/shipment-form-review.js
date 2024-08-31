@@ -34,7 +34,6 @@ import { PricingReview } from './review-pricing';
 import { FlightAvatar } from 'src/components/flights/flights-avatar';
 import { FlightTicketDetails } from 'src/components/flights/flights-ticket-details';
 import { FlightRates } from 'src/components/flights/flights-rates';
-import apiClient from '../../../utils/helpers/api-client';
 
 export const ShipmentFormReview = (props) => {
   const {

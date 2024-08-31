@@ -170,22 +170,6 @@ const Page = () => {
       const shipmentId = router.query.id
       apiClient.get(`bookings/${shipmentId}`).then(response => {
         let shipmentData = response.data.data[0]
-        console.log('raw response: ', shipmentData)
-        console.log('set response: ', {
-          exporter: exporters.find(exporter => exporter.id === shipmentData.exporter_id),
-          importer: importers.find(importer => importer.id.toString() === shipmentData.importer_id),
-          departureDate: shipmentData.date,
-          quantity: shipmentData.quantity,
-          category: categoryOptions.filter(category => category.id === shipmentData.category_id),
-          packaging: packagingOptions.filter(packaging => packaging.id === shipmentData.packaging_id),
-          weightIndividual: shipmentData.weight / shipmentData.quantity,
-          weightTotal: shipmentData.weight,
-          sizeIndividual: shipmentData.dimension / shipmentData.quantity,
-          sizeTotal: shipmentData.dimension,
-        })
-
-        console.log(categoryOptions)
-        
         setShipment({
           exporter: exporters.find(exporter => exporter.id === shipmentData.exporter_id),
           importer: importers.find(importer => importer.id === shipmentData.importer_id),
@@ -199,7 +183,6 @@ const Page = () => {
           sizeTotal: shipmentData.dimension,
         })
 
-        // const inputElements = document.querySelectorAll('input[type="number"], .MuiSelect-select');
         setTimeout(() => {
           const inputElements = document.querySelectorAll('input[type="number"]');
           inputElements.forEach((element) => {
@@ -221,55 +204,6 @@ const Page = () => {
     }
   }, [exporters, importers, categoryOptions, packagingOptions])
 
-  // useEffect(() => {
-  //   if (router.query.flight) {
-  //     let flightId = decryptId(router.query.flight)
-  //     apiClient.get(`flight-tickets/${flightId}`).then((response) => {
-  //       const flightData = transformFlightData(response.data.data)
-  //       setFlight(flightData[0])
-  //     }).catch((error) => {
-  //       console.error('Error fetching flight:', error)
-  //     })
-  //   }
-
-  //   if (exporters.length > 0 && importers.length > 0) {
-  //     const shipmentId = router.query.id
-  //     apiClient.get(`bookings/${shipmentId}`).then(response => {
-  //       let shipmentData = response.data.data[0]
-  //       console.log(shipmentData)
-  //       console.log({
-  //         exporter: exporters.find(exporter => exporter.id === shipmentData.exporter_id),
-  //         importer: importers.find(importer => importer.id.toString() === shipmentData.importer_id),
-  //         departureDate: shipmentData.date,
-  //         quantity: shipmentData.quantity,
-  //         category: categoryOptions.filter(category => category.id === shipmentData.category_id),
-  //         packaging: packagingOptions.filter(packaging => packaging.id === shipmentData.packaging_id),
-  //         weightIndividual: shipmentData.weight / shipmentData.quantity,
-  //         weightTotal: shipmentData.weight,
-  //         sizeIndividual: shipmentData.dimension / shipmentData.quantity,
-  //         sizeTotal: shipmentData.dimension,
-  //       })
-  //       setShipment({
-  //         exporter: exporters.find(exporter => exporter.id === shipmentData.exporter_id),
-  //         importer: importers.find(importer => importer.id === shipmentData.importer_id),
-  //         departureDate: shipmentData.date,
-  //         quantity: shipmentData.quantity,
-  //         category: categoryOptions.filter(category => category.id === shipmentData.category_id),
-  //         packaging: packagingOptions.filter(packaging => packaging.id === shipmentData.packaging_id),
-  //         weightIndividual: shipmentData.weight / shipmentData.quantity,
-  //         weightTotal: shipmentData.weight,
-  //         sizeIndividual: shipmentData.dimension / shipmentData.quantity,
-  //         sizeTotal: shipmentData.dimension,
-  //       })
-  //     })
-  //   }
-  //     // if (shipmentData.flight) {
-  //     //   setFlight(shipmentData.flight)
-  //     // }
-  //   }).catch((error) => {
-  //     console.error('Error fetching shipment:', error)
-  //   })
-  // }, [exporters, importers, categoryOptions, packagingOptions])
   const updateBooking = async (flight, shipment) => {
     try {
       const id = router.query.id
