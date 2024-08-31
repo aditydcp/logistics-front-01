@@ -207,6 +207,16 @@ const Page = () => {
             element.dispatchEvent(event);
           });
         })
+
+        apiClient.get(`flight-tickets/${shipmentData.flight_id}`).then((response) => {
+          const flightData = transformFlightData(response.data.data)
+          const flight = flightData[0]
+          const shipmentDate = new Date(flight.journeyDetails.departure.time)
+          updateShipment("departureDate", shipmentDate)
+          setFlight(flight)
+        }).catch((error) => {
+          console.error('Error fetching flight:', error)
+        })
       })
     }
   }, [exporters, importers, categoryOptions, packagingOptions])
