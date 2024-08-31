@@ -101,12 +101,15 @@ export const ShipmentsTable = (props) => {
                   Category
                 </TableCell>
                 <TableCell>
-                  Note
+                  Packaging
                 </TableCell>
+                {/* <TableCell>
+                  Note
+                </TableCell> */}
                 <TableCell>
                   Status
                 </TableCell>
-                <TableCell>
+                <TableCell align="center">
                   Actions
                 </TableCell>
               </TableRow>
@@ -116,7 +119,7 @@ export const ShipmentsTable = (props) => {
                 const isSelected = selected.includes(shipment.id);
                 const createdAt = format(new Date(shipment.created_at), 'dd/MM/yyyy');
                 const updatedAt = format(new Date(shipment.updated_at), 'dd/MM/yyyy');
-                // const departureDate = format(shipment.flight.departureDate, 'dd/MM/yyyy');
+                const departureDate = shipment.flight_ticket ? format(new Date(shipment.flight_ticket.departure.datetime), 'dd/MM/yyyy') : '-';
 
                 return (
                   <TableRow
@@ -143,23 +146,27 @@ export const ShipmentsTable = (props) => {
                       {createdAt ?? '-'}
                     </TableCell>
                     <TableCell>
-                      {/* {shipment.flight.airline}<br />
-                      {departureDate}<br />
-                      {shipment.flight.departureAirport}<br /> */}
-                      {shipment.flight_id ?? '-'}
+                      {shipment.flight_ticket ? <>
+                        {shipment.flight_ticket.airlines.map(airline => airline.name).join(' + ')}<br />
+                        {departureDate}<br />
+                        {shipment.flight_ticket.departure.airport.name}
+                      </> : '-'}
                     </TableCell>
                     <TableCell>
-                      {shipment.exporter?.name ?? '-'}
+                      {shipment.exporter ? shipment.exporter.name ?? 'Unnamed Exporter' : '-'}
                     </TableCell>
                     <TableCell>
-                      {shipment.importer?.name ?? '-'}
+                    {shipment.importer ? shipment.importer.name ?? 'Unnamed Importer' : '-'}
                     </TableCell>
                     <TableCell>
-                      {shipment.category ?? '-'}
+                      {shipment.category ? shipment.category.name : '-'}
                     </TableCell>
                     <TableCell>
+                      {shipment.packaging ? shipment.packaging.name : '-'}
+                    </TableCell>
+                    {/* <TableCell>
                       {shipment.note ?? '-'}
-                    </TableCell>
+                    </TableCell> */}
                     <TableCell>
                       <SeverityPill color={shipment.status.color}>
                         <Tooltip

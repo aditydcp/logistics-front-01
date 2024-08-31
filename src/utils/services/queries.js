@@ -1,5 +1,17 @@
 import * as db from './supabase'
 
+export const countAll = async (table) => {
+  return await db.countAll(table)
+}
+
+export const countById = async (table, id) => {
+  return await db.countById(table, id)
+}
+
+export const countByFields = async (table, fields) => {
+  return await db.countByFields(table, fields)
+}
+
 export const getAll = async (table) => {
   return await db.getAll(table)
 }
@@ -17,7 +29,6 @@ export const getByFields = async (table, fields) => {
 }
 
 export const createItem = async (table, object) => {
-  console.log('Creating item to table', table, object)
   return await db.createItem(table, object)
 }
 
@@ -60,4 +71,20 @@ export const searchFlights = async (
 
 export const searchFlightById = async (id) => {
   return await db.searchFlightById(id)
+}
+
+export const getBookings = async (
+  userId,
+  page = 1,
+  rowsPerPage = 10,
+  sortColumn = 'status',
+  sortDirection = 'asc'
+) => {
+  return await db.getBookings(
+    userId,
+    page,
+    rowsPerPage,
+    sortColumn,
+    sortDirection
+  )
 }
