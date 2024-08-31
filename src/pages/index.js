@@ -8,14 +8,6 @@ import PlusIcon from '@heroicons/react/24/solid/PlusIcon';
 // import { Box, Container, Stack, Unstable_Grid2 as Grid } from '@mui/material';
 import { Box, Button, Container, Stack, SvgIcon, Typography } from '@mui/material';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
-import { OverviewBudget } from 'src/sections/overview/overview-budget';
-import { OverviewLatestOrders } from 'src/sections/overview/overview-latest-orders';
-import { OverviewLatestProducts } from 'src/sections/overview/overview-latest-products';
-import { OverviewSales } from 'src/sections/overview/overview-sales';
-import { OverviewTasksProgress } from 'src/sections/overview/overview-tasks-progress';
-import { OverviewTotalCustomers } from 'src/sections/overview/overview-total-customers';
-import { OverviewTotalProfit } from 'src/sections/overview/overview-total-profit';
-import { OverviewTraffic } from 'src/sections/overview/overview-traffic';
 import { ShipmentsTable } from 'src/sections/overview/shipments-table';
 import { useSelection } from 'src/hooks/use-selection';
 import { applyPagination } from 'src/utils/helpers/apply-pagination';
@@ -48,7 +40,7 @@ const Page = () => {
     const fetchData = async () => {
       try {
       const response = await apiClient.get('bookings');
-      setData(response.data.data)
+      setData(response.data.data.sort((a, b) => a.status.value - b.status.value))
       } catch (error) {
         console.error('Error fetching exporters:', error)
       }
