@@ -23,9 +23,9 @@ export const shipmentPropertyValueMap = (propertyName, propertyValue) => {
     case 'Shipment Departure Date':
       return format(propertyValue, 'EEEE, dd MMMM yyyy');
     case 'Cargo Category':
-      return propertyValue.join(', ');
+      return propertyValue.name
     case 'Packaging':
-      return propertyValue.join(', ');
+      return propertyValue.name
     case 'Total Weight':
       return `${propertyValue}`;
     case 'Cargo Size':

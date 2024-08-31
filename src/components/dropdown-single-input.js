@@ -57,14 +57,22 @@ const DropdownSingleInput = (props) => {
             const {
               target: { value },
             } = event;
-            setValue(value)
+            setValue(
+              // On autofill we get a stringified value.
+              typeof value === 'string' ? value.split(',') : value,
+            )
+          }}
+          renderValue={(selected) => {
+            return (
+              <>{selected ? selected.name ?? 'Undefined' : ''}</>
+            )
           }}
           MenuProps={MenuProps}
         >
           {data.map((item) => (
             <MenuItem
               key={item.id}
-              value={item.id}
+              value={item}
             >
               {item.name}
             </MenuItem>

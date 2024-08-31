@@ -25,6 +25,7 @@ export default async function handler(req, res) {
       return ({
       ...booking,
       status: {
+        value: booking.status,
         label: bookingStatusProps.label,
         color: bookingStatusProps.color,
       },

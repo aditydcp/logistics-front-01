@@ -19,7 +19,6 @@ import { Scrollbar } from 'src/components/scrollbar';
 import { getInitials } from 'src/utils/helpers/get-initials';
 import { SeverityPill } from 'src/components/severity-pill';
 import { useRouter } from 'next/router';
-import { bookingStatusMapper } from '../../utils/helpers/booking-status-mapper';
 import apiClient from '../../utils/helpers/api-client';
 
 export const ShipmentsTable = (props) => {

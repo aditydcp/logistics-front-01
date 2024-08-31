@@ -22,14 +22,14 @@ import FlightsFormSearch from 'src/sections/shipments/add/flights-form-search';
 import { FlightsFormSelected } from 'src/sections/shipments/add/flights-form-selected';
 import { ShipmentFormReview } from 'src/sections/shipments/add/shipment-form-review';
 import { DetailsForm } from 'src/sections/shipments/add/details-form';
-import { decryptId } from '../../utils/helpers/crypt-client';
-import apiClient from '../../utils/helpers/api-client';
-import { transformFlightData } from '../../utils/helpers/flight-data-transformator';
-import useAirports from '../../hooks/use-airports';
-import useCategories from '../../hooks/use-categories';
-import usePackagings from '../../hooks/use-packagings';
-import useExporters from '../../hooks/use-exporters';
-import useImporters from '../../hooks/use-importers';
+import { decryptId } from '../../../utils/helpers/crypt-client';
+import apiClient from '../../../utils/helpers/api-client';
+import { transformFlightData } from '../../../utils/helpers/flight-data-transformator';
+import useAirports from '../../../hooks/use-airports';
+import useCategories from '../../../hooks/use-categories';
+import usePackagings from '../../../hooks/use-packagings';
+import useExporters from '../../../hooks/use-exporters';
+import useImporters from '../../../hooks/use-importers';
 
 const steps = [
   'Shipment details',
@@ -71,18 +71,6 @@ const Page = () => {
     packaging: [],
   })
   const [flight, setFlight] = useState(null);
-
-  useEffect(() => {
-    if (router.query.flight) {
-      let flightId = decryptId(router.query.flight)
-      apiClient.get(`flight-tickets/${flightId}`).then((response) => {
-        const flightData = transformFlightData(response.data.data)
-        setFlight(flightData[0])
-      }).catch((error) => {
-        console.error('Error fetching flight:', error)
-      })
-    }
-  }, [])
 
   const totalSteps = () => {
     return steps.length;
@@ -177,8 +165,48 @@ const Page = () => {
     updateShipment("sizeTotal", totalSize);
   };
 
-  const saveBooking = async (flight, shipment) => {
+  useEffect(() => {
+    if (exporters.length > 0 && importers.length > 0, categoryOptions.length > 0 && packagingOptions.length > 0) {
+      const shipmentId = router.query.id
+      apiClient.get(`bookings/${shipmentId}`).then(response => {
+        let shipmentData = response.data.data[0]
+        setShipment({
+          exporter: exporters.find(exporter => exporter.id === shipmentData.exporter_id),
+          importer: importers.find(importer => importer.id === shipmentData.importer_id),
+          departureDate: shipmentData.date,
+          quantity: shipmentData.quantity,
+          category: categoryOptions.find(category => category.id === shipmentData.category_id),
+          packaging: packagingOptions.find(packaging => packaging.id === shipmentData.packaging_id),
+          weightIndividual: shipmentData.weight / shipmentData.quantity,
+          weightTotal: shipmentData.weight,
+          sizeIndividual: shipmentData.dimension / shipmentData.quantity,
+          sizeTotal: shipmentData.dimension,
+        })
+
+        setTimeout(() => {
+          const inputElements = document.querySelectorAll('input[type="number"]');
+          inputElements.forEach((element) => {
+            const event = new Event('input', { bubbles: true });
+            element.dispatchEvent(event);
+          });
+        })
+
+        apiClient.get(`flight-tickets/${shipmentData.flight_id}`).then((response) => {
+          const flightData = transformFlightData(response.data.data)
+          const flight = flightData[0]
+          const shipmentDate = new Date(flight.journeyDetails.departure.time)
+          updateShipment("departureDate", shipmentDate)
+          setFlight(flight)
+        }).catch((error) => {
+          console.error('Error fetching flight:', error)
+        })
+      })
+    }
+  }, [exporters, importers, categoryOptions, packagingOptions])
+
+  const updateBooking = async (flight, shipment) => {
     try {
+      const id = router.query.id
       const booking = {
         user_id: 1,
         exporter_id: shipment.exporter.id,
@@ -192,8 +220,8 @@ const Page = () => {
         status: 0
       }
       console.log('Booking:', booking)
-      const response = await apiClient.post('/bookings', booking)
-      console.log('Booking saved successfully:', response.data);
+      const response = await apiClient.put(`/bookings/${id}/update`, booking)
+      console.log('Booking updated successfully:', response.data);
     } catch (error) {
       console.error('Error saving booking:', error);
     }
@@ -313,8 +341,8 @@ const Page = () => {
                         shipment={shipment}
                         flight={flight}
                         handleComplete={handleComplete}
-                        submitText="Confirm New Shipment"
-                        onSubmit={() => saveBooking(flight, shipment)}
+                        submitText={'Update Shipment'}
+                        onSubmit={() => updateBooking(flight, shipment)}
                       />
                     }
                   </Box>

@@ -28,8 +28,8 @@ export function transformFlightData(data) {
       categoriesData: ticket.categories,
       packagings: ticket.packaging_references,
       packagingData: ticket.packagings,
-      legs: ticket.flights.map(flight => ({
-        airlineRef: flight.airline.id - 1,
+      legs: ticket.flights.map((flight, index) => ({
+        airlineRef: index,
         airline: flight.airline,
         planeModel: flight.plane_model,
         weightLimit: flight.weight_limit,

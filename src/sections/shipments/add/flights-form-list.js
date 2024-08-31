@@ -27,7 +27,6 @@ import { FlightFeature } from 'src/components/flights/flights-feature';
 import { formatCurrency } from 'src/utils/helpers/format-currency';
 import { FlightSummary } from 'src/components/flights/flights-summary';
 import { FlightAvatar } from 'src/components/flights/flights-avatar';
-import { FlightDetailSection } from 'src/sections/flights/flights-detail';
 import { FlightInfo } from 'src/sections/flights/flights-info';
 
 export const FlightsFormList = (props) => {

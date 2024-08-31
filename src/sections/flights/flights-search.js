@@ -121,14 +121,14 @@ export const FlightsSearch = (props) => {
           advance_search: advanceSearch,
           weight,
           size,
-          category_ids: categories,
-          packaging_ids: packaging
+          category_ids: categories.map(category => category.id),
+          packaging_ids: packaging.map(packaging => packaging.id),
         }
       });
       const flightData = transformFlightData(response.data.data)
       setFlights(flightData)
     } catch (error) {
-      if (error.response.data.data.length === 0) {
+      if (error.response?.data?.data?.length === 0) {
         setFlights([])
         return
       }
