@@ -1,26 +1,14 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import Head from 'next/head';
 import NextLink from 'next/link';
-import { subDays, subHours } from 'date-fns';
 import ArrowDownOnSquareIcon from '@heroicons/react/24/solid/ArrowDownOnSquareIcon';
 import ArrowUpOnSquareIcon from '@heroicons/react/24/solid/ArrowUpOnSquareIcon';
 import PlusIcon from '@heroicons/react/24/solid/PlusIcon';
-// import { Box, Container, Stack, Unstable_Grid2 as Grid } from '@mui/material';
 import { Box, Button, Container, Stack, SvgIcon, Typography } from '@mui/material';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
 import { ShipmentsTable } from 'src/sections/overview/shipments-table';
 import { useSelection } from 'src/hooks/use-selection';
-import { applyPagination } from 'src/utils/helpers/apply-pagination';
 import apiClient from '../utils/helpers/api-client';
-
-const useShipments = (data, page, rowsPerPage) => {
-  return useMemo(
-    () => {
-      return applyPagination(data, page, rowsPerPage);
-    },
-    [data, page, rowsPerPage]
-  );
-};
 
 const useShipmentIds = (shipments) => {
   return useMemo(
@@ -32,6 +20,7 @@ const useShipmentIds = (shipments) => {
 };
 
 const Page = () => {
+  const [totalData, setTotalData] = useState(0);
   const [data, setData] = useState([])
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -39,18 +28,26 @@ const Page = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-      const response = await apiClient.get('bookings');
-      setData(response.data.data.sort((a, b) => a.status.value - b.status.value))
+      const response = await apiClient.get('bookings/fetch', {
+        params: {
+          userId: 1,
+          page: page,
+          rowsPerPage: rowsPerPage,
+          sortColumn: 'status',
+          sortDirection: 'asc'
+        }
+      });
+      setTotalData(response.data.meta.total)
+      setData(response.data.data)
       } catch (error) {
         console.error('Error fetching exporters:', error)
       }
     };
 
     fetchData();
-  }, [])
+  }, [page, rowsPerPage])
 
-  const shipments = useShipments(data, page, rowsPerPage);
-  const shipmentsIds = useShipmentIds(shipments);
+  const shipmentsIds = useShipmentIds(data);
   const shipmentsSelection = useSelection(shipmentsIds);
 
   const handlePageChange = useCallback(
@@ -135,8 +132,8 @@ const Page = () => {
               </div>
             </Stack>
             <ShipmentsTable
-              count={data.length}
-              shipments={shipments}
+              count={totalData}
+              shipments={data}
               onDeselectAll={shipmentsSelection.handleDeselectAll}
               onDeselectOne={shipmentsSelection.handleDeselectOne}
               onPageChange={handlePageChange}

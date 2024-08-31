@@ -6,6 +6,35 @@ const supabaseUrl = process.env.SUPABASE_URL
 const supabaseKey = process.env.SUPABASE_KEY
 const supabase = createClient(supabaseUrl, supabaseKey)
 
+const  countAll = async (table) => {
+  const { count, error } = await supabase
+    .from(table)
+    .select('*', { count: 'exact', head: true })
+
+  return { count, error }
+}
+
+const countById = async (table, id) => {
+  const { count, error } = await supabase
+    .from(table)
+    .select('*', { count: 'exact', head: true })
+    .eq('id', id)
+
+  return { count, error }
+}
+
+const countByFields = async (table, fields) => {
+  let query = supabase.from(table).select('*', { count: 'exact', head: true })
+
+  Object.entries(fields).forEach(([field, value]) => {
+    query = query.eq(field, value)
+  })
+
+  const { count, error } = await query
+
+  return { count, error }
+}
+
 const getAll = async (table) => {
   const { data, error } = await supabase
     .from(table)
@@ -126,7 +155,29 @@ const searchFlightById = async (id) => {
   return { data, error }
 }
 
+const getBookings = async (
+  userId,
+  page = 0,
+  rowsPerPage = 10,
+  sortColumn = 'status',
+  sortDirection = 'asc'
+) => {
+  const { data, error } = await supabase
+    .rpc('get_bookings_details', {
+      p_user_id : userId,
+      p_page : page,
+      p_rows_per_page : rowsPerPage,
+      p_sort_column : sortColumn,
+      p_sort_direction : sortDirection
+    })
+  
+  return { data, error }
+}
+
 export {
+  countAll,
+  countById,
+  countByFields,
   getAll,
   getAllFromPage,
   getById,
@@ -137,5 +188,6 @@ export {
   deleteItem,
   deleteByField,
   searchFlights,
-  searchFlightById
+  searchFlightById,
+  getBookings,
 }

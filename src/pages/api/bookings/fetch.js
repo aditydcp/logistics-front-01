@@ -1,10 +1,30 @@
 import { bookingStatusMapper } from "../../../utils/helpers/booking-status-mapper"
-import { getAll, createItem } from "../../../utils/services/queries"
-import { isValidBooking, table } from "../../../utils/types/bookings"
+import { countByFields, getBookings } from "../../../utils/services/queries"
+import { table } from "../../../utils/types/bookings"
 
 export default async function handler(req, res) {
   if (req.method === 'GET') {
-    const { data, error } = await getAll(table)
+    const {
+      userId,
+      page = 1,
+      rowsPerPage = 10,
+      sortColumn = 'status',
+      sortDirection = 'asc'
+    } = req.query
+
+    const { data, error } = await getBookings(
+      userId,
+      page,
+      rowsPerPage,
+      sortColumn,
+      sortDirection
+    )
+
+    const { count } = await countByFields(
+      table,
+      {user_id: userId}
+    )
+
     if (error) {
       res.status(400).json({
         message: 'Error getting bookings',
@@ -33,30 +53,11 @@ export default async function handler(req, res) {
 
     res.status(200).json({
       message: 'GET bookings',
+      meta: {
+        count: bookings.length,
+        total: count,
+      },
       data: bookings,
-      error: error
-    })
-  } else if (req.method === 'POST') {
-    const { body } = req
-
-    // Validate Booking schema
-    if (!isValidBooking(body)) {
-      res.status(400).json({
-        message: 'Error creating booking',
-        error: 'Request body does not match Booking data model'
-      })
-    }
-
-    const { data, error } = await createItem(table, body)
-    if (error) {
-      res.status(400).json({
-        message: 'Error creating booking',
-        error: error
-      })
-    }
-    res.status(200).json({
-      message: 'POST booking',
-      data: data,
       error: error
     })
   } else {
