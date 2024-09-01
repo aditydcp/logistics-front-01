@@ -1,12 +1,40 @@
+import { companyStatusMapper } from "../../../utils/helpers/status-action-mapper";
 import { getAll, upsertCompanyWithVerify } from "../../../utils/services/queries"
 import { isValidCompany, tableExporters } from "../../../utils/types/companies";
 
 export default async function handler(req, res) {
   if (req.method === 'GET') {
     const { data, error } = await getAll(tableExporters)
+    if (error) {
+      res.status(400).json({
+        message: 'Error getting exporters',
+        error: error
+      })
+    }
+    if (!data || data.length === 0) {
+      res.status(404).json({
+        message: 'Error getting exporters',
+        error: 'No exporters found'
+      })
+    }
+    
+    const companies = data.map(company => {
+      let statusValue = company.verified_at ? 0 : 1
+      let companyStatusProps = companyStatusMapper[statusValue]
+      
+      return ({
+      ...company,
+      status: {
+        value: statusValue,
+        label: companyStatusProps.label,
+        color: companyStatusProps.color,
+      },
+      actions: companyStatusProps.actions,
+    })})
+
     res.status(200).json({
       message: 'GET exporters',
-      data: data,
+      data: companies,
       error: error
     })
   } else if (req.method === 'POST') {

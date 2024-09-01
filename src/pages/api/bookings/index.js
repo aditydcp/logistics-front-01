@@ -1,4 +1,4 @@
-import { bookingStatusMapper } from "../../../utils/helpers/booking-status-mapper"
+import { bookingStatusMapper } from "../../../utils/helpers/status-action-mapper"
 import { getAll, createItem } from "../../../utils/services/queries"
 import { isValidBooking, table } from "../../../utils/types/bookings"
 

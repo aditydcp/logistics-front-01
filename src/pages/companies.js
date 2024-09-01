@@ -178,6 +178,7 @@ const Page = () => {
                   page={exportersPage}
                   rowsPerPage={exportersRowsPerPage}
                   selected={exportersSelection.selected}
+                  type={activePages[0]}
                 />
               </Stack>
             </> : <>
@@ -246,6 +247,7 @@ const Page = () => {
                   page={importersPage}
                   rowsPerPage={importersRowsPerPage}
                   selected={customersSelection2.selected}
+                  type={activePages[1]}
                 />
               </Stack>
             </>}

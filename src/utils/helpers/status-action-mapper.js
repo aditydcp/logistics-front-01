@@ -10,6 +10,12 @@ const confirmAction = {
   color: 'success',
 }
 
+const verifyAction = {
+  code:'verify',
+  label: 'Verify',
+  color:'info',
+}
+
 const cancelAction = {
   code: 'cancel',
   label: 'Cancel',
@@ -37,5 +43,18 @@ export const bookingStatusMapper = [
     label: 'Canceled',
     color: 'error',
     actions: []
+  }
+]
+
+export const companyStatusMapper = [
+  {
+    label: 'Unverified',
+    color: 'error',
+    actions: [editAction, verifyAction]
+  },
+  {
+    label: 'Verified',
+    color: 'success',
+    actions: [editAction]
   }
 ]
