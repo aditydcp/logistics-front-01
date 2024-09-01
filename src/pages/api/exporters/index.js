@@ -19,7 +19,7 @@ export default async function handler(req, res) {
     }
     
     const companies = data.map(company => {
-      let statusValue = company.verified_at ? 0 : 1
+      let statusValue = company.verified_at ? 1 : 0
       let companyStatusProps = companyStatusMapper[statusValue]
       
       return ({

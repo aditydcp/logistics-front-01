@@ -1,4 +1,4 @@
-import { getById, updateItem, deleteItem } from "../../../utils/services/queries"
+import { getById, updateItem, deleteItem, upsertCompanyWithVerify } from "../../../utils/services/queries"
 import { isValidCompany, tableImporters } from "../../../utils/types/companies";
 
 export default async function handler(req, res) {
@@ -20,6 +20,7 @@ export default async function handler(req, res) {
     }
   } else if (req.method === 'PUT') {
     const { body } = req
+    const { verify = false } = req.query
 
     // Validate Importer schema
     if (!isValidCompany(body)) {
@@ -29,7 +30,7 @@ export default async function handler(req, res) {
       })
     }
 
-    const { data, error } = await updateItem(tableImporters, id, body);
+    const { data, error } = await upsertCompanyWithVerify(tableImporters, body, id, verify)
     if (error) {
       res.status(400).json({
         message: `Error updating importer with id ${id}`,
