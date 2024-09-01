@@ -61,3 +61,24 @@ export function isValidCompany(data: any): data is Company {
     Object.keys(data).every(key => ['name', 'address', 'email', 'phone', 'logo'].includes(key))
   )
 }
+
+export function isValidVerifiedCompany(data: any): data is Company {
+  return (
+    typeof data.name === 'string' &&
+    typeof data.address === 'string' &&
+    typeof data.email === 'string' &&
+    typeof data.phone === 'string' &&
+    (data.logo === null || typeof data.logo === 'string') &&
+    Object.keys(data).every(key => [
+      'name',
+      'address',
+      'email',
+      'phone',
+      'logo',
+      'id',
+      'created_at',
+      'updated_at',
+      'verified_at'
+    ].includes(key))
+  )
+}
