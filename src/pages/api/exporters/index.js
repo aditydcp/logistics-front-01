@@ -11,7 +11,7 @@ export default async function handler(req, res) {
     })
   } else if (req.method === 'POST') {
     const { body } = req
-    const { verify } = req.query
+    const { verify = false } = req.query
 
     // Validate Exporter schema
     if (!isValidCompany(body)) {
