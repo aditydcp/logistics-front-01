@@ -28,6 +28,7 @@ import { CompaniesTable } from 'src/sections/companies/companies-table';
 import apiClient from '../utils/helpers/api-client';
 import useImporters from '../hooks/use-importers';
 import useExporters from '../hooks/use-exporters';
+import { useRouter } from 'next/router';
 
 const now = new Date();
 
@@ -37,7 +38,8 @@ const activePages = [
 ]
 
 const Page = () => {
-  const [active, setActive] = useState(activePages[0])
+  const router = useRouter()
+  const [active, setActive] = useState(router.query.type || activePages[0])
 
   const [exportersPage, setExportersPage] = useState(0);
   const [exportersRowsPerPage, setExportersRowsPerPage] = useState(5);
@@ -218,6 +220,8 @@ const Page = () => {
                   </Stack>
                   <div>
                     <Button
+                      component={NextLink}
+                      href="/companies/importers/add"
                       startIcon={(
                         <SvgIcon fontSize="small">
                           <PlusIcon />
