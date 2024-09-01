@@ -50,7 +50,8 @@ export const CompanySearch = (props) => {
           const isExisting = options.some((option) => inputValue === option.name);
           if (inputValue !== '' && !isExisting) {
             filtered.push({
-              inputValue,
+              id: 0,
+              nameValue: inputValue,
               name: `Add "${inputValue}"`,
             });
           }
@@ -68,8 +69,8 @@ export const CompanySearch = (props) => {
             return option;
           }
           // Add "xxx" option created dynamically
-          if (option.inputValue) {
-            return option.inputValue;
+          if (option.id === 0) {
+            return option.nameValue;
           }
           // Regular option
           return option.name;

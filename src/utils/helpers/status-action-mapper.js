@@ -25,7 +25,7 @@ const cancelAction = {
 const viewReportAction = {
   code: 'view-report',
   label: 'View Report',
-  color: 'primary',
+  color: 'info',
 }
 
 export const bookingStatusMapper = [

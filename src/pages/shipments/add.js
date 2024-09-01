@@ -120,6 +120,8 @@ const Page = () => {
 
   const handleStep = (step) => () => {
     setActiveStep(step);
+    console.log('shipment', shipment)
+    console.log('flight', flight)
   };
 
   const handleComplete = (step = null) => {
@@ -181,15 +183,21 @@ const Page = () => {
     try {
       const booking = {
         user_id: 1,
-        exporter_id: shipment.exporter.id,
-        importer_id: shipment.importer.id,
-        flight_id: parseInt(flight.id),
-        category_id: shipment.category.id,
-        packaging_id: shipment.packaging.id,
+        exporter_id: shipment.exporter?.id,
+        importer_id: shipment.importer?.id,
+        flight_id: flight ? parseInt(flight.id) : null,
+        category_id: shipment.category?.id,
+        packaging_id: shipment.packaging?.id,
         quantity: shipment.quantity,
         weight: shipment.weightTotal,
         dimension: shipment.sizeTotal,
         status: 0
+      }
+      if (shipment.exporter && shipment.exporter.id === 0) {
+        booking.exporter_name = shipment.exporter.nameValue
+      }
+      if (shipment.importer && shipment.importer.id === 0) {
+        booking.importer_name = shipment.importer.nameValue
       }
       console.log('Booking:', booking)
       const response = await apiClient.post('/bookings', booking)
