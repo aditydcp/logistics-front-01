@@ -15,11 +15,8 @@ import {
 } from '@mui/material';
 import { Scrollbar } from 'src/components/scrollbar';
 import { SeverityPill } from 'src/components/severity-pill';
-
-const statusMap = {
-  unverified: 'error',
-  verified: 'success'
-};
+import { useRouter } from 'next/router';
+import apiClient from '../../utils/helpers/api-client';
 
 export const CompaniesTable = (props) => {
   const {
@@ -33,11 +30,23 @@ export const CompaniesTable = (props) => {
     onSelectOne,
     page = 0,
     rowsPerPage = 0,
-    selected = []
+    selected = [],
+    type
   } = props;
+
+  const router = useRouter()
 
   const selectedSome = (selected.length > 0) && (selected.length < items.length);
   const selectedAll = (items.length > 0) && (selected.length === items.length);
+
+  const companyActionMapper = {
+    'edit': (company) => { router.push(`/companies/${type}/${company.id}/edit`) },
+    'verify': (company) => {
+      apiClient.put(`/${type}/${company.id}/verify`).then(() => {
+        router.reload()
+      })
+    },
+  };
 
   return (
     <Card>
@@ -66,20 +75,22 @@ export const CompaniesTable = (props) => {
                   Email
                 </TableCell>
                 <TableCell>
-                  Phone
+                  Address
                 </TableCell>
                 <TableCell>
-                  Location
+                  Phone Number
                 </TableCell>
                 <TableCell>
                   Status
+                </TableCell>
+                <TableCell align="center">
+                  Actions
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {items.map((company) => {
                 const isSelected = selected.includes(company.id);
-                const status = company.verified_at === null ? 'unverified' :'verified';
 
                 return (
                   <TableRow
@@ -112,22 +123,27 @@ export const CompaniesTable = (props) => {
                       {company.address ?? '-'}
                     </TableCell>
                     <TableCell>
-                      <Stack
+                      <SeverityPill color={company.status.color}>
+                        {company.status.label}
+                      </SeverityPill>
+                    </TableCell>
+                    <TableCell align="center">
+                    <Stack
+                        alignItems="center"
+                        justifyContent="center"
+                        direction="column"
                         spacing={1}
-                        width='fit-content'
                       >
-                        <SeverityPill color={statusMap[status]}>
-                          {status}
-                        </SeverityPill>
-                        {status === 'unverified' &&
+                        {company.actions ? company.actions.map((action) => (
                           <Button
-                            size='small'
-                            color='warning'
+                            key={action.code}
+                            color={action.color}
                             variant='outlined'
+                            onClick={() => companyActionMapper[action.code](company)}
                           >
-                            Verify
+                            {action.label}
                           </Button>
-                        }
+                        )) : '-'}
                       </Stack>
                     </TableCell>
                   </TableRow>

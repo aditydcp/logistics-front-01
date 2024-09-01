@@ -1,4 +1,4 @@
-import { bookingStatusMapper } from "../../../utils/helpers/booking-status-mapper"
+import { bookingStatusMapper } from "../../../utils/helpers/status-action-mapper"
 import { countByFields, getBookings } from "../../../utils/services/queries"
 import { table } from "../../../utils/types/bookings"
 

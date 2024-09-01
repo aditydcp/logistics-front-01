@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import Head from 'next/head';
-import { subDays, subHours } from 'date-fns';
+import NextLink from 'next/link';
 import ArrowUpOnSquareIcon from '@heroicons/react/24/solid/ArrowUpOnSquareIcon';
 import ArrowDownOnSquareIcon from '@heroicons/react/24/solid/ArrowDownOnSquareIcon';
 import PlusIcon from '@heroicons/react/24/solid/PlusIcon';
@@ -28,6 +28,7 @@ import { CompaniesTable } from 'src/sections/companies/companies-table';
 import apiClient from '../utils/helpers/api-client';
 import useImporters from '../hooks/use-importers';
 import useExporters from '../hooks/use-exporters';
+import { useRouter } from 'next/router';
 
 const now = new Date();
 
@@ -37,7 +38,8 @@ const activePages = [
 ]
 
 const Page = () => {
-  const [active, setActive] = useState(activePages[0])
+  const router = useRouter()
+  const [active, setActive] = useState(router.query.type || activePages[0])
 
   const [exportersPage, setExportersPage] = useState(0);
   const [exportersRowsPerPage, setExportersRowsPerPage] = useState(5);
@@ -150,6 +152,8 @@ const Page = () => {
                   </Stack>
                   <div>
                     <Button
+                      component={NextLink}
+                      href="/companies/exporters/add"
                       startIcon={(
                         <SvgIcon fontSize="small">
                           <PlusIcon />
@@ -174,6 +178,7 @@ const Page = () => {
                   page={exportersPage}
                   rowsPerPage={exportersRowsPerPage}
                   selected={exportersSelection.selected}
+                  type={activePages[0]}
                 />
               </Stack>
             </> : <>
@@ -216,6 +221,8 @@ const Page = () => {
                   </Stack>
                   <div>
                     <Button
+                      component={NextLink}
+                      href="/companies/importers/add"
                       startIcon={(
                         <SvgIcon fontSize="small">
                           <PlusIcon />
@@ -240,6 +247,7 @@ const Page = () => {
                   page={importersPage}
                   rowsPerPage={importersRowsPerPage}
                   selected={customersSelection2.selected}
+                  type={activePages[1]}
                 />
               </Stack>
             </>}

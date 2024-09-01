@@ -6,7 +6,7 @@ const supabaseUrl = process.env.SUPABASE_URL
 const supabaseKey = process.env.SUPABASE_KEY
 const supabase = createClient(supabaseUrl, supabaseKey)
 
-const  countAll = async (table) => {
+const countAll = async (table) => {
   const { count, error } = await supabase
     .from(table)
     .select('*', { count: 'exact', head: true })
@@ -149,7 +149,7 @@ const searchFlights = async (
 const searchFlightById = async (id) => {
   const { data, error } = await supabase
     .rpc('get_flight_ticket_details', {
-      p_ticket_id : id
+      p_ticket_id: id
     });
 
   return { data, error }
@@ -164,14 +164,30 @@ const getBookings = async (
 ) => {
   const { data, error } = await supabase
     .rpc('get_bookings_details', {
-      p_user_id : userId,
-      p_page : page,
-      p_rows_per_page : rowsPerPage,
-      p_sort_column : sortColumn,
-      p_sort_direction : sortDirection
+      p_user_id: userId,
+      p_page: page,
+      p_rows_per_page: rowsPerPage,
+      p_sort_column: sortColumn,
+      p_sort_direction: sortDirection
     })
-  
+
   return { data, error }
+}
+
+async function upsertCompanyWithVerify(
+  tableName,
+  companyData,
+  id = null,
+  verify = false
+) {
+  const { data, error } = await supabase.rpc('upsert_company_with_verify', {
+    p_table_name: tableName,
+    p_id: id,
+    p_company_data: companyData,
+    p_verify: verify
+  });
+
+  return { data, error };
 }
 
 export {
@@ -190,4 +206,5 @@ export {
   searchFlights,
   searchFlightById,
   getBookings,
+  upsertCompanyWithVerify,
 }

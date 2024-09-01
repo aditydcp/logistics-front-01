@@ -88,3 +88,12 @@ export const getBookings = async (
     sortDirection
   )
 }
+
+export const upsertCompanyWithVerify = async (
+  table,
+  companyData,
+  id = null,
+  verify = false
+) => {
+  return await db.upsertCompanyWithVerify(table, companyData, id, verify)
+}

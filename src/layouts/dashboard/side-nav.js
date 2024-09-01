@@ -128,7 +128,7 @@ export const SideNav = (props) => {
                 const active = item.path ? (pathname === item.path) : false;
                 if (item.role) {
                   if (!item.role.includes(user.role.toLowerCase())) {
-                    return (<></>);
+                    return;
                   }
                 }
                 return (
