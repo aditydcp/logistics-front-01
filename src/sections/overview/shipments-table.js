@@ -20,6 +20,7 @@ import { getInitials } from 'src/utils/helpers/get-initials';
 import { SeverityPill } from 'src/components/severity-pill';
 import { useRouter } from 'next/router';
 import apiClient from '../../utils/helpers/api-client';
+import { generatePDFReport } from '../../utils/helpers/generate-report';
 
 export const ShipmentsTable = (props) => {
   const {
@@ -59,7 +60,9 @@ export const ShipmentsTable = (props) => {
         router.reload()
       })
     },
-    'view-report': (shipment) => window.open('/assets/report-template.pdf', '_blank'),
+    'view-report': (shipment) => {
+      generatePDFReport(shipment)
+    },
   }
 
   return (

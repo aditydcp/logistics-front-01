@@ -56,6 +56,6 @@ export default async function handler(req, res) {
       error: error
   });
   } else {
-    res.status(405).end('Method Not Allowed')
+    res.status(405).json(errorMessages.methodNotAllowed)
   }
 }

@@ -7,7 +7,7 @@ export default async function handler(req, res) {
   const { id } = req.query;
 
   if (req.method === 'GET') {
-    res.status(405).end('Method Not Allowed')
+    res.status(405).json(errorMessages.methodNotAllowed)
 
     // TODO: Should get by multiple field conditions
     // const { data, error } = await getByFields(table, ['flight_id', 'ref_type'], [id, refType])
@@ -42,6 +42,6 @@ export default async function handler(req, res) {
       error: error
     })
   } else {
-    res.status(405).end('Method Not Allowed')
+    res.status(405).json(errorMessages.methodNotAllowed)
   }
 }
